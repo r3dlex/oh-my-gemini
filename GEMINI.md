@@ -2,11 +2,13 @@
 
 This extension is the canonical public entry point for the `oh-my-product` workflow.
 
-> **Shared context**: See `context/omp-core.md` for the full agent catalog, workflow stages, quality gates, and state conventions.
+> **Shared context**: See `docs/architecture/omp-core.md` for the full agent catalog, workflow stages, quality gates, and state conventions.
+
+> **Transition status (2026-04-13):** the canonical target for this repo is `oh-my-gemini` / `omg`, with extension assets under `extensions/oh-my-gemini/` and runtime state under `.omg/`. Legacy `oh-my-product` / `omp` / `.omp` references remain in some implementation and compatibility paths during the migration.
 
 ## Context Layers (priority order)
 1. **System/Runtime** — Gemini CLI constraints (immutable)
-2. **Project Standards** — This file (`GEMINI.md`) + `context/omp-core.md`
+2. **Project Standards** — This file (`GEMINI.md`) + `docs/architecture/omp-core.md`
 3. **Session Memory** — `.omp/state/`, memory entries
 4. **Active Task** — Current plan, taskboard, PRD
 5. **Execution Traces** — Recent iteration results
