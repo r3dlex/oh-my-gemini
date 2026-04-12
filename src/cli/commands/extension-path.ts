@@ -12,7 +12,8 @@ import {
 } from './arg-utils.js';
 
 export const OMP_EXTENSION_PATH_ENV = 'OMP_EXTENSION_PATH';
-export const EXTENSION_ROOT_RELATIVE_PATH = '.';
+export const CANONICAL_EXTENSION_ROOT_RELATIVE_PATH = path.join('extensions', 'oh-my-gemini');
+export const LEGACY_EXTENSION_ROOT_RELATIVE_PATH = '.';
 export const EXTENSION_MANIFEST_FILE_NAME = 'gemini-extension.json';
 
 export type ExtensionPathSource = 'override' | 'cwd' | 'installed';
@@ -87,12 +88,22 @@ function buildCandidateList(options: ResolveExtensionPathOptions): {
   const installedRoot = packageRootFromModuleUrl();
   candidates.push({
     source: 'installed',
-    path: path.join(installedRoot, EXTENSION_ROOT_RELATIVE_PATH),
+    path: path.join(installedRoot, CANONICAL_EXTENSION_ROOT_RELATIVE_PATH),
   });
 
   candidates.push({
     source: 'cwd',
-    path: path.join(options.cwd, EXTENSION_ROOT_RELATIVE_PATH),
+    path: path.join(options.cwd, CANONICAL_EXTENSION_ROOT_RELATIVE_PATH),
+  });
+
+  candidates.push({
+    source: 'installed',
+    path: path.join(installedRoot, LEGACY_EXTENSION_ROOT_RELATIVE_PATH),
+  });
+
+  candidates.push({
+    source: 'cwd',
+    path: path.join(options.cwd, LEGACY_EXTENSION_ROOT_RELATIVE_PATH),
   });
 
   return {
@@ -146,11 +157,11 @@ export async function resolveExtensionPath(
 
   throw new Error(
     [
-      'Unable to resolve oh-my-product extension path.',
+      'Unable to resolve oh-my-gemini extension path.',
       'Checked manifest candidates:',
       checkedCandidates,
       '',
-      `Set ${OMP_EXTENSION_PATH_ENV}=<path> or pass --extension-path <path>.`,
+      `Set ${OMP_EXTENSION_PATH_ENV}=<path> or pass --extension-path <path>. Canonical package layout prefers extensions/oh-my-gemini/.`,
     ].join('\n'),
   );
 }
