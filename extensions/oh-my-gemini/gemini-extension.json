@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/packages/cli/schemas/gemini-extension.json",
+  "name": "oh-my-gemini",
+  "version": "0.0.1",
+  "description": "Multi-agent orchestration for Gemini CLI with OMG-branded extension assets and command aliases.",
+  "author": "jjongguet",
+  "license": "MIT",
+  "homepage": "https://github.com/jjongguet/oh-my-product",
+  "sourceUrl": "https://github.com/jjongguet/oh-my-product",
+  "contextFileName": "GEMINI.md",
+  "settings": []
+}
