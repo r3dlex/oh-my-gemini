@@ -4,6 +4,8 @@ Thanks for contributing to `oh-my-product`. This repository ships both the `omp`
 
 This guide is intentionally practical: it focuses on the commands and file locations you will actually use while preparing a change.
 
+> **OMG transition note (2026-04-13):** the repo is actively moving from legacy `oh-my-product` / `omp` surfaces toward canonical `oh-my-gemini` / `omg` surfaces, including `extensions/oh-my-gemini/` and `.omg/`. Review [`docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md`](docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md) before changing branding, extension layout, or runtime-state paths.
+
 ## Prerequisites
 
 Install these tools before you start:
