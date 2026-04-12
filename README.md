@@ -13,6 +13,8 @@
 
 **Multi-agent orchestration for Gemini CLI. Zero learning curve.**
 
+> **Transition status (2026-04-13):** this repo is actively migrating from legacy `oh-my-product` / `omp` surfaces to canonical `oh-my-gemini` / `omg` surfaces. Phase 1 target paths are `extensions/oh-my-gemini/` and `.omg/`. Legacy `omp` / `.omp` references still exist while compatibility work is in progress. See [`docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md`](docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md) for the audited gap list and migration order.
+
 [Quick Start](#quick-start) | [Team Mode](#team-mode) | [Commands](#commands) | [Docs](docs/)
 
 ---
