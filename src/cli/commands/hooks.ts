@@ -1,13 +1,34 @@
-import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
+import {
+  buildInternalHookContext,
+  executeGeminiHookBridge,
+  mapGeminiHookEventToInternalEvent,
+  readGeminiHookPayloadFromStdin,
+  type GeminiHookOutput,
+  type GeminiHookPayload,
+} from '../../hooks/bridge.js';
+import {
+  createDefaultHookRegistry,
+  mergeHookResults,
+  runHookPipeline,
+  type HookContext,
+  type HookEventName,
+  type RegisteredHook,
+} from '../../hooks/index.js';
 import type { CliIo, CommandExecutionResult } from '../types.js';
-import { findUnknownOptions, hasFlag, parseCliArgs } from './arg-utils.js';
+import {
+  findUnknownOptions,
+  getStringOption,
+  hasFlag,
+  parseCliArgs,
+} from './arg-utils.js';
 
 export interface HooksCommandContext {
   cwd: string;
   io: CliIo;
+  readStdin?: () => Promise<string>;
 }
 
 const CANONICAL_HOOKS_STATE_FILE = path.join('.omg', 'state', 'hooks.json');
@@ -36,12 +57,15 @@ function printHooksHelp(io: CliIo): void {
       '',
       'Subcommands:',
       '  init      Bootstrap hook scaffolding',
+      '  exec      Execute the Gemini hook bridge (stdin JSON → stdout JSON)',
       '  status    Show hook pipeline state',
       '  validate  Validate trigger graph',
       '  test      Dry-run hook pipeline',
+      '  dispatch  Run the internal TS hook registry for a Gemini hook event',
       '',
       'Options:',
-      '  --help    Show command help',
+      '  --event <name>  Override the Gemini hook event name when dispatching',
+      '  --help          Show command help',
     ].join('\n'),
   );
 }
@@ -55,31 +79,78 @@ function resolveHooksStateFilePath(cwd: string): string {
   if (fs.existsSync(canonicalPath)) {
     return canonicalPath;
   }
-
   const legacyPath = path.join(cwd, LEGACY_HOOKS_STATE_FILE);
   if (fs.existsSync(legacyPath)) {
     return legacyPath;
   }
-
   return canonicalPath;
+}
+
+export function mapGeminiHookEventName(raw: string | undefined): HookEventName | null {
+  return raw ? mapGeminiHookEventToInternalEvent(raw) : null;
+}
+
+export function buildHookContextFromGeminiInput(input: {
+  cwd: string;
+  eventName: string | undefined;
+  payload: unknown;
+}): HookContext {
+  const payload = (typeof input.payload === 'object' && input.payload !== null
+    ? input.payload
+    : {}) as GeminiHookPayload & { workspace_path?: string; workspacePath?: string };
+  const cwd = payload.workspace_path ?? payload.workspacePath ?? payload.cwd ?? input.cwd;
+  const context = buildInternalHookContext(input.cwd, {
+    ...payload,
+    hook_event_name: input.eventName,
+  });
+  return context
+    ? {
+        ...context,
+        cwd,
+      }
+    : {
+        cwd,
+        event: undefined,
+        metadata: payload as Record<string, unknown>,
+      };
+}
+
+export async function dispatchGeminiHook(input: {
+  cwd: string;
+  eventName: string | undefined;
+  payload: unknown;
+  registry?: readonly RegisteredHook[];
+}): Promise<GeminiHookOutput> {
+  if (!mapGeminiHookEventName(input.eventName)) {
+    return {};
+  }
+  const payload = (typeof input.payload === 'object' && input.payload !== null
+    ? input.payload
+    : {}) as GeminiHookPayload;
+  return executeGeminiHookBridge({
+    cwd: input.cwd,
+    payload: {
+      ...payload,
+      hook_event_name: input.eventName,
+    },
+    hooks: input.registry,
+  });
 }
 
 function runInit(cwd: string, io: CliIo): CommandExecutionResult {
   const stateFilePath = hooksStateFilePath(cwd);
   const stateDir = path.dirname(stateFilePath);
-
   if (fs.existsSync(stateFilePath)) {
     io.stdout(`Hook state file already exists: ${stateFilePath}`);
     return { exitCode: 0 };
   }
-
   try {
     fs.mkdirSync(stateDir, { recursive: true });
-    const defaultState = {
-      initialized: new Date().toISOString(),
-      hooks: [],
-    };
-    fs.writeFileSync(stateFilePath, JSON.stringify(defaultState, null, 2) + '\n', 'utf8');
+    fs.writeFileSync(
+      stateFilePath,
+      JSON.stringify({ initialized: new Date().toISOString(), hooks: [] }, null, 2) + '\n',
+      'utf8',
+    );
     io.stdout(`Hook scaffolding initialized: ${stateFilePath}`);
     return { exitCode: 0 };
   } catch (error) {
@@ -93,38 +164,31 @@ function runStatus(cwd: string, io: CliIo): CommandExecutionResult {
   for (const hook of REGISTERED_HOOKS) {
     io.stdout(`  - ${hook}`);
   }
-
   const stateFilePath = resolveHooksStateFilePath(cwd);
   if (fs.existsSync(stateFilePath)) {
     io.stdout('');
     io.stdout(`Hook state file: ${stateFilePath}`);
     try {
-      const raw = fs.readFileSync(stateFilePath, 'utf8');
-      const parsed: unknown = JSON.parse(raw);
-      io.stdout(JSON.stringify(parsed, null, 2));
+      io.stdout(JSON.stringify(JSON.parse(fs.readFileSync(stateFilePath, 'utf8')), null, 2));
     } catch (error) {
       io.stderr(`Failed to read hook state: ${(error as Error).message}`);
     }
   } else {
     io.stdout('');
     io.stdout(`No hook state file found at: ${stateFilePath}`);
-    io.stdout('Run "omp hooks init" to bootstrap hook scaffolding.');
+    io.stdout('Run "omg hooks init" to bootstrap hook scaffolding.');
   }
-
   return { exitCode: 0 };
 }
 
 function runValidate(cwd: string, io: CliIo): CommandExecutionResult {
   const stateFilePath = resolveHooksStateFilePath(cwd);
-
   if (!fs.existsSync(stateFilePath)) {
     io.stdout('No hook state file found. Hook registry validation: OK (using defaults)');
     return { exitCode: 0 };
   }
-
   try {
-    const raw = fs.readFileSync(stateFilePath, 'utf8');
-    JSON.parse(raw);
+    JSON.parse(fs.readFileSync(stateFilePath, 'utf8'));
     io.stdout(`Hook registry validation: OK (${stateFilePath})`);
     return { exitCode: 0 };
   } catch (error) {
@@ -138,43 +202,74 @@ function runTest(io: CliIo): CommandExecutionResult {
   return { exitCode: 0 };
 }
 
+async function runExec(cwd: string, io: CliIo): Promise<CommandExecutionResult> {
+  try {
+    const payload = readGeminiHookPayloadFromStdin();
+    const output = await executeGeminiHookBridge({ cwd, payload });
+    io.stdout(JSON.stringify(output));
+    return { exitCode: output.decision === 'deny' ? 2 : 0 };
+  } catch (error) {
+    io.stderr(`Failed to execute Gemini hook bridge: ${(error as Error).message}`);
+    return { exitCode: 1 };
+  }
+}
+
+async function runDispatch(rest: string[], context: HooksCommandContext): Promise<CommandExecutionResult> {
+  const parsed = parseCliArgs(rest);
+  const unknown = findUnknownOptions(parsed.options, ['event', 'help', 'h']);
+  if (unknown.length > 0) {
+    context.io.stderr(`Unknown option(s): ${unknown.map((key) => `--${key}`).join(', ')}`);
+    return { exitCode: 2 };
+  }
+  const eventName = getStringOption(parsed.options, ['event'])
+    ?? (parsed.positionals[0] ? String(parsed.positionals[0]) : undefined)
+    ?? 'BeforeAgent';
+  try {
+    const payload = readGeminiHookPayloadFromStdin();
+    const output = await dispatchGeminiHook({
+      cwd: context.cwd,
+      eventName,
+      payload,
+      registry: createDefaultHookRegistry(),
+    });
+    context.io.stdout(JSON.stringify(output));
+    return { exitCode: output.decision === 'deny' ? 2 : 0 };
+  } catch (error) {
+    context.io.stderr(`Failed to dispatch Gemini hook event: ${(error as Error).message}`);
+    return { exitCode: 1 };
+  }
+}
+
 export async function executeHooksCommand(
   argv: string[],
   context: HooksCommandContext,
 ): Promise<CommandExecutionResult> {
   const { io, cwd } = context;
-  const parsed = parseCliArgs(argv);
-
-  if (hasFlag(parsed.options, ['help', 'h'])) {
+  if (argv.includes('--help') || argv.includes('-h')) {
     printHooksHelp(io);
     return { exitCode: 0 };
   }
-
-  const unknownOptions = findUnknownOptions(parsed.options, ['help', 'h']);
-  if (unknownOptions.length > 0) {
-    io.stderr(`Unknown option(s): ${unknownOptions.map((key) => `--${key}`).join(', ')}`);
-    return { exitCode: 2 };
-  }
-
-  const subcommand = parsed.positionals[0];
-
+  const [subcommand, ...rest] = argv;
   if (!subcommand) {
     printHooksHelp(io);
     return { exitCode: 0 };
   }
-
   switch (subcommand) {
     case 'init':
       return runInit(cwd, io);
+    case 'exec':
+      return runExec(cwd, io);
     case 'status':
       return runStatus(cwd, io);
     case 'validate':
       return runValidate(cwd, io);
     case 'test':
       return runTest(io);
+    case 'dispatch':
+      return runDispatch(rest, context);
     default:
       io.stderr(`Unknown subcommand: ${subcommand}`);
-      io.stderr('Run "omp hooks --help" for usage.');
+      io.stderr('Run "omg hooks --help" for usage.');
       return { exitCode: 2 };
   }
 }

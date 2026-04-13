@@ -314,8 +314,8 @@ interface OmpExternalModelsConfig {
 | `OMP_TEAM_POLL_TIMEOUT_MS` | Poll timeout for worker completion (default: 600000) |
 | `OMP_TEAM_WATCHDOG_MS` | Watchdog threshold for snapshot staleness (default: 90000) |
 | `OMP_TEAM_NON_REPORTING_MS` | Threshold for non-reporting workers (default: 180000) |
-| `OMP_LEGACY_RUNNING_SUCCESS` | Set `1` to treat `running` status as success (compat) |
-| `OMP_LEGACY_VERIFY_GATE_PASS` | Set `1` to pass verify gate when signal is missing (compat) |
+| `OMG_LEGACY_RUNNING_SUCCESS` | Set `1` to treat `running` status as success (canonical; `OMP_LEGACY_RUNNING_SUCCESS` remains a compat alias) |
+| `OMG_LEGACY_VERIFY_GATE_PASS` | Set `1` to pass verify gate when signal is missing (canonical; `OMP_LEGACY_VERIFY_GATE_PASS` remains a compat alias) |
 | `OMP_REQUEST_TIMEOUT_MS` | Override request timeout for all API calls (milliseconds) |
 | `GEMINI_REQUEST_TIMEOUT_MS` | Alias for `OMP_REQUEST_TIMEOUT_MS` |
 | `OMP_MODEL_HIGH` | Override the HIGH-tier model (default: `gemini-3.1-flash-lite-preview`) |

@@ -542,7 +542,11 @@ export async function runCli(argv: string[] = process.argv.slice(2), deps: CliDe
       }
 
       case 'hooks': {
-        const result = await executeHooksCommand(rest, { cwd, io });
+        const result = await executeHooksCommand(rest, {
+          cwd,
+          io,
+          ...(deps.hooks ?? {}),
+        });
         return result.exitCode;
       }
 

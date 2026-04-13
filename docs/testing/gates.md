@@ -49,7 +49,7 @@ Pass criteria:
 
 - all quality checks pass with hard-fail semantics (no hidden `continue-on-error`).
 - coverage gate enforces >=80% statements/functions/branches/lines across the release-critical extension and verification surfaces exercised by CI.
-- legacy compatibility bypass flags remain disabled (`OMP_LEGACY_RUNNING_SUCCESS!=1`, `OMP_LEGACY_VERIFY_GATE_PASS!=1`).
+- legacy compatibility bypass flags remain disabled (`OMG_LEGACY_RUNNING_SUCCESS!=1`, `OMG_LEGACY_VERIFY_GATE_PASS!=1`; `OMP_*` aliases remain blocked too).
 - verification framework contracts pass (`test runners`, `tier selector`, `assertion helpers`).
 
 Fail criteria:
@@ -82,7 +82,7 @@ npm run gate:legacy-bypass
 Pass criteria:
 
 - blocking workflows (`.github/workflows/ci.yml`, `.github/workflows/release.yml`) execute the policy gate before quality/release checks.
-- no blocking job relies on `OMP_LEGACY_RUNNING_SUCCESS=1` or `OMP_LEGACY_VERIFY_GATE_PASS=1`.
+- no blocking job relies on `OMG_LEGACY_RUNNING_SUCCESS=1` or `OMG_LEGACY_VERIFY_GATE_PASS=1` (or their `OMP_*` compatibility aliases).
 
 Fail criteria:
 
@@ -166,7 +166,7 @@ npm run verify
   - watchdog failures (stale/invalid snapshot timestamps),
 - orchestrator enforces fix-loop cap (default `3`) and records a deterministic `failed` phase,
 - persisted worker heartbeat/status signals are merged into monitor snapshots,
-- runtime snapshots expose `verifyBaselinePassed`; absent/false verify gate signals fail deterministically unless explicit legacy compatibility flags are enabled (`OMP_LEGACY_VERIFY_GATE_PASS`, `OMP_LEGACY_RUNNING_SUCCESS`),
+- runtime snapshots expose `verifyBaselinePassed`; absent/false verify gate signals fail deterministically unless explicit legacy compatibility flags are enabled (`OMG_LEGACY_VERIFY_GATE_PASS`, `OMG_LEGACY_RUNNING_SUCCESS`, or their `OMP_*` compatibility aliases),
 - state store writes canonical task/mailbox artifacts (`tasks/task-<id>.json`, `mailbox/<worker>.ndjson`) with compatibility reads for legacy payloads,
 - monitor/runtime failure paths surface actionable `failed` reasons.
 

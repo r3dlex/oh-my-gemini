@@ -94,7 +94,7 @@ async function defaultMcpServeRunner(input: McpServeInput): Promise<McpServeOutp
 
   return {
     exitCode: 0,
-    message: 'oh-my-product MCP server running on stdio transport.',
+    message: 'oh-my-gemini MCP server running on stdio transport.',
     details,
   };
 }

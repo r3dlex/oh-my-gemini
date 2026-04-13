@@ -124,7 +124,7 @@ function buildGeminiWorkerPrompt(input: {
       : [];
 
   return [
-    `You are oh-my-product worker ${input.workerName} for team ${input.teamName}.`,
+    `You are oh-my-gemini worker ${input.workerName} for team ${input.teamName}.`,
     input.taskId ? `Pre-assigned task id: ${input.taskId}` : 'No explicit pre-assigned task id was provided.',
     'Follow the team context below, perform the assigned worker work, and then exit cleanly.',
     `Team context path: ${input.contextPath}`,
@@ -588,11 +588,11 @@ export async function executeWorkerRunCommand(
   }
 
   if (!teamName || !workerName) {
-    io.stderr('[oh-my-product] worker run: --team and --worker are required');
+    io.stderr('[oh-my-gemini] worker run: --team and --worker are required');
     return { exitCode: 2 };
   }
 
-  io.stdout(`[oh-my-product] worker ${workerName} starting for team ${teamName}`);
+  io.stdout(`[oh-my-gemini] worker ${workerName} starting for team ${teamName}`);
   await processSubagentStart({ cwd, id: `${teamName}/${workerName}`, type: 'worker', teamName }).catch(() => undefined);
 
   const stateStore = new TeamStateStore({ cwd });
@@ -662,10 +662,10 @@ export async function executeWorkerRunCommand(
     const contextContent = await readTeamContext(cwd);
     const contextPath = path.join(cwd, '.gemini', 'GEMINI.md');
     if (contextContent) {
-      io.stdout(`[oh-my-product] team context loaded (${contextContent.length} chars)`);
+      io.stdout(`[oh-my-gemini] team context loaded (${contextContent.length} chars)`);
     }
 
-    io.stdout(`[oh-my-product] worker ${workerName} executing task for team ${teamName}`);
+    io.stdout(`[oh-my-gemini] worker ${workerName} executing task for team ${teamName}`);
 
     const workerCli = resolveWorkerCliMode(process.env);
     if (workerCli === 'gemini') {
@@ -756,7 +756,7 @@ export async function executeWorkerRunCommand(
         })
         .catch((err) => {
           io.stderr(
-            `[oh-my-product] failed to transition task status: ${(err as Error).message}`,
+            `[oh-my-gemini] failed to transition task status: ${(err as Error).message}`,
           );
         });
     }
@@ -772,7 +772,7 @@ export async function executeWorkerRunCommand(
     doneStatus = 'failed';
     doneError = (error as Error).message;
     doneSummary = `Worker ${workerName} failed task for team ${teamName}: ${doneError}`;
-    io.stderr(`[oh-my-product] worker ${workerName} failed: ${doneError}`);
+    io.stderr(`[oh-my-gemini] worker ${workerName} failed: ${doneError}`);
     exitCode = 1;
     await stateStore
       .writeWorkerStatus(teamName, workerName, {
@@ -807,7 +807,7 @@ export async function executeWorkerRunCommand(
         },
       })
       .catch((err) => {
-        io.stderr(`[oh-my-product] failed to write done signal: ${(err as Error).message}`);
+        io.stderr(`[oh-my-gemini] failed to write done signal: ${(err as Error).message}`);
       });
 
     await stateStore
@@ -830,6 +830,6 @@ export async function executeWorkerRunCommand(
     }).catch(() => undefined);
   }
 
-  io.stdout(`[oh-my-product] worker ${workerName} done`);
+  io.stdout(`[oh-my-gemini] worker ${workerName} done`);
   return { exitCode };
 }

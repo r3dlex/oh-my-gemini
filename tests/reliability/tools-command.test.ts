@@ -41,6 +41,9 @@ describe('reliability: tools command + registry', () => {
   test('buildGeminiExtensionMcpServerConfig emits default registration snippet', () => {
     const config = buildGeminiExtensionMcpServerConfig();
 
+    expect(config.omg_cli_tools).toBeDefined();
+    expect(config.omg_cli_tools?.command).toBe('oh-my-gemini');
+    expect(config.omg_cli_tools?.args).toStrictEqual(['tools', 'serve']);
     expect(config.omp_cli_tools).toBeDefined();
     expect(config.omp_cli_tools?.command).toBe('oh-my-gemini');
     expect(config.omp_cli_tools?.args).toStrictEqual(['tools', 'serve']);

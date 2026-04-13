@@ -13,7 +13,7 @@
 
 **Multi-agent orchestration for Gemini CLI with OMG branding and OMP compatibility aliases.**
 
-> **Transition status (2026-04-13):** this repo is actively migrating from legacy `oh-my-product` / `omp` surfaces to canonical `oh-my-gemini` / `omg` surfaces. Phase 1 target paths are `extensions/oh-my-gemini/` and `.omg/`. Legacy `omp` / `.omp` references still exist while compatibility work is in progress. See [`docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md`](docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md) for the audited gap list and migration order.
+> **Transition status (2026-04-13):** this repo now treats `oh-my-gemini` / `omg` as the canonical user-facing surface, with legacy `omp` / `.omp` aliases retained only where compatibility still requires them. See [`docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md`](docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md) for the audited gap list and migration order.
 
 [Quick Start](#quick-start) | [Team Mode](#team-mode) | [Commands](#commands) | [Docs](docs/)
 
@@ -28,6 +28,8 @@ gemini
 ```
 
 After setup, restart Gemini CLI for `/omg:*` commands to appear (`/omp:*` remains compatible during migration).
+
+The packaged extension now ships a Gemini-native `hooks/hooks.json` bridge and exposes `omg_cli_tools` as the canonical MCP server id.
 
 ```bash
 omg doctor                                    # check prerequisites
@@ -80,21 +82,21 @@ Default backend: `tmux` | Optional: `subagents` for role-tagged runs
 | `/omg:cancel` | Graceful stop |
 | `/omg:handoff` | Context transfer document |
 
-Full command reference: [`docs/omp/commands.md`](docs/omp/commands.md)
+Full command reference: [`docs/omg/commands.md`](docs/omg/commands.md)
 
 ---
 
 ## Compatibility Note
 
-User-facing command and documentation surfaces now use `omg` / `oh-my-gemini` first, with `omp` / `oh-my-product` kept as compatibility aliases during the migration.
+User-facing command and documentation surfaces now use `omg` / `oh-my-gemini`; legacy `omp` / `oh-my-product` aliases are treated as compatibility-only shims.
 
 Some internal compatibility identifiers intentionally remain unchanged for now:
 
 - legacy hidden state and artifact paths
-- legacy environment variable names
+- legacy `OMP_*` compatibility aliases for selected environment variables
 - legacy internal interop identifiers
 - legacy internal type/class names
-- the `omp_cli_tools` MCP server identifier used by setup and extension manifests
+- the temporary `omp_cli_tools` MCP server alias (`omg_cli_tools` is now the canonical id used by setup and extension manifests)
 
 Those internal names are deferred to a later migration to avoid breaking state, protocol, and compatibility contracts.
 

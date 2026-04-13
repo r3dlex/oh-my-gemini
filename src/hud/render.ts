@@ -84,6 +84,8 @@ function renderGeminiApiSource(context: HudRenderContext): string {
 function renderGeminiQuota(context: HudRenderContext): string | null {
   const quota = context.gemini.quotaPercent;
   const window = context.gemini.windowPercent;
+  const budgetTokens = context.gemini.budgetTokens;
+  const budgetUsd = context.gemini.budgetUsd;
 
   const segments: string[] = [];
   if (typeof window === 'number') {
@@ -91,6 +93,12 @@ function renderGeminiQuota(context: HudRenderContext): string | null {
   }
   if (typeof quota === 'number') {
     segments.push(`quota:${quota}%`);
+  }
+  if (typeof budgetTokens === 'number' && budgetTokens > 0) {
+    segments.push(`budget:${budgetTokens}t`);
+  }
+  if (typeof budgetUsd === 'number' && Number.isFinite(budgetUsd) && budgetUsd > 0) {
+    segments.push(`$${budgetUsd.toFixed(4)}`);
   }
   if (context.gemini.rateLimited) {
     segments.push('rate-limited');
@@ -138,6 +146,7 @@ const FOCUSED_ELEMENTS: readonly ElementRenderer[] = [
   renderTaskSummary,
   renderWorkerSummary,
   renderGeminiModel,
+  renderGeminiQuota,
   renderLastUpdate,
 ];
 

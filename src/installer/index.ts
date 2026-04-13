@@ -1,6 +1,7 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
+import { buildGeminiExtensionMcpServerConfig } from '../cli/tools/index.js';
 import { mergeMarkedBlockInFile } from './merge-markers.js';
 import {
   persistSetupScope,
@@ -61,13 +62,7 @@ const SUBAGENTS_CATALOG_RELATIVE_PATH = path.join(
   'catalog.json',
 );
 
-const GEMINI_CLI_TOOLS_MCP_SERVER_NAME = 'omp_cli_tools';
-const GEMINI_CLI_TOOLS_MCP_SERVER_CONFIG = {
-  [GEMINI_CLI_TOOLS_MCP_SERVER_NAME]: {
-    command: 'oh-my-gemini',
-    args: ['tools', 'serve'],
-  },
-} as const;
+const GEMINI_CLI_TOOLS_MCP_SERVER_CONFIG = buildGeminiExtensionMcpServerConfig();
 
 async function ensureOmgStateDirectories(
   cwd: string,
@@ -175,6 +170,14 @@ async function ensureGeminiSettings(
     tools.sandbox = platform === 'darwin' ? 'sandbox-exec' : 'docker';
   }
 
+  if (tools.enableHooks !== true) {
+    tools.enableHooks = true;
+  }
+
+  if (tools.enableMessageBusIntegration !== true) {
+    tools.enableMessageBusIntegration = true;
+  }
+
   next.tools = tools;
 
   const existingMcpServers =
@@ -199,6 +202,20 @@ async function ensureGeminiSettings(
 
   next.experimental = experimental;
 
+  const hooksConfig =
+    next.hooksConfig && typeof next.hooksConfig === 'object' && !Array.isArray(next.hooksConfig)
+      ? (next.hooksConfig as Record<string, unknown>)
+      : {};
+
+  if (typeof hooksConfig.enabled !== 'boolean') {
+    hooksConfig.enabled = true;
+  }
+  if (typeof hooksConfig.notifications !== 'boolean') {
+    hooksConfig.notifications = true;
+  }
+
+  next.hooksConfig = hooksConfig;
+
   const serialized = `${JSON.stringify(next, null, 2)}\n`;
   const previousSerialized = existing ? `${JSON.stringify(existing, null, 2)}\n` : '';
 
@@ -214,7 +231,7 @@ async function ensureGeminiSettings(
   if (options.dryRun) {
     return {
       status: 'skipped',
-      message: `dry-run: would ${writeStatus} settings to configure tools.sandbox=${String(tools.sandbox)} + agents enabled`,
+      message: `dry-run: would ${writeStatus} settings to configure tools.sandbox=${String(tools.sandbox)} + agents/hooks baseline`,
     };
   }
 
@@ -223,7 +240,7 @@ async function ensureGeminiSettings(
 
   return {
     status: writeStatus,
-    message: `configured tools.sandbox to ${String(tools.sandbox)} and experimental.enableAgents when absent`,
+    message: `configured tools.sandbox=${String(tools.sandbox)}, enabled hooks/message bus, and set experimental.enableAgents when absent`,
   };
 }
 

@@ -1,12 +1,85 @@
 {
   "hooks": {
-    "SessionStart": [],
-    "UserPromptSubmit": [],
-    "PreToolUse": [],
-    "PostToolUse": [],
-    "PreCompact": [],
-    "SessionEnd": [],
-    "Stop": [],
-    "AfterAgent": []
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "name": "omg-session-start",
+            "description": "Bridge Gemini CLI lifecycle startup hooks into oh-my-gemini's internal hook registry.",
+            "command": "oh-my-gemini hooks exec",
+            "timeout": 60000
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "name": "omg-before-agent",
+            "description": "Run oh-my-gemini prompt routing, project-memory, and learned-pattern hooks before each turn.",
+            "command": "oh-my-gemini hooks exec",
+            "timeout": 60000
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "name": "omg-before-tool",
+            "description": "Bridge Gemini CLI tool invocations into oh-my-gemini's permission and policy hooks.",
+            "command": "oh-my-gemini hooks exec",
+            "timeout": 60000
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "name": "omg-after-tool",
+            "description": "Bridge Gemini CLI tool responses into oh-my-gemini's recovery and tracking hooks.",
+            "command": "oh-my-gemini hooks exec",
+            "timeout": 60000
+          }
+        ]
+      }
+    ],
+    "PreCompress": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "name": "omg-pre-compress",
+            "description": "Run oh-my-gemini checkpoint hooks before Gemini CLI compacts history.",
+            "command": "oh-my-gemini hooks exec",
+            "timeout": 60000
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "name": "omg-session-end",
+            "description": "Bridge Gemini CLI shutdown hooks into oh-my-gemini's session summary and cleanup hooks.",
+            "command": "oh-my-gemini hooks exec",
+            "timeout": 60000
+          }
+        ]
+      }
+    ]
   }
 }

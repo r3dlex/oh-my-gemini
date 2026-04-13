@@ -45,8 +45,14 @@ describe('smoke: setup idempotency', () => {
 
         expect(Object.keys(snapshotAfterFirstRun).length).toBeGreaterThan(0);
         const settings = JSON.parse(snapshotAfterFirstRun['.gemini/settings.json'] ?? '{}') as {
+          hooksConfig?: { enabled?: boolean; notifications?: boolean };
           mcpServers?: Record<string, { command?: string; args?: string[] }>;
         };
+        expect(settings.hooksConfig?.enabled).toBe(true);
+        expect(settings.hooksConfig?.notifications).toBe(true);
+        expect(settings.mcpServers?.omg_cli_tools).toBeDefined();
+        expect(settings.mcpServers?.omg_cli_tools?.command).toBe('oh-my-gemini');
+        expect(settings.mcpServers?.omg_cli_tools?.args).toStrictEqual(['tools', 'serve']);
         expect(settings.mcpServers?.omp_cli_tools).toBeDefined();
         expect(settings.mcpServers?.omp_cli_tools?.command).toBe('oh-my-gemini');
         expect(settings.mcpServers?.omp_cli_tools?.args).toStrictEqual(['tools', 'serve']);

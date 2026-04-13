@@ -1,6 +1,7 @@
 import type { ModeName } from '../lib/mode-names.js';
 
 export type HookEventName =
+  | 'AfterAgent'
   | 'UserPromptSubmit'
   | 'PreToolUse'
   | 'PostToolUse'

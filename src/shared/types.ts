@@ -92,7 +92,7 @@ export interface BackgroundTask {
 }
 
 export interface HookDefinition {
-  event: 'PreToolUse' | 'PostToolUse' | 'Stop' | 'SessionStart' | 'SessionEnd' | 'UserPromptSubmit';
+  event: 'AfterAgent' | 'PreToolUse' | 'PostToolUse' | 'Stop' | 'SessionStart' | 'SessionEnd' | 'UserPromptSubmit';
   matcher?: string;
   command?: string;
   handler?: (context: HookContext) => Promise<HookResult>;

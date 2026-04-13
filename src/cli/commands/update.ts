@@ -15,9 +15,9 @@ export interface UpdateCommandContext {
 
 function printUpdateHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp update [--json]',
+    'Usage: omg update [--json]',
     '',
-    'Updates the globally installed oh-my-product package using npm.',
+    'Updates the globally installed oh-my-gemini package using npm.',
     '',
     'Options:',
     '  --json   Print machine-readable output',

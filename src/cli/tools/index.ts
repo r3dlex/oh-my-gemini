@@ -12,11 +12,13 @@ export interface CliToolRegistryOptions {
 export interface GeminiExtensionMcpServerConfig {
   command: string;
   args: string[];
+  cwd?: string;
   transport: 'stdio';
   description: string;
 }
 
-export const GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME = 'omp_cli_tools';
+export const GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME = 'omg_cli_tools';
+export const LEGACY_GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME = 'omp_cli_tools';
 
 function normalizeCategoryInput(values?: readonly CliToolCategory[]): CliToolCategory[] {
   if (!values || values.length === 0) {
@@ -100,7 +102,6 @@ export function buildGeminiExtensionMcpServerConfig(options: {
   serverName?: string;
 } = {}): Record<string, GeminiExtensionMcpServerConfig> {
   const binCommand = options.binCommand ?? 'oh-my-gemini';
-  const serverName = options.serverName ?? GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME;
   const categories = normalizeCategoryInput(options.categories);
 
   const args = ['tools', 'serve'];
@@ -108,12 +109,30 @@ export function buildGeminiExtensionMcpServerConfig(options: {
     args.push('--categories', categories.join(','));
   }
 
+  const sharedConfig: GeminiExtensionMcpServerConfig = {
+    command: binCommand,
+    args,
+    transport: 'stdio',
+    description: 'oh-my-gemini CLI tools MCP server (file/git/http/process)',
+  };
+
+  if (options.serverName) {
+    return {
+      [options.serverName]: sharedConfig,
+    };
+  }
+
   return {
-    [serverName]: {
+    [GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME]: {
+      ...sharedConfig,
+      cwd: "${extensionPath}",
+    },
+    [LEGACY_GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME]: {
       command: binCommand,
       args,
+      cwd: '${extensionPath}',
       transport: 'stdio',
-      description: 'oh-my-gemini CLI tools MCP server (file/git/http/process)',
+      description: 'oh-my-gemini CLI tools MCP server compatibility alias (file/git/http/process)',
     },
   };
 }

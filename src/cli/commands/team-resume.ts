@@ -70,7 +70,7 @@ function printTeamResumeHelp(io: CliIo): void {
     'Usage: omp team resume [--team <name>] [--max-fix-loop <0..3>] [--watchdog-ms <n>] [--non-reporting-ms <n>] [--dry-run] [--json]',
     '',
     'Options:',
-    '  --team <name>         Team state namespace (default: oh-my-product)',
+    '  --team <name>         Team state namespace (default: oh-my-gemini)',
     '  --max-fix-loop <n>    Override max fix attempts for resumed run (0..3)',
     '  --watchdog-ms <n>     Override watchdog threshold in milliseconds',
     '  --non-reporting-ms <n>  Override heartbeat staleness threshold in milliseconds',

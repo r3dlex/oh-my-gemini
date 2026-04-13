@@ -29,17 +29,21 @@ describe('integration: tools command', () => {
     expect(result.status, [result.stderr, result.stdout].join('\n')).toBe(0);
 
     const payload = JSON.parse(result.stdout.trim()) as {
-      mcpServers?: Record<string, { command: string; args: string[] }>;
+      mcpServers?: Record<string, { command: string; args: string[]; cwd?: string }>;
     };
 
-    const toolsServer = payload.mcpServers?.omp_cli_tools;
-    expect(toolsServer).toBeDefined();
+    const canonicalToolsServer = payload.mcpServers?.omg_cli_tools;
+    const compatToolsServer = payload.mcpServers?.omp_cli_tools;
+    expect(canonicalToolsServer).toBeDefined();
+    expect(compatToolsServer).toBeDefined();
 
-    if (!toolsServer) {
-      throw new Error('Expected omp_cli_tools server registration.');
+    if (!canonicalToolsServer || !compatToolsServer) {
+      throw new Error('Expected omg_cli_tools and omp_cli_tools server registrations.');
     }
 
-    expect(toolsServer.command).toBe('oh-my-gemini');
-    expect(toolsServer.args).toStrictEqual(['tools', 'serve']);
+    expect(canonicalToolsServer.command).toBe('oh-my-gemini');
+    expect(canonicalToolsServer.args).toStrictEqual(['tools', 'serve']);
+    expect(compatToolsServer.command).toBe('oh-my-gemini');
+    expect(compatToolsServer.args).toStrictEqual(['tools', 'serve']);
   });
 });

@@ -41,10 +41,10 @@ export interface TeamShutdownCommandContext {
 
 function printTeamShutdownHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp team shutdown [--team <name>] [--force] [--json]',
+    'Usage: omg team shutdown [--team <name>] [--force] [--json]',
     '',
     'Options:',
-    '  --team <name>   Team state namespace (default: oh-my-product)',
+    '  --team <name>   Team state namespace (default: oh-my-gemini)',
     '  --force         Ignore runtime teardown errors where possible',
     '  --json          Print machine-readable output',
     '  --help          Show command help',
@@ -99,7 +99,7 @@ async function persistShutdownTransition(params: {
 
   const at = new Date().toISOString();
   const shutdownReason =
-    'Operational shutdown requested via omp team shutdown before success completion.';
+    'Operational shutdown requested via omg team shutdown before success completion.';
   const transition: PersistedPhaseTransitionEvent = {
     teamName: params.teamName,
     runId: phase.runId,
@@ -109,7 +109,7 @@ async function persistShutdownTransition(params: {
     reason: shutdownReason,
     metadata: {
       force: params.force,
-      invokedBy: 'omp team shutdown',
+      invokedBy: 'omg team shutdown',
       shutdownType: 'operational_stop',
     },
   };
@@ -207,7 +207,7 @@ async function defaultShutdownRunner(
       ...snapshot,
       status: 'stopped',
       updatedAt: now,
-      summary: `Operational shutdown requested via omp team shutdown (force=${input.force}).`,
+      summary: `Operational shutdown requested via omg team shutdown (force=${input.force}).`,
       failureReason: undefined,
       runtime: {
         ...runtime,
@@ -216,7 +216,7 @@ async function defaultShutdownRunner(
         shutdown: {
           requestedAt: now,
           force: input.force,
-          requestedBy: 'omp team shutdown',
+          requestedBy: 'omg team shutdown',
         },
         verifyBaselinePassed: false,
         verifyBaselineSource: 'shutdown',

@@ -23,6 +23,7 @@ import {
   type HudPreset,
   type TeamHudSummary,
 } from './types.js';
+import { summarizeTokenUsage } from '../state/token-tracking.js';
 
 interface ReadHudContextInput {
   cwd: string;
@@ -371,10 +372,11 @@ async function readGeminiApiSnapshot(
   cwd: string,
   env: NodeJS.ProcessEnv,
 ): Promise<GeminiApiSnapshot> {
-  const [settings, usage, keySource] = await Promise.all([
+  const [settings, usage, keySource, tokenBudget] = await Promise.all([
     readJsonFile<unknown>(path.join(cwd, GEMINI_SETTINGS_PATH)),
     readJsonFile<unknown>(path.join(cwd, GEMINI_USAGE_PATH)),
     detectGeminiApiKeySource(cwd, env),
+    summarizeTokenUsage(cwd, 'daily').catch(() => null),
   ]);
 
   const settingsRecord = isRecord(settings) ? settings : {};
@@ -398,6 +400,8 @@ async function readGeminiApiSnapshot(
     keySource,
     windowPercent,
     quotaPercent,
+    budgetTokens: tokenBudget?.totalTokens,
+    budgetUsd: tokenBudget?.totalEstimatedCostUsd,
     rateLimited,
     updatedAt: normalizeIsoTimestamp(usageRecord.updatedAt),
   };

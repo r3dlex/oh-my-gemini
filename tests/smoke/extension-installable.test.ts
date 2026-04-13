@@ -16,6 +16,7 @@ describe('smoke: native Gemini extension package layout', () => {
     const manifestPath = path.join(extensionRoot, 'gemini-extension.json');
     const rootManifestPath = path.join(packageRoot, 'gemini-extension.json');
     const contextFilePath = path.join(extensionRoot, 'GEMINI.md');
+    const hooksFilePath = path.join(extensionRoot, 'hooks', 'hooks.json');
     const commandFiles = [
       path.join(extensionRoot, 'commands', 'omp', 'doctor.toml'),
       path.join(extensionRoot, 'commands', 'omp', 'setup.toml'),
@@ -26,26 +27,36 @@ describe('smoke: native Gemini extension package layout', () => {
 
     expect(existsSync(manifestPath)).toBe(true);
     expect(existsSync(contextFilePath)).toBe(true);
+    expect(existsSync(hooksFilePath)).toBe(true);
 
     const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
       contextFileName?: string;
-      mcpServers?: Record<string, { command?: string; args?: string[] }>;
+      settings?: Array<{ envVar?: string }>;
+      mcpServers?: Record<string, { command?: string; args?: string[]; cwd?: string }>;
     };
     const rootManifest = JSON.parse(readFileSync(rootManifestPath, 'utf8')) as {
-      mcpServers?: Record<string, { command?: string; args?: string[] }>;
+      settings?: Array<{ envVar?: string }>;
+      mcpServers?: Record<string, { command?: string; args?: string[]; cwd?: string }>;
     };
 
     expect(manifest.contextFileName).toBe('GEMINI.md');
+    expect(manifest.mcpServers?.omg_cli_tools?.command).toBe('oh-my-gemini');
+    expect(manifest.mcpServers?.omg_cli_tools?.args).toStrictEqual(['tools', 'serve']);
     expect(manifest.mcpServers?.omp_cli_tools?.command).toBe('oh-my-gemini');
     expect(manifest.mcpServers?.omp_cli_tools?.args).toStrictEqual(['tools', 'serve']);
+    expect(rootManifest.mcpServers?.omg_cli_tools?.command).toBe('oh-my-gemini');
+    expect(rootManifest.mcpServers?.omg_cli_tools?.args).toStrictEqual(['tools', 'serve']);
     expect(rootManifest.mcpServers?.omp_cli_tools?.command).toBe('oh-my-gemini');
     expect(rootManifest.mcpServers?.omp_cli_tools?.args).toStrictEqual(['tools', 'serve']);
+    expect(rootManifest.mcpServers?.omp_cli_tools?.cwd).toBe('${extensionPath}');
 
     for (const commandFile of commandFiles) {
       expect(existsSync(commandFile)).toBe(true);
     }
 
     expect(existsSync(path.join(extensionRoot, 'agents'))).toBe(true);
+    expect(existsSync(path.join(extensionRoot, 'hooks'))).toBe(true);
     expect(existsSync(path.join(extensionRoot, 'skills'))).toBe(true);
+    expect(existsSync(path.join(extensionRoot, 'hooks', 'hooks.json'))).toBe(true);
   });
 });

@@ -513,7 +513,7 @@ The extension package defines:
 - `.gemini/sandbox.Dockerfile`
 - `.gemini/agents/catalog.json`
 
-It also registers the built-in MCP tools server (`oh-my-product tools serve`) in Gemini settings when needed.
+It also registers the built-in MCP tools servers (`oh-my-gemini tools serve`) in Gemini settings when needed, using the canonical `omg_cli_tools` id plus the temporary `omp_cli_tools` compatibility alias.
 
 ### Why it matters
 

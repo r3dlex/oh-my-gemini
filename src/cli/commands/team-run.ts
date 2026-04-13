@@ -86,7 +86,7 @@ function printTeamRunHelp(io: CliIo): void {
     '',
     'Options:',
     '  --task <text>        Required task description for orchestration',
-    '  --team <name>        Team state namespace (default: oh-my-product)',
+    '  --team <name>        Team state namespace (default: oh-my-gemini)',
     '  --backend <name>     Runtime backend (default: tmux, auto-selected by leading backend tags when omitted)',
     `  --workers <n>        Worker count (${MIN_WORKERS}..${MAX_WORKERS}, default: ${DEFAULT_WORKERS}; subagents with explicit assignments must match count)`,
     '  --subagents <ids>    Comma-separated subagent ids (subagents or gemini-spawn backends)',

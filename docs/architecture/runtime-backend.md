@@ -226,8 +226,8 @@ provide minimal worker metadata.
 
 ### Legacy compatibility toggles (temporary)
 
-- `OMP_LEGACY_RUNNING_SUCCESS=1`: treat runtime `running` status as passable.
-- `OMP_LEGACY_VERIFY_GATE_PASS=1`: treat missing verify baseline signal as passable.
+- `OMG_LEGACY_RUNNING_SUCCESS=1`: treat runtime `running` status as passable (`OMP_LEGACY_RUNNING_SUCCESS=1` remains a compatibility alias).
+- `OMG_LEGACY_VERIFY_GATE_PASS=1`: treat missing verify baseline signal as passable (`OMP_LEGACY_VERIFY_GATE_PASS=1` remains a compatibility alias).
 
 ### Threshold controls
 

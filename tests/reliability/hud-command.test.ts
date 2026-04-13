@@ -57,6 +57,8 @@ function createHudContext(): HudRenderContext {
       keySource: 'env',
       windowPercent: 42,
       quotaPercent: 55,
+      budgetTokens: 2048,
+      budgetUsd: 0.25,
       updatedAt: '2026-03-05T00:00:00.000Z',
     },
   };
@@ -243,7 +245,7 @@ describe('reliability: hud command', () => {
     expect(observed).toStrictEqual({
       preset: undefined,
       intervalMs: 2500,
-      teamName: 'oh-my-product',
+      teamName: 'oh-my-gemini',
     });
   });
 

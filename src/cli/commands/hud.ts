@@ -40,7 +40,7 @@ function printHudHelp(io: CliIo): void {
     'Usage: omp hud [--team <name>] [--preset <minimal|focused|full>] [--json] [--watch]',
     '',
     'Options:',
-    '  --team <name>     Team namespace to visualize (default: oh-my-product)',
+    '  --team <name>     Team namespace to visualize (default: oh-my-gemini)',
     '  --preset <name>   Render preset (minimal | focused | full)',
     '  --json            Print raw HUD context JSON',
     '  --watch, -w       Re-render continuously with 1s interval',

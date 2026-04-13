@@ -33,6 +33,8 @@ function createContext(overrides: Partial<HudRenderContext> = {}): HudRenderCont
       keySource: 'env',
       windowPercent: 22,
       quotaPercent: 45,
+      budgetTokens: 1536,
+      budgetUsd: 0.125,
       rateLimited: false,
       updatedAt: '2026-03-05T00:00:00.000Z',
     },
@@ -49,6 +51,7 @@ describe('reliability: hud renderer', () => {
     expect(output).toContain('[#####---] 60%');
     expect(output).toContain('workers:2/4 done,2 active');
     expect(output).toContain('[####----] 50%');
+    expect(output).toContain('window:22%,quota:45%');
   });
 
   test('renders Gemini metadata in full preset', () => {
@@ -56,7 +59,7 @@ describe('reliability: hud renderer', () => {
 
     expect(output).toContain('model:gemini-2.5-pro');
     expect(output).toContain('api:env');
-    expect(output).toContain('window:22%,quota:45%');
+    expect(output).toContain('window:22%,quota:45%,budget:1536t,$0.1250');
   });
 
   test('renders rate-limited marker when Gemini usage is throttled', () => {

@@ -14,13 +14,29 @@ export const INVALID_USAGE_EXIT_CODE = CLI_USAGE_EXIT_CODE;
 export const INVALID_ARGUMENT_EXIT_CODE = CLI_USAGE_EXIT_CODE;
 export const CLI_USAGE_ERROR_EXIT_CODE = CLI_USAGE_EXIT_CODE;
 
-export const LEGACY_RUNNING_SUCCESS_ENV_FLAG = 'OMP_LEGACY_RUNNING_SUCCESS';
+export const CANONICAL_LEGACY_RUNNING_SUCCESS_ENV_FLAG = 'OMG_LEGACY_RUNNING_SUCCESS';
+export const CANONICAL_LEGACY_VERIFY_GATE_PASS_ENV_FLAG = 'OMG_LEGACY_VERIFY_GATE_PASS';
+export const COMPAT_LEGACY_RUNNING_SUCCESS_ENV_FLAG = 'OMP_LEGACY_RUNNING_SUCCESS';
+export const COMPAT_LEGACY_VERIFY_GATE_PASS_ENV_FLAG = 'OMP_LEGACY_VERIFY_GATE_PASS';
+
+export const LEGACY_RUNNING_SUCCESS_ENV_FLAG = CANONICAL_LEGACY_RUNNING_SUCCESS_ENV_FLAG;
 export const LEGACY_RUNNING_SUCCESS_ENV = LEGACY_RUNNING_SUCCESS_ENV_FLAG;
-export const LEGACY_VERIFY_GATE_PASS_ENV_FLAG = 'OMP_LEGACY_VERIFY_GATE_PASS';
+export const LEGACY_RUNNING_SUCCESS_ENV_ALIAS = COMPAT_LEGACY_RUNNING_SUCCESS_ENV_FLAG;
+export const LEGACY_RUNNING_SUCCESS_ENV_FLAGS = [
+  LEGACY_RUNNING_SUCCESS_ENV_FLAG,
+  LEGACY_RUNNING_SUCCESS_ENV_ALIAS,
+] as const;
+export const LEGACY_VERIFY_GATE_PASS_ENV_FLAG = CANONICAL_LEGACY_VERIFY_GATE_PASS_ENV_FLAG;
 export const LEGACY_VERIFY_GATE_PASS_ENV = LEGACY_VERIFY_GATE_PASS_ENV_FLAG;
+export const LEGACY_VERIFY_GATE_PASS_ENV_ALIAS = COMPAT_LEGACY_VERIFY_GATE_PASS_ENV_FLAG;
+export const LEGACY_VERIFY_GATE_PASS_ENV_FLAGS = [
+  LEGACY_VERIFY_GATE_PASS_ENV_FLAG,
+  LEGACY_VERIFY_GATE_PASS_ENV_ALIAS,
+] as const;
 
 export interface LegacyBypassDescriptor {
   envFlag: string;
+  legacyAliases?: readonly string[];
   mode: 'running-success' | 'verify-gate-pass';
   description: string;
   warning: string;
@@ -29,22 +45,25 @@ export interface LegacyBypassDescriptor {
 const LEGACY_BYPASS_DESCRIPTORS = {
   runningSuccess: {
     envFlag: LEGACY_RUNNING_SUCCESS_ENV_FLAG,
+    legacyAliases: [LEGACY_RUNNING_SUCCESS_ENV_ALIAS],
     mode: 'running-success',
     description: 'treat runtime status=running as a successful terminal completion',
     warning:
-      'Deprecated compatibility bypass: OMP_LEGACY_RUNNING_SUCCESS=1 allows running snapshots to pass. Remove this temporary flag.',
+      'Deprecated compatibility bypass: OMG_LEGACY_RUNNING_SUCCESS=1 (legacy alias: OMP_LEGACY_RUNNING_SUCCESS=1) allows running snapshots to pass. Remove this temporary flag.',
   },
   verifyGatePass: {
     envFlag: LEGACY_VERIFY_GATE_PASS_ENV_FLAG,
+    legacyAliases: [LEGACY_VERIFY_GATE_PASS_ENV_ALIAS],
     mode: 'verify-gate-pass',
     description: 'treat missing verifyBaselinePassed as a successful verify gate',
     warning:
-      'Deprecated compatibility bypass: OMP_LEGACY_VERIFY_GATE_PASS=1 allows missing verify baseline signals to pass. Remove this temporary flag.',
+      'Deprecated compatibility bypass: OMG_LEGACY_VERIFY_GATE_PASS=1 (legacy alias: OMP_LEGACY_VERIFY_GATE_PASS=1) allows missing verify baseline signals to pass. Remove this temporary flag.',
   },
 } as const satisfies Record<string, LegacyBypassDescriptor>;
 
 export interface LegacyBypassAuditRecord {
   envFlag: string;
+  legacyAliases?: readonly string[];
   mode: LegacyBypassDescriptor['mode'];
   usedAt: string;
   context: string;
@@ -52,16 +71,45 @@ export interface LegacyBypassAuditRecord {
   warning: string;
 }
 
+function isAnyLegacyFlagEnabled(
+  env: NodeJS.ProcessEnv,
+  primaryFlag: string,
+  compatibilityAliases: readonly string[] = [],
+): boolean {
+  return [primaryFlag, ...compatibilityAliases].some((flag) => env[flag] === '1');
+}
+
+function readEnabledFlag(
+  env: NodeJS.ProcessEnv,
+  flags: readonly string[],
+): string | undefined {
+  for (const flag of flags) {
+    if (env[flag] === '1') {
+      return flag;
+    }
+    if (env[flag] === '0') {
+      return undefined;
+    }
+  }
+  return undefined;
+}
+
 export function isLegacyRunningSuccessEnabled(
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
-  return env[LEGACY_RUNNING_SUCCESS_ENV_FLAG] === '1';
+  if (Object.prototype.hasOwnProperty.call(env, CANONICAL_LEGACY_RUNNING_SUCCESS_ENV_FLAG)) {
+    return env[CANONICAL_LEGACY_RUNNING_SUCCESS_ENV_FLAG] === '1';
+  }
+  return env[COMPAT_LEGACY_RUNNING_SUCCESS_ENV_FLAG] === '1';
 }
 
 export function isLegacyVerifyGatePassEnabled(
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
-  return env[LEGACY_VERIFY_GATE_PASS_ENV_FLAG] === '1';
+  if (Object.prototype.hasOwnProperty.call(env, CANONICAL_LEGACY_VERIFY_GATE_PASS_ENV_FLAG)) {
+    return env[CANONICAL_LEGACY_VERIFY_GATE_PASS_ENV_FLAG] === '1';
+  }
+  return env[COMPAT_LEGACY_VERIFY_GATE_PASS_ENV_FLAG] === '1';
 }
 
 export function listLegacyBypassDeprecationWarnings(
@@ -101,9 +149,10 @@ export function buildLegacyVerifyGatePassAuditRecord(
   };
 }
 
-
 export interface LegacyBypassUsage {
   flag: string;
+  legacyAliases?: readonly string[];
+  matchedFlag?: string;
   auditCode: LegacyBypassDescriptor['mode'];
   enabled: boolean;
   description: string;
@@ -113,18 +162,25 @@ export interface LegacyBypassUsage {
 export function getLegacyBypassUsages(
   env: NodeJS.ProcessEnv = process.env,
 ): LegacyBypassUsage[] {
+  const runningSuccessFlag = readEnabledFlag(env, LEGACY_RUNNING_SUCCESS_ENV_FLAGS);
+  const verifyGatePassFlag = readEnabledFlag(env, LEGACY_VERIFY_GATE_PASS_ENV_FLAGS);
+
   return [
     {
       flag: LEGACY_RUNNING_SUCCESS_ENV_FLAG,
+      legacyAliases: LEGACY_BYPASS_DESCRIPTORS.runningSuccess.legacyAliases,
       auditCode: LEGACY_BYPASS_DESCRIPTORS.runningSuccess.mode,
-      enabled: isLegacyRunningSuccessEnabled(env),
+      matchedFlag: runningSuccessFlag,
+      enabled: runningSuccessFlag !== undefined,
       description: LEGACY_BYPASS_DESCRIPTORS.runningSuccess.description,
       deprecationWarning: LEGACY_BYPASS_DESCRIPTORS.runningSuccess.warning,
     },
     {
       flag: LEGACY_VERIFY_GATE_PASS_ENV_FLAG,
+      legacyAliases: LEGACY_BYPASS_DESCRIPTORS.verifyGatePass.legacyAliases,
       auditCode: LEGACY_BYPASS_DESCRIPTORS.verifyGatePass.mode,
-      enabled: isLegacyVerifyGatePassEnabled(env),
+      matchedFlag: verifyGatePassFlag,
+      enabled: verifyGatePassFlag !== undefined,
       description: LEGACY_BYPASS_DESCRIPTORS.verifyGatePass.description,
       deprecationWarning: LEGACY_BYPASS_DESCRIPTORS.verifyGatePass.warning,
     },
@@ -148,7 +204,7 @@ export function emitLegacyBypassAuditLogs(params: {
 
   for (const usage of enabled) {
     log(
-      `[legacy-bypass][audit] scope=${scope} flag=${usage.flag} code=${usage.auditCode} detail=${usage.description}`,
+      `[legacy-bypass][audit] scope=${scope} flag=${usage.matchedFlag ?? usage.flag} canonical=${usage.flag} code=${usage.auditCode} detail=${usage.description}`,
     );
     log(`[legacy-bypass][deprecation] ${usage.deprecationWarning}`);
   }

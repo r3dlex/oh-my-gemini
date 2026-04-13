@@ -15,9 +15,9 @@ export interface UninstallCommandContext {
 
 function printUninstallHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp uninstall [--json]',
+    'Usage: omg uninstall [--json]',
     '',
-    'Uninstalls the globally installed oh-my-product package using npm.',
+    'Uninstalls the globally installed oh-my-gemini package using npm.',
     '',
     'Options:',
     '  --json   Print machine-readable output',
