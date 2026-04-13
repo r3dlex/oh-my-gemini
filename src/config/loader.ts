@@ -109,7 +109,7 @@ function createDefaultConfig(env: NodeJS.ProcessEnv): OmpConfig {
 
 export function getConfigPaths(cwd: string = process.cwd()): ConfigPaths {
   return {
-    user: path.join(homedir(), '.config', 'oh-my-product', 'config.jsonc'),
+    user: path.join(homedir(), '.config', 'oh-my-gemini', 'config.jsonc'),
     project: path.join(cwd, '.gemini', 'omp.jsonc'),
   };
 }

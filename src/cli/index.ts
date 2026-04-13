@@ -182,7 +182,7 @@ function printGlobalHelp(io: CliIo): void {
     '  reasoning    Run a reasoning/analysis prompt with structured output',
     '  ralph        Launch ralph self-referential loop for autonomous task completion',
     '  autoresearch Run automated research workflows and save artifacts',
-    '  hooks        Manage and inspect Claude Code hooks configuration',
+    '  hooks        Manage and inspect the Gemini hook pipeline state/configuration',
     '  cleanup      Clean up stale sessions, artifacts, and temporary state',
     '',
     'Examples:',

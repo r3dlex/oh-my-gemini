@@ -1,6 +1,6 @@
-# Live OMX Team E2E (Operator Runbook)
+# Live `omx team` E2E for oh-my-gemini
 
-This runbook validates the **real tmux-backed OMX Team lifecycle** against this repository.
+This runbook validates the **real tmux-backed `omx team` lifecycle** against this repository.
 
 It complements `omp team run` by exercising the operator path:
 
@@ -17,7 +17,7 @@ It complements `omp team run` by exercising the operator path:
 ## One-command e2e
 
 ```bash
-npm run team:e2e -- "oh-my-product live team smoke"
+npm run team:e2e -- "oh-my-gemini live team smoke"
 ```
 
 The script (`scripts/e2e-omx-team.sh`) prints:
@@ -52,7 +52,7 @@ state is not left behind.
 
 ## Multi-worker analysis task contract
 
-When using live OMX Team for analysis/review work (not just smoke e2e), define
+When using live `omx team` for analysis/review work (not just smoke e2e), define
 the task contract before launching workers:
 
 1. **Scope** — exactly which transcript/files/logs are in-bounds

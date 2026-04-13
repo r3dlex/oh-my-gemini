@@ -1,11 +1,11 @@
-description = "Run verification gates for oh-my-product."
+description = "Run verification gates for oh-my-gemini."
 prompt = """
 Run the verification workflow for this repository.
 
 Actions:
 1. Execute:
-   - If args exist: oh-my-product verify {{args}}
-   - If args are empty: oh-my-product verify
+   - If args exist: oh-my-gemini verify {{args}}
+   - If args are empty: oh-my-gemini verify
    - alias: omp verify
    - contributor fallback from repository root: npm run verify
 2. Confirm default suites are typecheck + smoke + integration + reliability when no explicit `--suite` filter is provided.

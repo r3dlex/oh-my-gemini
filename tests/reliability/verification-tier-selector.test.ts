@@ -76,19 +76,19 @@ describe('reliability: verification tier selector', () => {
     it('maps LIGHT tier to architect-low profile', () => {
       const agent = getVerificationAgent('LIGHT');
       expect(agent.agent).toBe('architect-low');
-      expect(agent.model).toBe('haiku');
+      expect(agent.model).toBe('flash');
     });
 
     it('maps STANDARD tier to architect-medium profile', () => {
       const agent = getVerificationAgent('STANDARD');
       expect(agent.agent).toBe('architect-medium');
-      expect(agent.model).toBe('sonnet');
+      expect(agent.model).toBe('pro');
     });
 
     it('maps THOROUGH tier to architect profile', () => {
       const agent = getVerificationAgent('THOROUGH');
       expect(agent.agent).toBe('architect');
-      expect(agent.model).toBe('opus');
+      expect(agent.model).toBe('pro-thinking');
     });
   });
 

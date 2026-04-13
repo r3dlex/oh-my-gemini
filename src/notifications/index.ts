@@ -90,11 +90,21 @@ function withPlatform(
 }
 
 function resolveStopCallbackConfigPath(cwd: string): string {
+  return path.join(cwd, '.omg', 'notifications', 'stop-callbacks.json');
+}
+
+function resolveLegacyStopCallbackConfigPath(cwd: string): string {
   return path.join(cwd, '.omp', 'notifications', 'stop-callbacks.json');
 }
 
 export async function readStopCallbackConfig(cwd: string): Promise<StopCallbackConfigFile | null> {
-  return readJsonFile<StopCallbackConfigFile>(resolveStopCallbackConfigPath(cwd));
+  const canonicalPath = resolveStopCallbackConfigPath(cwd);
+  const canonical = await readJsonFile<StopCallbackConfigFile>(canonicalPath);
+  if (canonical) {
+    return canonical;
+  }
+
+  return readJsonFile<StopCallbackConfigFile>(resolveLegacyStopCallbackConfigPath(cwd));
 }
 
 export async function writeStopCallbackConfig(cwd: string, config: StopCallbackConfigFile): Promise<void> {
@@ -107,7 +117,7 @@ export async function saveSessionSummary(
   explicitPath?: string,
 ): Promise<string> {
   const summary = buildSessionSummary(input);
-  const relativePath = explicitPath ?? path.join('.omp', 'state', 'sessions', `${input.sessionId ?? 'session'}.summary.json`);
+  const relativePath = explicitPath ?? path.join('.omg', 'state', 'sessions', `${input.sessionId ?? 'session'}.summary.json`);
   const filePath = path.isAbsolute(relativePath) ? relativePath : path.join(cwd, relativePath);
   await writeJsonFile(filePath, {
     ...summary,

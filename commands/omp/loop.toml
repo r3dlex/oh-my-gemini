@@ -1,6 +1,6 @@
 description = "Run an exec→verify→fix cycle until the goal is met or max iterations reached."
 prompt = """
-Execute an iterative loop for oh-my-product task completion.
+Execute an iterative loop for oh-my-gemini task completion.
 
 Usage:
 - `/omp:loop "make all tests pass"` — run until goal met
@@ -21,7 +21,7 @@ Exit conditions:
 - Same failure 3x → early exit with root cause analysis
 - User cancellation → preserve progress
 
-Track state in `.omp/state/loop.json`:
+Track state in `.omg/state/loop.json`:
   { "goal": "...", "iteration": 1, "max": 5, "failures": [] }
 
 Output progress each iteration:

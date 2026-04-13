@@ -14,6 +14,7 @@ describe('smoke: native Gemini extension package layout', () => {
   test('publishes installable extension assets at the canonical oh-my-gemini extension root', () => {
     const extensionRoot = path.join(packageRoot, 'extensions', 'oh-my-gemini');
     const manifestPath = path.join(extensionRoot, 'gemini-extension.json');
+    const rootManifestPath = path.join(packageRoot, 'gemini-extension.json');
     const contextFilePath = path.join(extensionRoot, 'GEMINI.md');
     const commandFiles = [
       path.join(extensionRoot, 'commands', 'omp', 'doctor.toml'),
@@ -28,9 +29,17 @@ describe('smoke: native Gemini extension package layout', () => {
 
     const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
       contextFileName?: string;
+      mcpServers?: Record<string, { command?: string; args?: string[] }>;
+    };
+    const rootManifest = JSON.parse(readFileSync(rootManifestPath, 'utf8')) as {
+      mcpServers?: Record<string, { command?: string; args?: string[] }>;
     };
 
     expect(manifest.contextFileName).toBe('GEMINI.md');
+    expect(manifest.mcpServers?.omp_cli_tools?.command).toBe('oh-my-gemini');
+    expect(manifest.mcpServers?.omp_cli_tools?.args).toStrictEqual(['tools', 'serve']);
+    expect(rootManifest.mcpServers?.omp_cli_tools?.command).toBe('oh-my-gemini');
+    expect(rootManifest.mcpServers?.omp_cli_tools?.args).toStrictEqual(['tools', 'serve']);
 
     for (const commandFile of commandFiles) {
       expect(existsSync(commandFile)).toBe(true);

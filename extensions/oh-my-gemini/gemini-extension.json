@@ -8,5 +8,15 @@
   "homepage": "https://github.com/jjongguet/oh-my-gemini",
   "sourceUrl": "https://github.com/jjongguet/oh-my-gemini",
   "contextFileName": "GEMINI.md",
-  "settings": []
+  "mcpServers": {
+    "omp_cli_tools": {
+      "command": "oh-my-gemini",
+      "args": [
+        "tools",
+        "serve"
+      ],
+      "transport": "stdio",
+      "description": "oh-my-gemini CLI tools MCP server (file/git/http/process)"
+    }
+  }
 }

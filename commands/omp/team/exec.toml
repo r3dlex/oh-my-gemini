@@ -1,6 +1,6 @@
 description = "Execute a scoped delivery slice from the team plan."
 prompt = """
-Execute the next delivery slice from the oh-my-product team plan.
+Execute the next delivery slice from the oh-my-gemini team plan.
 
 {{args}}
 

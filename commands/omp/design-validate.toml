@@ -1,12 +1,12 @@
 description = "Validate a DESIGN.md file against Google Stitch format."
 prompt = """
-Run oh-my-product design validate to check the DESIGN.md file.
+Run oh-my-gemini design validate to check the DESIGN.md file.
 
 If args are provided:
-  oh-my-product design validate {{args}}
+  oh-my-gemini design validate {{args}}
   # alias: omp design validate {{args}}
 Else:
-  oh-my-product design validate
+  oh-my-gemini design validate
   # alias: omp design validate
 
 Checks that DESIGN.md is parseable and well-formed.

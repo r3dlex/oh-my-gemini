@@ -37,7 +37,7 @@ export const HARSH_CRITIC_PROMPT_METADATA: AgentPromptMetadata = {
 
 export const harshCriticAgent: AgentConfig = {
   name: 'harsh-critic',
-  description: `Thorough reviewer with structured gap analysis and multi-perspective investigation (Opus). Uses "What's Missing" output format, pre-commitment predictions, and security/new-hire/ops perspective rotation.`,
+  description: `Thorough reviewer with structured gap analysis and multi-perspective investigation (pro-thinking). Uses "What's Missing" output format, pre-commitment predictions, and security/new-hire/ops perspective rotation.`,
   prompt: loadAgentPrompt('harsh-critic'),
   model: 'pro-thinking',
   defaultModel: 'pro-thinking',

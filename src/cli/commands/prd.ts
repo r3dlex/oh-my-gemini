@@ -145,7 +145,7 @@ function buildSimplePrd(params: {
 }): PrdDocument {
   const task = (params.task ?? params.description ?? 'Implement requested feature').trim();
   const title = task.slice(0, 50) + (task.length > 50 ? '...' : '');
-  const project = (params.project ?? (path.basename(params.cwd) || 'oh-my-product')).trim();
+  const project = (params.project ?? (path.basename(params.cwd) || 'oh-my-gemini')).trim();
   const branchName = (params.branchName ?? 'main').trim();
   const description = (params.description ?? task).trim();
 

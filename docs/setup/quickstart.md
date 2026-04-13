@@ -291,7 +291,7 @@ Optional threshold tuning for reliability troubleshooting:
 npm run omp -- team run --task "reliability-smoke" --watchdog-ms 90000 --non-reporting-ms 180000
 ```
 
-## 10) Optional live OMX Team e2e (operator path)
+## 10) Optional live `omx team` e2e (operator path)
 
 ```bash
 npm run team:e2e -- "oh-my-gemini live team smoke"

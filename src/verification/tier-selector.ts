@@ -10,24 +10,24 @@ export type VerificationTier = 'LIGHT' | 'STANDARD' | 'THOROUGH';
 
 export interface VerificationAgent {
   agent: string;
-  model: 'haiku' | 'sonnet' | 'opus';
+  model: 'flash' | 'pro' | 'pro-thinking';
   evidenceRequired: string[];
 }
 
 const TIER_AGENTS: Record<VerificationTier, VerificationAgent> = {
   LIGHT: {
     agent: 'architect-low',
-    model: 'haiku',
+    model: 'flash',
     evidenceRequired: ['lsp_diagnostics clean'],
   },
   STANDARD: {
     agent: 'architect-medium',
-    model: 'sonnet',
+    model: 'pro',
     evidenceRequired: ['lsp_diagnostics clean', 'build pass'],
   },
   THOROUGH: {
     agent: 'architect',
-    model: 'opus',
+    model: 'pro-thinking',
     evidenceRequired: ['full architect review', 'all tests pass', 'no regressions'],
   },
 };

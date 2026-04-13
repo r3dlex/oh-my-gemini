@@ -1,13 +1,13 @@
-description = "List/register oh-my-product built-in MCP tools (file/git/http/process)."
+description = "List/register oh-my-gemini built-in MCP tools (file/git/http/process)."
 prompt = """
-Manage oh-my-product built-in CLI MCP tools.
+Manage oh-my-gemini built-in CLI MCP tools.
 
 Actions:
 1. Inspect available tools:
-   - oh-my-product tools list --json
+   - oh-my-gemini tools list --json
    - alias: omp tools list --json
 2. Produce Gemini extension mcpServers registration payload:
-   - oh-my-product tools manifest --json
+   - oh-my-gemini tools manifest --json
    - alias: omp tools manifest --json
 3. If user asks for selective categories, pass `--categories file,git,http,process` subset.
 4. Report:

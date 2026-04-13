@@ -95,7 +95,7 @@ describe('integration: notifications module contracts', () => {
     const summary = buildSessionSummary({
       sessionId: 'sess-123',
       status: 'completed',
-      projectName: 'oh-my-product',
+      projectName: 'oh-my-gemini',
       durationMs: 95_000,
       tasksCompleted: 4,
       tasksFailed: 1,
@@ -105,7 +105,7 @@ describe('integration: notifications module contracts', () => {
       notes: ['follow-up docs remain'],
     });
 
-    expect(summary.title).toBe('oh-my-product completed');
+    expect(summary.title).toBe('oh-my-gemini completed');
     expect(summary.text).toContain('session=sess-123');
     expect(summary.text).toContain('duration=1m 35s');
     expect(summary.text).toContain('tasks=4 completed, 1 failed');
@@ -150,7 +150,7 @@ describe('integration: notifications module contracts', () => {
       {
         sessionId: 'sess-stop',
         status: 'completed',
-        projectName: 'oh-my-product',
+        projectName: 'oh-my-gemini',
       },
     );
 
@@ -181,7 +181,7 @@ describe('integration: notifications module contracts', () => {
       {
         sessionId: 'sess-456',
         status: 'failed',
-        projectName: 'oh-my-product',
+        projectName: 'oh-my-gemini',
         reason: 'validation failure',
         tags: ['urgent'],
       },

@@ -28,7 +28,7 @@ function printUpdateHelp(io: CliIo): void {
 async function defaultUpdateRunner(): Promise<{ exitCode: number; message: string; details?: Record<string, unknown> }> {
   const require = createRequire(import.meta.url);
   const pkg = require('../../../package.json') as { name?: string };
-  const packageName = pkg.name ?? 'oh-my-product';
+  const packageName = pkg.name ?? 'oh-my-gemini';
 
   const result = await execFileAsync('npm', ['install', '-g', `${packageName}@latest`], {
     cwd: process.cwd(),

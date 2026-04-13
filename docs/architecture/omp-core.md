@@ -1,6 +1,6 @@
-# oh-my-product Core Context
+# oh-my-gemini Core Context
 
-Shared context layer loaded by all oh-my-product sessions. This provides stable runtime rules, role catalogs, and workflow definitions.
+Shared context layer loaded by all oh-my-gemini sessions. This provides stable runtime rules, role catalogs, and workflow definitions.
 
 ## Agent Catalog
 

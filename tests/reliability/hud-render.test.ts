@@ -6,10 +6,10 @@ import type { HudRenderContext } from '../../src/hud/types.js';
 function createContext(overrides: Partial<HudRenderContext> = {}): HudRenderContext {
   return {
     version: '0.1.0',
-    gitBranch: 'oh-my-product/dev',
+    gitBranch: 'oh-my-gemini/dev',
     generatedAt: '2026-03-05T00:00:00.000Z',
     team: {
-      teamName: 'oh-my-product',
+      teamName: 'oh-my-gemini',
       hasState: true,
       phase: 'exec',
       runtimeStatus: 'running',
@@ -44,6 +44,7 @@ describe('reliability: hud renderer', () => {
   test('renders task and worker progress bars in focused preset', () => {
     const output = renderHud(createContext(), 'focused');
 
+    expect(output).toContain('[OMG#0.1.0]');
     expect(output).toContain('tasks:6/10');
     expect(output).toContain('[#####---] 60%');
     expect(output).toContain('workers:2/4 done,2 active');
@@ -73,7 +74,7 @@ describe('reliability: hud renderer', () => {
   test('reports no persisted team state when team state is absent', () => {
     const output = renderHud(createContext({
       team: {
-        teamName: 'oh-my-product',
+        teamName: 'oh-my-gemini',
         hasState: false,
         phase: 'unknown',
         runtimeStatus: 'missing',

@@ -30,9 +30,9 @@ gemini
 After setup, restart Gemini CLI for `/omg:*` commands to appear (`/omp:*` remains compatible during migration).
 
 ```bash
-omp doctor                                    # check prerequisites
-omp team run --task "..." --workers 2         # parallel work
-omp hud --watch                               # live status
+omg doctor                                    # check prerequisites
+omg team run --task "..." --workers 2         # parallel work
+omg hud --watch                               # live status
 ```
 
 ---
@@ -42,10 +42,10 @@ omp hud --watch                               # live status
 tmux-first multi-worker orchestration with persistent state and lifecycle controls.
 
 ```bash
-omp team run --task "review src/ for reliability gaps" --workers 4
-omp team status --team oh-my-gemini --json
-omp team resume --team oh-my-gemini
-omp team shutdown --team oh-my-gemini --force
+omg team run --task "review src/ for reliability gaps" --workers 4
+omg team status --team oh-my-gemini --json
+omg team resume --team oh-my-gemini
+omg team shutdown --team oh-my-gemini --force
 ```
 
 Default backend: `tmux` | Optional: `subagents` for role-tagged runs
@@ -58,27 +58,27 @@ Default backend: `tmux` | Optional: `subagents` for role-tagged runs
 
 | Command | Description |
 |---------|-------------|
-| `omp` | Launch Gemini CLI with the oh-my-gemini extension |
-| `omp team run` | Start orchestrated team run |
-| `omp team status/resume/shutdown/cancel` | Team lifecycle |
-| `omp doctor` | Diagnose prerequisites |
-| `omp verify` | Run validation suites |
-| `omp hud` | Live team status overlay |
-| `omp skill` | List/print reusable skill prompts |
+| `omg` | Launch Gemini CLI with the oh-my-gemini extension |
+| `omg team run` | Start orchestrated team run |
+| `omg team status/resume/shutdown/cancel` | Team lifecycle |
+| `omg doctor` | Diagnose prerequisites |
+| `omg verify` | Run validation suites |
+| `omg hud` | Live team status overlay |
+| `omg skill` | List/print reusable skill prompts |
 
 ### Slash Commands (inside Gemini CLI)
 
 | Command | Description |
 |---------|-------------|
-| `/omp:autopilot` | End-to-end autonomous execution |
-| `/omp:plan` | Phased execution plan with gates |
-| `/omp:execute` | Immediate task implementation |
-| `/omp:review` | Structured code review |
-| `/omp:verify` | Acceptance validation |
-| `/omp:debug` | Root cause investigation |
-| `/omp:status` | Progress summary |
-| `/omp:cancel` | Graceful stop |
-| `/omp:handoff` | Context transfer document |
+| `/omg:autopilot` | End-to-end autonomous execution |
+| `/omg:plan` | Phased execution plan with gates |
+| `/omg:execute` | Immediate task implementation |
+| `/omg:review` | Structured code review |
+| `/omg:verify` | Acceptance validation |
+| `/omg:debug` | Root cause investigation |
+| `/omg:status` | Progress summary |
+| `/omg:cancel` | Graceful stop |
+| `/omg:handoff` | Context transfer document |
 
 Full command reference: [`docs/omp/commands.md`](docs/omp/commands.md)
 
@@ -94,6 +94,7 @@ Some internal compatibility identifiers intentionally remain unchanged for now:
 - legacy environment variable names
 - legacy internal interop identifiers
 - legacy internal type/class names
+- the `omp_cli_tools` MCP server identifier used by setup and extension manifests
 
 Those internal names are deferred to a later migration to avoid breaking state, protocol, and compatibility contracts.
 
@@ -114,7 +115,7 @@ Those internal names are deferred to a later migration to avoid breaking state, 
 | `gemini-3.1-flash-lite-preview` (default) | Yes | Yes |
 | `gemini-3.1-pro-preview` (`--pro`) | Yes | Yes |
 
-Default model on `omp` launch is `gemini-3.1-flash-lite-preview`. Use `omp --pro` for `gemini-3.1-pro-preview`.
+Default model on `omg` launch is `gemini-3.1-flash-lite-preview`. Use `omg --pro` for `gemini-3.1-pro-preview` (`omp --pro` also works).
 
 All defaults work without a paid Gemini CLI coding plan — just log in via OAuth (Google Account) or use an API key. Override with `OMP_MODEL_HIGH`, `OMP_MODEL_MEDIUM`, `OMP_MODEL_LOW` env vars. Gemini 3.1, 3, and 2.5 models are all available via `-m` flag.
 

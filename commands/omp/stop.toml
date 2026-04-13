@@ -1,6 +1,6 @@
 description = "Gracefully pause execution and preserve progress."
 prompt = """
-Gracefully stop oh-my-product execution and preserve current progress.
+Gracefully stop oh-my-gemini execution and preserve current progress.
 
 {{args}}
 
@@ -10,7 +10,7 @@ If "--resume": show resumable state from last stop.
 
 Stop behavior:
 1. Signal active workers to finish current atomic operation
-2. Persist all in-flight state to `.omp/state/`
+2. Persist all in-flight state to `.omg/state/`
 3. Record stop point with enough context to resume
 4. Report what was completed and what remains
 

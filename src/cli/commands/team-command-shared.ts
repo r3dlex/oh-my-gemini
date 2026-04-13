@@ -12,7 +12,7 @@ import { canonicalizeWorkdir } from './workdir-security.js';
 export type TeamBackend = 'tmux' | 'subagents' | 'gemini-spawn';
 
 const TEAM_RUN_REQUEST_SCHEMA_VERSION = 1;
-const TEAM_DEFAULT_NAME = 'oh-my-product';
+const TEAM_DEFAULT_NAME = 'oh-my-gemini';
 
 export interface PersistedTeamRunRequest {
   schemaVersion: number;

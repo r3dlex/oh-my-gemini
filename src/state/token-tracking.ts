@@ -1,3 +1,4 @@
+import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
 import { appendNdjsonFile, readNdjsonFile } from './filesystem.js';
@@ -40,7 +41,20 @@ export interface TokenUsageSummary {
 }
 
 function resolveTokenLogPath(cwd: string): string {
+  return path.join(cwd, '.omg', 'state', 'tokens', 'usage.ndjson');
+}
+
+function resolveLegacyTokenLogPath(cwd: string): string {
   return path.join(cwd, '.omp', 'state', 'tokens', 'usage.ndjson');
+}
+
+async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function normalizeIsoTimestamp(value: string): string {
@@ -95,7 +109,10 @@ export async function recordTokenUsage(cwd: string, input: TokenUsageRecord): Pr
 }
 
 export async function listTokenUsage(cwd: string): Promise<TokenUsageRecord[]> {
-  const records = await readNdjsonFile<TokenUsageRecord>(resolveTokenLogPath(cwd));
+  const canonicalPath = resolveTokenLogPath(cwd);
+  const records = await readNdjsonFile<TokenUsageRecord>(
+    (await fileExists(canonicalPath)) ? canonicalPath : resolveLegacyTokenLogPath(cwd),
+  );
   return records
     .map((record) => normalizeTokenUsageRecord(record))
     .sort((left, right) => right.completedAt.localeCompare(left.completedAt));

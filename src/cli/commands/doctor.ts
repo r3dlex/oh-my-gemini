@@ -826,7 +826,7 @@ async function runDoctorChecks(
     probe('tmux', cwd),
     probe('docker', cwd),
     probe('podman', cwd),
-    probe('oh-my-product', cwd),
+    probe('oh-my-gemini', cwd),
   ]);
 
   const [dockerReady, podmanReady] = await Promise.all([
@@ -894,9 +894,9 @@ async function runDoctorChecks(
       required: false,
       status: hasOmpBinary ? 'ok' : 'missing',
       details: hasOmpBinary
-        ? 'oh-my-product command found in PATH'
-        : 'oh-my-product command not found in PATH (MCP tools will be unavailable inside Gemini extension)',
-      hint: 'Install globally: npm install -g oh-my-product',
+        ? 'oh-my-gemini command found in PATH'
+        : 'oh-my-gemini command not found in PATH (MCP tools will be unavailable inside Gemini extension)',
+      hint: 'Install globally: npm install -g oh-my-gemini',
     },
   ];
 

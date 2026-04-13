@@ -1,11 +1,11 @@
 /**
- * Agent Definitions for Oh-My-Product
+ * Agent definitions for oh-my-gemini.
  *
  * This module provides:
  * 1. Re-exports of base agents from individual files
  * 2. Tiered agent variants with dynamically loaded prompts from /agents/*.md
  * 3. getAgentDefinitions() for agent registry
- * 4. ompSystemPrompt for the main orchestrator
+ * 4. omgSystemPrompt for the main orchestrator
  */
 
 import type { AgentConfig, ModelType } from './types.js';
@@ -54,22 +54,22 @@ export { loadAgentPrompt };
 // ============================================================
 
 /**
- * Debugger Agent - Root-Cause Analysis & Debugging (Sonnet)
+ * Debugger agent - root-cause analysis and debugging.
  */
 export const debuggerAgent: AgentConfig = {
   name: 'debugger',
-  description: 'Root-cause analysis, regression isolation, failure diagnosis (Sonnet).',
+  description: 'Root-cause analysis, regression isolation, and failure diagnosis.',
   prompt: loadAgentPrompt('debugger'),
   model: 'pro',
   defaultModel: 'pro'
 };
 
 /**
- * Verifier Agent - Completion Evidence & Test Validation (Sonnet)
+ * Verifier agent - completion evidence and test validation.
  */
 export const verifierAgent: AgentConfig = {
   name: 'verifier',
-  description: 'Completion evidence, claim validation, test adequacy (Sonnet).',
+  description: 'Completion evidence, claim validation, and test adequacy.',
   prompt: loadAgentPrompt('verifier'),
   model: 'pro',
   defaultModel: 'pro'
@@ -80,11 +80,11 @@ export const verifierAgent: AgentConfig = {
 // ============================================================
 
 /**
- * Quality-Reviewer Agent - Logic Defects & Maintainability (Sonnet)
+ * Quality-reviewer agent - logic defects and maintainability.
  */
 export const qualityReviewerAgent: AgentConfig = {
   name: 'quality-reviewer',
-  description: 'Logic defects, maintainability, anti-patterns (Sonnet).',
+  description: 'Logic defects, maintainability, and anti-pattern detection.',
   prompt: loadAgentPrompt('quality-reviewer'),
   model: 'pro',
   defaultModel: 'pro'
@@ -96,12 +96,12 @@ export const qualityReviewerAgent: AgentConfig = {
 // ============================================================
 
 /**
- * Test-Engineer Agent - Test Strategy & Coverage (Sonnet)
+ * Test-engineer agent - test strategy and coverage.
  * Replaces: tdd-guide agent
  */
 export const testEngineerAgent: AgentConfig = {
   name: 'test-engineer',
-  description: 'Test strategy, coverage, flaky test hardening (Sonnet).',
+  description: 'Test strategy, coverage, and flaky-test hardening.',
   prompt: loadAgentPrompt('test-engineer'),
   model: 'pro',
   defaultModel: 'pro'
@@ -112,33 +112,33 @@ export const testEngineerAgent: AgentConfig = {
 // ============================================================
 
 /**
- * Security-Reviewer Agent - Security Vulnerability Detection (Sonnet)
+ * Security-reviewer agent - security vulnerability detection.
  */
 export const securityReviewerAgent: AgentConfig = {
   name: 'security-reviewer',
-  description: 'Security vulnerability detection specialist (Sonnet). Use for security audits and OWASP detection.',
+  description: 'Security vulnerability detection specialist. Use for security audits and OWASP detection.',
   prompt: loadAgentPrompt('security-reviewer'),
   model: 'pro',
   defaultModel: 'pro'
 };
 
 /**
- * Build-Fixer Agent - Build Error Resolution (Sonnet)
+ * Build-fixer agent - build error resolution.
  */
 export const buildFixerAgent: AgentConfig = {
   name: 'build-fixer',
-  description: 'Build and compilation error resolution specialist (Sonnet). Use for fixing build/type errors in any language.',
+  description: 'Build and compilation error resolution specialist. Use for fixing build and type errors in any language.',
   prompt: loadAgentPrompt('build-fixer'),
   model: 'pro',
   defaultModel: 'pro'
 };
 
 /**
- * Code-Reviewer Agent - Expert Code Review (Opus)
+ * Code-reviewer agent - expert code review.
  */
 export const codeReviewerAgent: AgentConfig = {
   name: 'code-reviewer',
-  description: 'Expert code review specialist (Opus). Use for comprehensive code quality review.',
+  description: 'Expert code review specialist. Use for comprehensive code quality review.',
   prompt: loadAgentPrompt('code-reviewer'),
   model: 'pro-thinking',
   defaultModel: 'pro-thinking'
@@ -146,7 +146,7 @@ export const codeReviewerAgent: AgentConfig = {
 
 
 /**
- * Git-Master Agent - Git Operations Expert (Sonnet)
+ * Git-master agent - git operations expert.
  */
 export const gitMasterAgent: AgentConfig = {
   name: 'git-master',
@@ -157,11 +157,11 @@ export const gitMasterAgent: AgentConfig = {
 };
 
 /**
- * Code-Simplifier Agent - Code Simplification & Refactoring (Opus)
+ * Code-simplifier agent - code simplification and refactoring.
  */
 export const codeSimplifierAgent: AgentConfig = {
   name: 'code-simplifier',
-  description: 'Simplifies and refines code for clarity, consistency, and maintainability (Opus).',
+  description: 'Simplifies and refines code for clarity, consistency, and maintainability.',
   prompt: loadAgentPrompt('code-simplifier'),
   model: 'pro-thinking',
   defaultModel: 'pro-thinking'
@@ -196,7 +196,7 @@ export const tddGuideAgentAlias = testEngineerAgent;
  */
 
 /**
- * Get all agent definitions as a record for use with Claude Agent SDK
+ * Get all agent definitions as a record for Gemini-oriented orchestration.
  */
 export function getAgentDefinitions(options?: {
   overrides?: Partial<Record<string, Partial<AgentConfig>>>;
@@ -278,11 +278,11 @@ export function getAgentDefinitions(options?: {
 }
 
 // ============================================================
-// OMP SYSTEM PROMPT
+// OMG SYSTEM PROMPT
 // ============================================================
 
 /**
- * OMP System Prompt - The main orchestrator
+ * OMG System Prompt - The main orchestrator
  */
 export const ompSystemPrompt = `You are the relentless orchestrator of a multi-agent development system.
 
@@ -296,31 +296,31 @@ You coordinate specialized subagents to accomplish complex software engineering 
 ## Available Subagents (21 Agents)
 
 ### Build/Analysis Lane
-- **explore**: Internal codebase discovery (haiku) — fast pattern matching
-- **analyst**: Requirements clarity (opus) — hidden constraint analysis
-- **planner**: Task sequencing (opus) — execution plans and risk flags
-- **architect**: System design (opus) — boundaries, interfaces, tradeoffs
-- **debugger**: Root-cause analysis (sonnet) — regression isolation, diagnosis
-- **executor**: Code implementation (sonnet) — features and refactoring (use model=opus for complex tasks)
-- **verifier**: Completion validation (sonnet) — evidence, claims, test adequacy
+- **explore**: Internal codebase discovery — fast pattern matching
+- **analyst**: Requirements clarity — hidden constraint analysis
+- **planner**: Task sequencing — execution plans and risk flags
+- **architect**: System design — boundaries, interfaces, tradeoffs
+- **debugger**: Root-cause analysis — regression isolation, diagnosis
+- **executor**: Code implementation — features and refactoring (use a higher-depth model for complex tasks)
+- **verifier**: Completion validation — evidence, claims, test adequacy
 
 ### Review Lane
-- **quality-reviewer**: Logic defects (sonnet) — maintainability, anti-patterns, performance hotspots, quality strategy, release readiness (use model=haiku for lightweight style-only checks)
-- **security-reviewer**: Security audits (sonnet) — vulns, trust boundaries, authn/authz
-- **code-reviewer**: Comprehensive review (opus) — API contracts, versioning, backward compatibility, orchestrates all review aspects
+- **quality-reviewer**: Logic defects — maintainability, anti-patterns, performance hotspots, quality strategy, release readiness (use a lighter model for style-only checks)
+- **security-reviewer**: Security audits — vulns, trust boundaries, authn/authz
+- **code-reviewer**: Comprehensive review — API contracts, versioning, backward compatibility, orchestrates all review aspects
 
 ### Domain Specialists
-- **test-engineer**: Test strategy (sonnet) — coverage, flaky test hardening
-- **build-fixer**: Build errors (sonnet) — toolchain/type failures
-- **designer**: UI/UX architecture (sonnet) — interaction design
-- **writer**: Documentation (haiku) — docs, migration notes
-- **qa-tester**: CLI testing (sonnet) — interactive runtime validation via tmux
-- **scientist**: Data analysis (sonnet) — statistics and research
-- **git-master**: Git operations (sonnet) — commits, rebasing, history
-- **document-specialist**: External docs & reference lookup (sonnet) — SDK/API/package research
+- **test-engineer**: Test strategy — coverage, flaky test hardening
+- **build-fixer**: Build errors — toolchain/type failures
+- **designer**: UI/UX architecture — interaction design
+- **writer**: Documentation — docs, migration notes
+- **qa-tester**: CLI testing — interactive runtime validation via tmux
+- **scientist**: Data analysis — statistics and research
+- **git-master**: Git operations — commits, rebasing, history
+- **document-specialist**: External docs & reference lookup — SDK/API/package research
 
 ### Coordination
-- **critic**: Plan review (opus) — critical challenge and evaluation
+- **critic**: Plan review — critical challenge and evaluation
 
 ### Deprecated Aliases
 - **api-reviewer** → code-reviewer
@@ -330,7 +330,7 @@ You coordinate specialized subagents to accomplish complex software engineering 
 - **tdd-guide** → test-engineer
 
 ### Optional Agents (enable in config)
-- **harsh-critic**: Thorough gap analysis (opus) — structured "What's Missing" analysis, multi-perspective investigation, severity-rated findings. Enable with \`features.harshCritic: true\` in config.
+- **harsh-critic**: Thorough gap analysis — structured "What's Missing" analysis, multi-perspective investigation, severity-rated findings. Enable with \`features.harshCritic: true\` in config.
 
 ## Orchestration Principles
 1. **Delegate Aggressively**: Fire off subagents for specialized tasks - don't do everything yourself

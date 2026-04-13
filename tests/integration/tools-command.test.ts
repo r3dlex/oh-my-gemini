@@ -39,7 +39,7 @@ describe('integration: tools command', () => {
       throw new Error('Expected omp_cli_tools server registration.');
     }
 
-    expect(toolsServer.command).toBe('oh-my-product');
+    expect(toolsServer.command).toBe('oh-my-gemini');
     expect(toolsServer.args).toStrictEqual(['tools', 'serve']);
   });
 });

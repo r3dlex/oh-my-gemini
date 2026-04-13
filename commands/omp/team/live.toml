@@ -1,6 +1,6 @@
-description = "Run live OMX Team orchestration (tmux worker panes + status/shutdown lifecycle)."
+description = "Run the live `omx team` operator path against this oh-my-gemini repository."
 prompt = """
-Run a live OMX Team orchestration cycle in this repository.
+Run a live `omx team` orchestration cycle against this oh-my-gemini repository.
 
 User task input:
 {{args}}
@@ -11,7 +11,7 @@ Actions:
    - Ensure current session is a tmux leader pane (`$TMUX` set).
 2. Start team:
    - If args exist: omx team 3:executor "{{args}}"
-   - If args are empty: omx team 3:executor "oh-my-product live-team smoke"
+   - If args are empty: omx team 3:executor "oh-my-gemini live-team smoke"
 3. Capture startup evidence:
    - `Team started: <name>` line,
    - tmux target / pane evidence,

@@ -186,7 +186,7 @@ export async function executeSetupCommand(
       enableGeminiExtension({ cwd: context.cwd });
 
       if (!jsonOutput) {
-        io.stdout('Gemini extension linked successfully. Restart Gemini CLI for /omp:* commands to appear.');
+        io.stdout('Gemini extension linked successfully. Restart Gemini CLI for /omg:* commands to appear (/omp:* remains available as a compatibility alias).');
       }
     } else {
       io.stderr(

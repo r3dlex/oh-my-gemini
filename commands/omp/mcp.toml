@@ -1,12 +1,12 @@
-description = "Run oh-my-product MCP stdio server with tools/resources/prompts surfaces."
+description = "Run oh-my-gemini MCP stdio server with tools/resources/prompts surfaces."
 prompt = """
-Run the oh-my-product MCP server.
+Run the oh-my-gemini MCP server.
 
 If args are provided:
-  oh-my-product mcp serve {{args}}
+  oh-my-gemini mcp serve {{args}}
   # alias: omp mcp serve {{args}}
 Else:
-  oh-my-product mcp serve --dry-run --json
+  oh-my-gemini mcp serve --dry-run --json
 
 Report:
 1) resolved tool/resource/prompt surfaces,

@@ -142,7 +142,7 @@ function sanitizeSessionName(raw: string): string {
     .replace(/^-|-$/g, '')
     .slice(0, 80);
 
-  return sanitized || 'oh-my-product';
+  return sanitized || 'oh-my-gemini';
 }
 
 function buildCommand(

@@ -1,12 +1,12 @@
 description = "Summarize progress, active state, blockers, and the best next actions."
 prompt = """
-Run the oh-my-product status skill for a progress checkpoint.
+Run the oh-my-gemini status skill for a progress checkpoint.
 
 If args are provided:
-  oh-my-product skill status {{args}}
+  oh-my-gemini skill status {{args}}
   # alias: omp skill status {{args}}
 Else:
-  oh-my-product skill status
+  oh-my-gemini skill status
   # alias: omp skill status
 
 Reports current objective, completed work, work in progress, blockers or risks, and next actions.

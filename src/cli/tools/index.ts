@@ -99,7 +99,7 @@ export function buildGeminiExtensionMcpServerConfig(options: {
   categories?: readonly CliToolCategory[];
   serverName?: string;
 } = {}): Record<string, GeminiExtensionMcpServerConfig> {
-  const binCommand = options.binCommand ?? 'oh-my-product';
+  const binCommand = options.binCommand ?? 'oh-my-gemini';
   const serverName = options.serverName ?? GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME;
   const categories = normalizeCategoryInput(options.categories);
 
@@ -113,7 +113,7 @@ export function buildGeminiExtensionMcpServerConfig(options: {
       command: binCommand,
       args,
       transport: 'stdio',
-      description: 'oh-my-product CLI tools MCP server (file/git/http/process)',
+      description: 'oh-my-gemini CLI tools MCP server (file/git/http/process)',
     },
   };
 }

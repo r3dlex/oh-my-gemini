@@ -1,6 +1,8 @@
 # OMP Reference Docs
 
-This folder groups the detailed `oh-my-product` / `omp` reference docs by topic.
+This folder groups the detailed `oh-my-gemini` reference docs by topic.
+
+The folder name stays `docs/omp/` for compatibility, but the preferred product naming is `oh-my-gemini` / `omg`.
 
 ## Contents
 

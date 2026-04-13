@@ -1,6 +1,6 @@
 description = "Generate a dependency-aware execution plan for the assembled team."
 prompt = """
-Create a dependency-aware execution plan for the oh-my-product team.
+Create a dependency-aware execution plan for the oh-my-gemini team.
 
 {{args}}
 

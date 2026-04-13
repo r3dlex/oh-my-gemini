@@ -1,6 +1,6 @@
 description = "Set reasoning effort level globally or per teammate."
 prompt = """
-Configure reasoning effort allocation for oh-my-product workers.
+Configure reasoning effort allocation for oh-my-gemini workers.
 
 Levels:
 - **low** (default): Standard responses using the default model (gemini-3.1-flash-lite-preview)
@@ -13,7 +13,7 @@ Usage:
 {{args}}
 
 If no args, display current reasoning configuration.
-Persist to `.omp/state/reasoning.json`.
+Persist to `.omg/state/reasoning.json`.
 
 Model mapping:
   low → gemini-3.1-flash-lite-preview

@@ -5,18 +5,18 @@ Scope: Phase 1 foundation review for the oh-my-gemini 1.0.0 implementation effor
 
 ## Why this document exists
 
-The repository already contains most of the orchestration runtime needed for `oh-my-gemini`, but the public documentation and several naming-critical implementation surfaces still describe the older `oh-my-product` / `omp` shape. This review captures the current baseline, the highest-value Phase 1 gaps, and the safest migration order.
+The repository already contains most of the orchestration runtime needed for `oh-my-gemini`, but the latest audit still found stale `oh-my-product` copy in command prompts, contributor docs, and operator runbooks, plus deeper implementation/config drift in adjacent source surfaces. This review captures the current baseline, the highest-value Phase 1 gaps, and the safest migration order.
 
 ## Evidence snapshot
 
 Current repo evidence from this task's audit:
 
-- `package.json` still publishes `oh-my-product` and exposes `omp` / `oh-my-product` bins.
-- `gemini-extension.json` is still rooted at the package root and still declares `oh-my-product` metadata.
-- No canonical `extensions/oh-my-gemini/` subtree exists yet.
+- `package.json` now publishes `oh-my-gemini`, but still intentionally keeps `omp` / `oh-my-product` CLI aliases for compatibility.
+- Root and nested `gemini-extension.json` manifests exist, but their settings/MCP surfaces still require implementation-side verification.
 - Runtime and installer surfaces still persist to `.omp/` in multiple locations (`src/installer/*`, `src/state/*`, `src/lib/worktree-paths.ts`, `src/notifications/index.ts`).
-- MCP URIs and server naming still use `omp://` / `oh-my-product-mcp` in `src/mcp/server.ts` and `src/mcp/client.ts`.
-- Top-level docs (`README.md`, `GEMINI.md`, `CONTRIBUTING.md`) still describe the repo as `oh-my-product`.
+- MCP URIs, server naming, and some team-runtime compatibility env aliases still use `omp://`, `OMP_*`, or `OMX_*` identifiers by design or for backward compatibility.
+- Contributor docs and Gemini command prompt TOMLs still had stale `oh-my-product` copy before this remediation pass.
+- Operator docs referenced “OMX Team” ambiguously even when they specifically meant the external `omx team` validation path for oh-my-gemini.
 
 ## Highest-value Phase 1 gaps
 
@@ -44,8 +44,10 @@ Current repo evidence from this task's audit:
 
 ## Documentation fixes landed with this review
 
-- `README.md` now calls out the active OMG migration and points readers to this review.
-- `GEMINI.md` now points at the real shared architecture doc path (`docs/architecture/omp-core.md`) instead of the stale `context/omp-core.md` path, and it also records the OMG transition target.
+- `README.md` calls out the active OMG migration and points readers to this review.
+- `GEMINI.md` points at the real shared architecture doc path (`docs/architecture/omp-core.md`) and records the OMG transition target.
+- Command prompt TOMLs under `commands/omp/` now refer to `oh-my-gemini` instead of the stale `oh-my-product` product name while preserving `omp` compatibility examples.
+- `docs/omp/*`, `docs/setup/install-scopes.md`, `docs/architecture/{omp-core,runtime-backend}.md`, and the live `omx team` operator docs now distinguish canonical OMG branding from intentional `omp`/`omx` compatibility/runtime surfaces more explicitly.
 
 ## Recommended next implementation checks
 
@@ -62,8 +64,8 @@ Before calling Phase 1 done, verify all of the following:
 These files still likely need a later dedicated pass once implementation settles:
 
 - `CONTRIBUTING.md`
-- `docs/omp/*`
+- `README.md` (explicitly deferred in this pass per task ordering: update last after the broader remediation settles)
 - `docs/i18n/README.*.md`
-- command/agent/skill prompt copy that still says `oh-my-product`
+- source comments/help text that still mention older sister-tool or Claude-specific provenance where that wording is no longer helpful to operators
 
-That work is better done after the core entrypoints and extension layout stop moving.
+That work is better done after the core entrypoints, extension layout, and hook/config implementation work stop moving.

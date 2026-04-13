@@ -199,7 +199,7 @@ Reference: [`docs/testing/feature-readiness.md`](feature-readiness.md)
 
 - Documentation/command/code surfaces stay aligned (no README/gate/CLI contract drift),
 - `gate:publish` passes (`gate:global-install-contract` + `gate:3`),
-- live OMX team evidence (`start -> status polling -> shutdown`) is captured.
+- live `omx team` evidence for oh-my-gemini (`start -> status polling -> shutdown`) is captured.
 - when `verify:features` is used, capability-group checks generate a report under
   `.omx/reports/feature-readiness-*.md`.
 
@@ -210,7 +210,7 @@ Reference: [`docs/testing/feature-readiness.md`](feature-readiness.md)
 - reliability or verify suites fail,
 - operator live e2e evidence is missing.
 
-## Optional Operator E2E — Live OMX Team (ad-hoc)
+## Optional Operator E2E — live `omx team` (ad-hoc)
 
 ### Command
 

@@ -10,7 +10,8 @@ export interface HooksCommandContext {
   io: CliIo;
 }
 
-const HOOKS_STATE_FILE = path.join('.omp', 'state', 'hooks.json');
+const CANONICAL_HOOKS_STATE_FILE = path.join('.omg', 'state', 'hooks.json');
+const LEGACY_HOOKS_STATE_FILE = path.join('.omp', 'state', 'hooks.json');
 
 const REGISTERED_HOOKS = [
   'createModeRegistryHook',
@@ -30,7 +31,8 @@ const REGISTERED_HOOKS = [
 function printHooksHelp(io: CliIo): void {
   io.stdout(
     [
-      'Usage: omp hooks <subcommand> [options]',
+      'Usage: omg hooks <subcommand> [options]',
+      'Compatibility alias: omp hooks <subcommand> [options]',
       '',
       'Subcommands:',
       '  init      Bootstrap hook scaffolding',
@@ -45,7 +47,21 @@ function printHooksHelp(io: CliIo): void {
 }
 
 function hooksStateFilePath(cwd: string): string {
-  return path.join(cwd, HOOKS_STATE_FILE);
+  return path.join(cwd, CANONICAL_HOOKS_STATE_FILE);
+}
+
+function resolveHooksStateFilePath(cwd: string): string {
+  const canonicalPath = path.join(cwd, CANONICAL_HOOKS_STATE_FILE);
+  if (fs.existsSync(canonicalPath)) {
+    return canonicalPath;
+  }
+
+  const legacyPath = path.join(cwd, LEGACY_HOOKS_STATE_FILE);
+  if (fs.existsSync(legacyPath)) {
+    return legacyPath;
+  }
+
+  return canonicalPath;
 }
 
 function runInit(cwd: string, io: CliIo): CommandExecutionResult {
@@ -78,7 +94,7 @@ function runStatus(cwd: string, io: CliIo): CommandExecutionResult {
     io.stdout(`  - ${hook}`);
   }
 
-  const stateFilePath = hooksStateFilePath(cwd);
+  const stateFilePath = resolveHooksStateFilePath(cwd);
   if (fs.existsSync(stateFilePath)) {
     io.stdout('');
     io.stdout(`Hook state file: ${stateFilePath}`);
@@ -99,7 +115,7 @@ function runStatus(cwd: string, io: CliIo): CommandExecutionResult {
 }
 
 function runValidate(cwd: string, io: CliIo): CommandExecutionResult {
-  const stateFilePath = hooksStateFilePath(cwd);
+  const stateFilePath = resolveHooksStateFilePath(cwd);
 
   if (!fs.existsSync(stateFilePath)) {
     io.stdout('No hook state file found. Hook registry validation: OK (using defaults)');

@@ -1,5 +1,5 @@
 /**
- * Agent Types for Oh-My-Product
+ * Agent types for oh-my-gemini.
  *
  * Defines types for agent configuration and metadata used in dynamic prompt generation.
  * Ported from OMC's agent type system, adapted for Gemini API.

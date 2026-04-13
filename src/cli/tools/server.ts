@@ -17,7 +17,7 @@ export function createCliToolsMcpServer(
 ): OmpMcpServer {
   return new OmpMcpServer({
     serverInfo: {
-      name: options.serverName ?? 'oh-my-product-cli-tools',
+      name: options.serverName ?? 'oh-my-gemini-cli-tools',
       version: options.serverVersion ?? '0.1.0',
     },
     tools: createCliToolRegistry({

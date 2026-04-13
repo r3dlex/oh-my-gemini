@@ -65,7 +65,7 @@ interface TeamStatusPayload {
 }
 
 const DEFAULT_SERVER_INFO: Implementation = {
-  name: 'oh-my-product-mcp',
+  name: 'oh-my-gemini-mcp',
   version: '0.5.0',
 };
 
@@ -921,7 +921,7 @@ export function createDefaultOmpMcpServer(
   options: DefaultOmpMcpServerOptions = {},
 ): OmpMcpServer {
   const cwd = options.cwd ?? process.cwd();
-  const teamName = normalizeTeamNameCanonical(options.teamName ?? 'oh-my-product');
+  const teamName = normalizeTeamNameCanonical(options.teamName ?? 'oh-my-gemini');
 
   const stateStore = new TeamStateStore({ cwd });
   const controlPlane = new TeamControlPlane({ stateStore });

@@ -1,6 +1,6 @@
 description = "Dynamically compose a team roster with approval gate."
 prompt = """
-Assemble an oh-my-product team for a given objective.
+Assemble an oh-my-gemini team for a given objective.
 
 {{args}}
 

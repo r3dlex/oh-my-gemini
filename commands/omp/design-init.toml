@@ -1,12 +1,12 @@
 description = "Initialize a DESIGN.md file with Google Stitch format."
 prompt = """
-Run oh-my-product design init to create a DESIGN.md file.
+Run oh-my-gemini design init to create a DESIGN.md file.
 
 If args are provided:
-  oh-my-product design init {{args}}
+  oh-my-gemini design init {{args}}
   # alias: omp design init {{args}}
 Else:
-  oh-my-product design init
+  oh-my-gemini design init
   # alias: omp design init
 
 Creates a Google Stitch-compatible DESIGN.md in the project root.

@@ -1,12 +1,12 @@
 description = "Execute a concrete implementation task with progress updates and validation evidence."
 prompt = """
-Run the oh-my-product execute skill for immediate task implementation.
+Run the oh-my-gemini execute skill for immediate task implementation.
 
 If args are provided:
-  oh-my-product skill execute {{args}}
+  oh-my-gemini skill execute {{args}}
   # alias: omp skill execute {{args}}
 Else:
-  oh-my-product skill execute
+  oh-my-gemini skill execute
   # alias: omp skill execute
 
 Makes reasonable assumptions, prefers minimal coherent changes, and reports objective, changed files, commands run, and result.

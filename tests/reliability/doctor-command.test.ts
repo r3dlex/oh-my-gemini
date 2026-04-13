@@ -80,7 +80,7 @@ async function createValidExtensionFixture(
     'gemini-extension.json',
     `${JSON.stringify(
       {
-        name: 'oh-my-product',
+        name: 'oh-my-gemini',
         version: '0.1.0',
         description: 'fixture',
         contextFileName: 'GEMINI.md',
@@ -274,7 +274,7 @@ describe('reliability: doctor command hardening', () => {
     }
   });
 
-  test('reports omp-binary check as missing when oh-my-product is not in PATH', async () => {
+  test('reports omp-binary check as missing when oh-my-gemini is not in PATH', async () => {
     const cwd = createTempDir('omp-doctor-omp-binary-missing-');
     const ioCapture = createIoCapture();
 
@@ -303,17 +303,17 @@ describe('reliability: doctor command hardening', () => {
         status: 'missing',
       });
       expect(omgBinaryCheck?.details).toBe(
-        'oh-my-product command not found in PATH (MCP tools will be unavailable inside Gemini extension)',
+        'oh-my-gemini command not found in PATH (MCP tools will be unavailable inside Gemini extension)',
       );
       expect(omgBinaryCheck?.hint).toBe(
-        'Install globally: npm install -g oh-my-product',
+        'Install globally: npm install -g oh-my-gemini',
       );
     } finally {
       removeDir(cwd);
     }
   });
 
-  test('reports omp-binary check as ok when oh-my-product is in PATH', async () => {
+  test('reports omp-binary check as ok when oh-my-gemini is in PATH', async () => {
     const cwd = createTempDir('omp-doctor-omp-binary-ok-');
     const ioCapture = createIoCapture();
 
@@ -328,7 +328,7 @@ describe('reliability: doctor command hardening', () => {
           cwd,
           io: ioCapture.io,
           probeCommand: createProbeStub(
-            new Set(['node', 'npm', 'gemini', 'tmux', 'oh-my-product']),
+            new Set(['node', 'npm', 'gemini', 'tmux', 'oh-my-gemini']),
           ),
         },
       );
@@ -343,9 +343,9 @@ describe('reliability: doctor command hardening', () => {
         required: false,
         status: 'ok',
       });
-      expect(omgBinaryCheck?.details).toBe('oh-my-product command found in PATH');
+      expect(omgBinaryCheck?.details).toBe('oh-my-gemini command found in PATH');
       expect(omgBinaryCheck?.hint).toBe(
-        'Install globally: npm install -g oh-my-product',
+        'Install globally: npm install -g oh-my-gemini',
       );
     } finally {
       removeDir(cwd);

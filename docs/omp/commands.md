@@ -1,12 +1,12 @@
-# `omp` Command Quick Reference
+# `omg` / `omp` Command Quick Reference
 
-> `oh-my-product` and `omp` are equivalent CLI entry points.
-> Post-global-install contract: after `npm install -g oh-my-product`, run setup with
-> `omp setup --scope project` (equivalent: `oh-my-product setup --scope project`).
+> `oh-my-gemini`, `omg`, and `omp` are equivalent CLI entry points during the migration.
+> Post-global-install contract: after `npm install -g oh-my-gemini`, run setup with
+> `oh-my-gemini setup --scope project` (equivalent: `omg setup --scope project` or `omp setup --scope project`).
 
-> Internal compatibility note: user-facing command/docs surfaces use `omp`, while
-> legacy hidden state paths, legacy environment variable names, and legacy
-> internal interop identifiers remain intentionally unchanged in this pass.
+> Internal compatibility note: user-facing naming now prefers `oh-my-gemini` / `omg`, while
+> the current slash-command folder, legacy hidden state paths, legacy environment variable names,
+> and internal interop identifiers may still use `omp` / `.omp` until later migration phases.
 
 ## `omp setup`
 
@@ -39,7 +39,7 @@ omp extension path [--json] [--extension-path <path>]
 - Useful for user install flow:
 
 ```bash
-EXT_PATH="$(oh-my-product extension path)"
+EXT_PATH="$(oh-my-gemini extension path)"
 gemini extensions install "$EXT_PATH"
 ```
 
@@ -62,7 +62,7 @@ omp hud --watch [--interval-ms 1000]
 omp mcp serve [--dry-run] [--json]
 ```
 
-- Starts an MCP stdio server exposing oh-my-product tools/resources/prompts.
+- Starts an MCP stdio server exposing oh-my-gemini tools/resources/prompts.
 - Built-in tools include file tools (`file_list`, `file_read`, `file_write`, `file_stat`),
   `exec_run`, and team status/task lifecycle/mailbox helpers.
 - Built-in resources include team status snapshot + skill catalog + `GEMINI.md` context.

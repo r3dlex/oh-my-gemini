@@ -1,6 +1,6 @@
 # Runtime Backend Contract
 
-`oh-my-product` orchestration is runtime-backend driven.
+`oh-my-gemini` orchestration is runtime-backend driven.
 
 ## Interface
 

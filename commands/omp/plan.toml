@@ -1,12 +1,12 @@
-description = "Produce a phased execution plan aligned to the oh-my-product roadmap gates."
+description = "Produce a phased execution plan aligned to the oh-my-gemini roadmap gates."
 prompt = """
-Run the oh-my-product plan skill for task decomposition and execution sequencing.
+Run the oh-my-gemini plan skill for task decomposition and execution sequencing.
 
 If args are provided:
-  oh-my-product skill plan {{args}}
+  oh-my-gemini skill plan {{args}}
   # alias: omp skill plan {{args}}
 Else:
-  oh-my-product skill plan
+  oh-my-gemini skill plan
   # alias: omp skill plan
 
 Clarifies objective, maps to roadmap phase, defines acceptance gates, sequences tasks, and produces a verification checklist.

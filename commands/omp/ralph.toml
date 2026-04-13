@@ -1,6 +1,6 @@
 description = "Activate quality-gated strict orchestration mode."
 prompt = """
-Activate oh-my-product ralph mode — strict quality-gated execution.
+Activate oh-my-gemini ralph mode — strict quality-gated execution.
 
 {{args}}
 
@@ -20,7 +20,7 @@ Quality rules:
 - No skipping gates — each must pass sequentially
 - Failed gate → fix loop (max 3 attempts per gate)
 - Verifier must provide concrete evidence (test output, diff, screenshot)
-- Progress persisted to `.omp/state/ralph.json`
+- Progress persisted to `.omg/state/ralph.json`
 
 Ralph includes ultrawork capabilities — tasks within each gate
 can be parallelized for throughput.

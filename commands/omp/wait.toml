@@ -1,12 +1,12 @@
 description = "Check rate-limit state and manage auto-resume behavior for blocked Gemini work."
 prompt = """
-Run the oh-my-product wait skill for rate-limit management.
+Run the oh-my-gemini wait skill for rate-limit management.
 
 If args are provided:
-  oh-my-product skill wait {{args}}
+  oh-my-gemini skill wait {{args}}
   # alias: omp skill wait {{args}}
 Else:
-  oh-my-product skill wait
+  oh-my-gemini skill wait
   # alias: omp skill wait
 
 Reports current rate-limit status, auto-resume state, and recommended next action. Supports --start and --stop flags.

@@ -1,9 +1,9 @@
-description = "Diagnose local prerequisites for oh-my-product workflows."
+description = "Diagnose local prerequisites for oh-my-gemini workflows."
 prompt = """
 Run prerequisite diagnostics for this repository.
 
 Command:
-  oh-my-product doctor --json --fix --no-strict
+  oh-my-gemini doctor --json --fix --no-strict
   # alias: omp doctor --json --fix --no-strict
   # contributor fallback from repo root: npm run omp -- doctor --json --fix --no-strict
 

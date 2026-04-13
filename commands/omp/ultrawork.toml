@@ -1,6 +1,6 @@
 description = "Execute independent tasks at maximum parallelism."
 prompt = """
-Activate oh-my-product ultrawork mode — maximum throughput batch execution.
+Activate oh-my-gemini ultrawork mode — maximum throughput batch execution.
 
 {{args}}
 
@@ -23,7 +23,7 @@ Worker allocation:
 - Default: executor agents, override with role hints
 - Max concurrent workers: 5 (configurable via args)
 
-State tracked in `.omp/state/ultrawork.json`:
+State tracked in `.omg/state/ultrawork.json`:
   { "tasks": [...], "completed": 0, "total": N, "workers": [...] }
 
 Output: progress bar + per-task status updates.

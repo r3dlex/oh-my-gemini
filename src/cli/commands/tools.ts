@@ -211,7 +211,7 @@ async function executeToolsManifest(
     return { exitCode: CLI_USAGE_EXIT_CODE };
   }
 
-  const binCommand = getStringOption(parsed.options, ['bin']) ?? 'oh-my-product';
+  const binCommand = getStringOption(parsed.options, ['bin']) ?? 'oh-my-gemini';
   const serverName = getStringOption(parsed.options, ['server-name']);
 
   const registration = buildGeminiExtensionMcpServerConfig({

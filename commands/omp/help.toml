@@ -1,12 +1,12 @@
-description = "Explain the relevant oh-my-product commands, skills, and workflow choices."
+description = "Explain the relevant oh-my-gemini commands, skills, and workflow choices."
 prompt = """
-Run the oh-my-product help skill for usage guidance.
+Run the oh-my-gemini help skill for usage guidance.
 
 If args are provided:
-  oh-my-product skill help {{args}}
+  oh-my-gemini skill help {{args}}
   # alias: omp skill help {{args}}
 Else:
-  oh-my-product skill help
+  oh-my-gemini skill help
   # alias: omp skill help
 
 Provides shortest-path-to-success guidance with concrete commands. Mentions adjacent commands only when they unblock the user.

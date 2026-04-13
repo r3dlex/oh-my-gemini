@@ -55,7 +55,7 @@ describe('reliability: ask/cost/sessions/wait commands', () => {
 
       const sessionLog = await fs.readFile(path.join(tempRoot, '.omp', 'state', 'sessions', 'registry.ndjson'), 'utf8');
       expect(sessionLog).toContain('ask-session-1');
-      const tokenLog = await fs.readFile(path.join(tempRoot, '.omp', 'state', 'tokens', 'usage.ndjson'), 'utf8');
+      const tokenLog = await fs.readFile(path.join(tempRoot, '.omg', 'state', 'tokens', 'usage.ndjson'), 'utf8');
       expect(tokenLog).toContain('ask-session-1');
     } finally {
       removeDir(tempRoot);
