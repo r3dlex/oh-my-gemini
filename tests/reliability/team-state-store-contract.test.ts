@@ -42,33 +42,47 @@ describe('reliability: team state store durable contract', () => {
     }
   });
 
-  test('resolves state root env precedence: OMP_TEAM_STATE_ROOT > OMX_TEAM_STATE_ROOT > OMP_STATE_ROOT', () => {
+  test('resolves state root env precedence: OMG_TEAM_STATE_ROOT > OMP_TEAM_STATE_ROOT > OMX_TEAM_STATE_ROOT > OMG_STATE_ROOT > OMP_STATE_ROOT', () => {
     const tempRoot = createTempDir('omp-state-root-env-precedence-');
 
+    const previousOmgTeamStateRoot = process.env.OMG_TEAM_STATE_ROOT;
     const previousOmpTeamStateRoot = process.env.OMP_TEAM_STATE_ROOT;
     const previousOmxTeamStateRoot = process.env.OMX_TEAM_STATE_ROOT;
+    const previousOmgStateRoot = process.env.OMG_STATE_ROOT;
     const previousOmpStateRoot = process.env.OMP_STATE_ROOT;
 
     try {
       const explicitRoot = path.join(tempRoot, 'explicit-root');
-      const omgTeamRoot = path.join(tempRoot, 'omp-team-root');
+      const omgTeamRoot = path.join(tempRoot, 'omg-team-root');
+      const ompTeamRoot = path.join(tempRoot, 'omp-team-root');
       const omxTeamRoot = path.join(tempRoot, 'omx-team-root');
-      const omgStateRoot = path.join(tempRoot, 'omp-state-root');
+      const omgStateRoot = path.join(tempRoot, 'omg-state-root');
+      const ompStateRoot = path.join(tempRoot, 'omp-state-root');
 
-      process.env.OMP_TEAM_STATE_ROOT = omgTeamRoot;
+      process.env.OMG_TEAM_STATE_ROOT = omgTeamRoot;
+      process.env.OMP_TEAM_STATE_ROOT = ompTeamRoot;
       process.env.OMX_TEAM_STATE_ROOT = omxTeamRoot;
-      process.env.OMP_STATE_ROOT = omgStateRoot;
+      process.env.OMG_STATE_ROOT = omgStateRoot;
+      process.env.OMP_STATE_ROOT = ompStateRoot;
 
+      const fromOmgTeam = new TeamStateStore({ cwd: tempRoot });
+      expect(fromOmgTeam.rootDir).toBe(omgTeamRoot);
+
+      delete process.env.OMG_TEAM_STATE_ROOT;
       const fromOmpTeam = new TeamStateStore({ cwd: tempRoot });
-      expect(fromOmpTeam.rootDir).toBe(omgTeamRoot);
+      expect(fromOmpTeam.rootDir).toBe(ompTeamRoot);
 
       delete process.env.OMP_TEAM_STATE_ROOT;
       const fromOmxTeam = new TeamStateStore({ cwd: tempRoot });
       expect(fromOmxTeam.rootDir).toBe(omxTeamRoot);
 
       delete process.env.OMX_TEAM_STATE_ROOT;
+      const fromOmgState = new TeamStateStore({ cwd: tempRoot });
+      expect(fromOmgState.rootDir).toBe(omgStateRoot);
+
+      delete process.env.OMG_STATE_ROOT;
       const fromOmpState = new TeamStateStore({ cwd: tempRoot });
-      expect(fromOmpState.rootDir).toBe(omgStateRoot);
+      expect(fromOmpState.rootDir).toBe(ompStateRoot);
 
       const explicit = new TeamStateStore({
         cwd: tempRoot,
@@ -76,6 +90,12 @@ describe('reliability: team state store durable contract', () => {
       });
       expect(explicit.rootDir).toBe(explicitRoot);
     } finally {
+      if (previousOmgTeamStateRoot === undefined) {
+        delete process.env.OMG_TEAM_STATE_ROOT;
+      } else {
+        process.env.OMG_TEAM_STATE_ROOT = previousOmgTeamStateRoot;
+      }
+
       if (previousOmpTeamStateRoot === undefined) {
         delete process.env.OMP_TEAM_STATE_ROOT;
       } else {
@@ -86,6 +106,12 @@ describe('reliability: team state store durable contract', () => {
         delete process.env.OMX_TEAM_STATE_ROOT;
       } else {
         process.env.OMX_TEAM_STATE_ROOT = previousOmxTeamStateRoot;
+      }
+
+      if (previousOmgStateRoot === undefined) {
+        delete process.env.OMG_STATE_ROOT;
+      } else {
+        process.env.OMG_STATE_ROOT = previousOmgStateRoot;
       }
 
       if (previousOmpStateRoot === undefined) {

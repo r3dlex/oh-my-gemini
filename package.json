@@ -1,16 +1,16 @@
 {
-  "name": "oh-my-product",
-  "version": "0.0.1",
+  "name": "oh-my-gemini",
+  "version": "1.0.0",
   "private": false,
   "description": "Orchestration layer for Gemini CLI workflows",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jjongguet/oh-my-product.git"
+    "url": "git+https://github.com/jjongguet/oh-my-gemini.git"
   },
-  "homepage": "https://github.com/jjongguet/oh-my-product",
+  "homepage": "https://github.com/jjongguet/oh-my-gemini",
   "bugs": {
-    "url": "https://github.com/jjongguet/oh-my-product/issues"
+    "url": "https://github.com/jjongguet/oh-my-gemini/issues"
   },
   "publishConfig": {
     "access": "public"
@@ -22,6 +22,7 @@
     "commands/",
     "skills/",
     "agents/",
+    "extensions/oh-my-gemini/",
     "docs/architecture/omp-core.md",
     ".gemini/",
     "gemini-extension.json",
@@ -32,7 +33,9 @@
     "README.md"
   ],
   "bin": {
+    "omg": "dist/cli/index.js",
     "omp": "dist/cli/index.js",
+    "oh-my-gemini": "dist/cli/index.js",
     "oh-my-product": "dist/cli/index.js"
   },
   "scripts": {
@@ -64,6 +67,7 @@
     "test:smoke": "vitest run tests/smoke",
     "test:integration": "vitest run tests/integration",
     "test:reliability": "vitest run tests/reliability",
+    "test:coverage": "vitest run tests/smoke tests/integration tests/reliability --coverage",
     "test:verification": "vitest run tests/reliability/verification-tier-selector.test.ts tests/reliability/verification-test-runner.test.ts tests/reliability/verification-assertions.test.ts tests/reliability/verify-command-package-manager.test.ts",
     "test:e2e": "vitest run tests/e2e",
     "test:all": "npm run test:smoke && npm run test:integration && npm run test:reliability",

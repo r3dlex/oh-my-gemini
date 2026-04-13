@@ -122,7 +122,7 @@ describe('reliability: launch command surface', () => {
     expect(observed?.target).toBe('new-tmux-session');
     expect(observed?.sessionName).toMatch(/^omp-/);
     expect(observed?.geminiArgs[0]).toBe('--extensions');
-    expect(observed?.geminiArgs[1]).toBe('oh-my-product');
+    expect(observed?.geminiArgs[1]).toBe('oh-my-gemini');
     // Default model injected when none specified
     expect(observed?.geminiArgs).toContain('-m');
     expect(observed?.geminiArgs).toContain('gemini-3.1-flash-lite-preview');

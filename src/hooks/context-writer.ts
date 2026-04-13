@@ -34,7 +34,7 @@ function buildContextContent(input: {
   designSection?: string;
 }): string {
   const baseSections = [
-    '# oh-my-product Team Context',
+    '# oh-my-gemini Team Context',
     '',
     `## Team: ${input.teamName}`,
     `## Task: ${truncateText(input.task, MAX_TASK_PREVIEW_CHARS)}`,
@@ -42,9 +42,10 @@ function buildContextContent(input: {
     `## State Root: ${input.stateRoot}`,
     '',
     '## Environment Variables',
+    '- `OMG_TEAM_STATE_ROOT`: preferred path to `.omg/state/`',
     '- `OMP_TEAM_WORKER`: `<teamName>/<workerId>` — combined identifier',
     '- `OMP_WORKER_NAME`: `<workerId>` — this worker\'s ID',
-    '- `OMP_TEAM_STATE_ROOT`: path to `.omp/state/`',
+    '- `OMP_TEAM_STATE_ROOT`: compatibility path to the team state root',
     '- `OMP_WORKER_TASK_ID`: pre-assigned task ID for this worker (if set)',
     '- `OMP_WORKER_CLAIM_TOKEN`: claim token to use with transitionTaskStatus (if set)',
     '',
@@ -73,8 +74,8 @@ function buildContextContent(input: {
     ...(input.learnedSkillLines.length > 0 ? input.learnedSkillLines : ['- No learned skills recorded yet.']),
     ...(input.projectMemorySummary ? ['', input.projectMemorySummary] : []),
     '',
-    'Use `omp skill list` to see all available skills.',
-    'Use `omp skill <name>` to load a specific skill prompt.',
+    'Use `omg skill list` (compat: `omp skill list`) to see all available skills.',
+    'Use `omg skill <name>` (compat: `omp skill <name>`) to load a specific skill prompt.',
   ];
 
   const designLines = input.designSection ? ['', '## Design System', input.designSection] : [];
@@ -104,7 +105,7 @@ function buildContextContent(input: {
 
   const emergencyTask = truncateText(input.task, 512);
   return [
-    '# oh-my-product Team Context',
+    '# oh-my-gemini Team Context',
     '',
     `## Team: ${input.teamName}`,
     `## Task: ${emergencyTask}`,
@@ -119,11 +120,14 @@ function buildContextContent(input: {
 export async function writeWorkerContext(input: TeamStartInput): Promise<void> {
   const geminiDir = path.join(input.cwd, '.gemini');
   const contextPath = path.join(geminiDir, 'GEMINI.md');
+  const omgStateDir = path.join(input.cwd, '.omg', 'state');
 
   const stateRoot =
+    input.env?.OMG_TEAM_STATE_ROOT ??
     input.env?.OMP_TEAM_STATE_ROOT ??
     input.env?.OMX_TEAM_STATE_ROOT ??
-    path.join(input.cwd, '.omp', 'state');
+    input.env?.OMG_STATE_ROOT ??
+    path.join(input.cwd, '.omg', 'state');
 
   const [projectMemory, learnedPatterns] = await Promise.all([
     loadProjectMemory(input.cwd),
@@ -178,6 +182,7 @@ export async function writeWorkerContext(input: TeamStartInput): Promise<void> {
   });
 
   await mkdir(geminiDir, { recursive: true });
+  await mkdir(path.join(omgStateDir, 'sessions'), { recursive: true });
   try {
     await writeFile(contextPath, content, 'utf8');
   } catch (err) {

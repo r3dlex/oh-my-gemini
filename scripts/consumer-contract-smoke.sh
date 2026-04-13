@@ -53,11 +53,17 @@ cd "$CONSUMER_DIR"
 npm_config_cache="$NPM_CACHE_DIR" npm init -y >/dev/null 2>&1
 npm_config_cache="$NPM_CACHE_DIR" npm install --no-audit --no-fund "$TARBALL_PATH" >/dev/null
 
-BIN_MAIN="./node_modules/.bin/oh-my-product"
+BIN_MAIN="./node_modules/.bin/oh-my-gemini"
+BIN_COMPAT="./node_modules/.bin/oh-my-product"
 BIN_ALIAS="./node_modules/.bin/omp"
 
 if [[ ! -x "$BIN_MAIN" ]]; then
   echo "[consumer-contract] missing executable bin: $BIN_MAIN" >&2
+  exit 1
+fi
+
+if [[ ! -x "$BIN_COMPAT" ]]; then
+  echo "[consumer-contract] missing compatibility bin: $BIN_COMPAT" >&2
   exit 1
 fi
 
@@ -68,6 +74,7 @@ fi
 
 echo "[consumer-contract] validating local package bins"
 "$BIN_MAIN" --help >/dev/null
+"$BIN_COMPAT" --help >/dev/null
 "$BIN_ALIAS" --help >/dev/null
 npx --no-install omp --help >/dev/null
 

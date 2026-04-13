@@ -183,7 +183,8 @@ mkdir -p "$GLOBAL_PREFIX" "$WRITE_WORKSPACE" "$DRY_RUN_WORKSPACE"
 npm_config_cache="$NPM_CACHE_DIR" npm install --no-audit --no-fund -g --prefix "$GLOBAL_PREFIX" "$TARBALL_PATH" >/dev/null
 
 BIN_OMG="$GLOBAL_PREFIX/bin/omp"
-BIN_MAIN="$GLOBAL_PREFIX/bin/oh-my-product"
+BIN_MAIN="$GLOBAL_PREFIX/bin/oh-my-gemini"
+BIN_COMPAT="$GLOBAL_PREFIX/bin/oh-my-product"
 
 if [[ ! -x "$BIN_OMG" ]]; then
   echo "[global-install-contract] missing global alias bin: $BIN_OMG" >&2
@@ -195,9 +196,15 @@ if [[ ! -x "$BIN_MAIN" ]]; then
   exit 1
 fi
 
+if [[ ! -x "$BIN_COMPAT" ]]; then
+  echo "[global-install-contract] missing global compatibility bin: $BIN_COMPAT" >&2
+  exit 1
+fi
+
 echo "[global-install-contract] validating global bin provenance"
 resolved_omg="$(PATH="$GLOBAL_PREFIX/bin:$PATH" command -v omp || true)"
-resolved_main="$(PATH="$GLOBAL_PREFIX/bin:$PATH" command -v oh-my-product || true)"
+resolved_main="$(PATH="$GLOBAL_PREFIX/bin:$PATH" command -v oh-my-gemini || true)"
+resolved_compat="$(PATH="$GLOBAL_PREFIX/bin:$PATH" command -v oh-my-product || true)"
 
 if [[ "$resolved_omg" != "$BIN_OMG" ]]; then
   echo "[global-install-contract] omp does not resolve to temp global prefix bin" >&2
@@ -207,14 +214,22 @@ if [[ "$resolved_omg" != "$BIN_OMG" ]]; then
 fi
 
 if [[ "$resolved_main" != "$BIN_MAIN" ]]; then
-  echo "[global-install-contract] oh-my-product does not resolve to temp global prefix bin" >&2
+  echo "[global-install-contract] oh-my-gemini does not resolve to temp global prefix bin" >&2
   echo "  expected: $BIN_MAIN" >&2
   echo "  actual:   ${resolved_main:-<empty>}" >&2
   exit 1
 fi
 
+if [[ "$resolved_compat" != "$BIN_COMPAT" ]]; then
+  echo "[global-install-contract] oh-my-product compatibility bin does not resolve to temp global prefix bin" >&2
+  echo "  expected: $BIN_COMPAT" >&2
+  echo "  actual:   ${resolved_compat:-<empty>}" >&2
+  exit 1
+fi
+
 "$BIN_OMG" --help >/dev/null
 "$BIN_MAIN" --help >/dev/null
+"$BIN_COMPAT" --help >/dev/null
 
 echo "[global-install-contract] running setup (write mode, first pass) via omp"
 cd "$WRITE_WORKSPACE"
@@ -247,7 +262,7 @@ if (!settings.tools || !validSandboxValues.includes(settings.tools.sandbox)) {
 }
 
 const geminiGuide = fs.readFileSync(path.join(workspace, ".gemini/GEMINI.md"), "utf8");
-if (!geminiGuide.includes("This section is managed by oh-my-product setup.")) {
+if (!geminiGuide.includes("This section is managed by oh-my-gemini setup.")) {
   console.error("[global-install-contract] managed setup marker missing from .gemini/GEMINI.md");
   process.exit(1);
 }
@@ -255,9 +270,9 @@ if (!geminiGuide.includes("This section is managed by oh-my-product setup.")) {
 
 write_snapshot_before_second_run="$(snapshot_required_artifacts "$WRITE_WORKSPACE")"
 
-echo "[global-install-contract] running setup (write mode, second pass) via oh-my-product"
+echo "[global-install-contract] running setup (write mode, second pass) via oh-my-gemini"
 setup_write_second_json="$("$BIN_MAIN" setup --scope project --json)"
-validate_setup_result "$setup_write_second_json" "$WRITE_WORKSPACE" "write/oh-my-product/second" "false" "unchanged"
+validate_setup_result "$setup_write_second_json" "$WRITE_WORKSPACE" "write/oh-my-gemini/second" "false" "unchanged"
 assert_required_artifacts_unchanged "$write_snapshot_before_second_run" "$WRITE_WORKSPACE"
 
 echo "[global-install-contract] running setup (dry-run mode, first pass) via oh-my-product"

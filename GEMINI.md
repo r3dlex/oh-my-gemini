@@ -1,6 +1,6 @@
-# oh-my-product Extension Context
+# oh-my-gemini Extension Context
 
-This extension is the canonical public entry point for the `oh-my-product` workflow.
+This extension is the canonical public entry point for the `oh-my-gemini` workflow.
 
 > **Shared context**: See `docs/architecture/omp-core.md` for the full agent catalog, workflow stages, quality gates, and state conventions.
 
@@ -9,7 +9,7 @@ This extension is the canonical public entry point for the `oh-my-product` workf
 ## Context Layers (priority order)
 1. **System/Runtime** — Gemini CLI constraints (immutable)
 2. **Project Standards** — This file (`GEMINI.md`) + `docs/architecture/omp-core.md`
-3. **Session Memory** — `.omp/state/`, memory entries
+3. **Session Memory** — `.omg/state/` (preferred) or `.omp/state/` (compatibility), memory entries
 4. **Active Task** — Current plan, taskboard, PRD
 5. **Execution Traces** — Recent iteration results
 
@@ -20,12 +20,12 @@ This extension is the canonical public entry point for the `oh-my-product` workf
 - Setup defaults to **project scope**.
 
 ## Preferred command flow
-1. `oh-my-product setup --scope project` (alias: `omp setup --scope project`)
+1. `oh-my-gemini setup --scope project` (aliases: `omg setup --scope project`, `omp setup --scope project`)
 2. ensure `.gemini/agents/catalog.json` exists (repo contributor fallback: `npm run setup:subagents`)
-3. `oh-my-product doctor`
-4. `oh-my-product team run --task "..."`
-5. `oh-my-product verify`
-6. Optional MCP server surface: `oh-my-product mcp serve --dry-run --json`
+3. `oh-my-gemini doctor`
+4. `oh-my-gemini team run --task "..."`
+5. `oh-my-gemini verify`
+6. Optional MCP server surface: `oh-my-gemini mcp serve --dry-run --json`
 7. Optional live team bridge: `omx team 3:executor "..."`
 
 ## Discoverability notes
@@ -50,7 +50,7 @@ Primary command families:
 ## Guardrails
 - Do not skip sandbox checks when a task requires shell execution.
 - Prefer actionable failure output (what failed + how to fix it).
-- Keep state transitions observable under `.omp/state/`.
+- Keep state transitions observable under `.omg/state/` while preserving `.omp/state/` compatibility when required.
 
 ## Handoff expectations
 When executing team tasks, include:

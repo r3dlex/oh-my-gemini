@@ -64,10 +64,25 @@ const SUBAGENTS_CATALOG_RELATIVE_PATH = path.join(
 const GEMINI_CLI_TOOLS_MCP_SERVER_NAME = 'omp_cli_tools';
 const GEMINI_CLI_TOOLS_MCP_SERVER_CONFIG = {
   [GEMINI_CLI_TOOLS_MCP_SERVER_NAME]: {
-    command: 'oh-my-product',
+    command: 'oh-my-gemini',
     args: ['tools', 'serve'],
   },
 } as const;
+
+async function ensureOmgStateDirectories(
+  cwd: string,
+  fsImpl: Pick<typeof fs, 'mkdir'>,
+): Promise<void> {
+  for (const relativePath of [
+    '.omg',
+    path.join('.omg', 'state'),
+    path.join('.omg', 'state', 'sessions'),
+    path.join('.omg', 'logs'),
+    path.join('.omg', 'plans'),
+  ]) {
+    await fsImpl.mkdir(path.join(cwd, relativePath), { recursive: true });
+  }
+}
 
 const SANDBOX_DOCKERFILE_TEMPLATE = [
   '# syntax=docker/dockerfile:1.7',
@@ -221,12 +236,12 @@ async function ensureManagedGeminiNote(
   },
 ): Promise<JsonWriteResult> {
   const managedLines = [
-    'This section is managed by oh-my-product setup.',
+    'This section is managed by oh-my-gemini setup.',
     '',
     `- Active setup scope: ${scope}`,
     '- Scope precedence: CLI flag > persisted (.omp/setup-scope.json) > default (project)',
-    '- Run `oh-my-product doctor` (alias: `omp doctor`) after setup to validate dependencies.',
-    '- Run `oh-my-product verify` (alias: `omp verify`) to execute typecheck/smoke/integration/reliability checks.',
+    '- Run `oh-my-gemini doctor` (aliases: `omg doctor`, `omp doctor`) after setup to validate dependencies.',
+    '- Run `oh-my-gemini verify` (aliases: `omg verify`, `omp verify`) to execute typecheck/smoke/integration/reliability checks.',
   ];
 
   const result = await mergeMarkedBlockInFile(filePath, managedLines, {
@@ -340,6 +355,10 @@ export async function runSetup(options: SetupOptions = {}): Promise<SetupResult>
     'Gemini subagents catalog (.gemini/agents)',
     fsImpl,
   );
+
+  if (!dryRun) {
+    await ensureOmgStateDirectories(cwd, fsImpl);
+  }
 
   const resolvedScope = await resolveSetupScope({
     cwd,

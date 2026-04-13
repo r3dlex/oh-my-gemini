@@ -12,6 +12,7 @@ import {
 } from './arg-utils.js';
 
 export const OMP_EXTENSION_PATH_ENV = 'OMP_EXTENSION_PATH';
+export const OMG_EXTENSION_PATH_ENV = 'OMG_EXTENSION_PATH';
 export const CANONICAL_EXTENSION_ROOT_RELATIVE_PATH = path.join('extensions', 'oh-my-gemini');
 export const LEGACY_EXTENSION_ROOT_RELATIVE_PATH = '.';
 export const EXTENSION_MANIFEST_FILE_NAME = 'gemini-extension.json';
@@ -48,7 +49,8 @@ function printExtensionPathHelp(io: CliIo): void {
     'Options:',
     '  --json                     Print machine-readable path resolution output',
     '  --extension-path <path>    Explicit extension root path override',
-    `  $${OMP_EXTENSION_PATH_ENV}           Environment override for extension root`,
+    `  $${OMG_EXTENSION_PATH_ENV}           Preferred environment override for extension root`,
+    `  $${OMP_EXTENSION_PATH_ENV}           Compatibility override for extension root`,
     '  --help                     Show command help',
   ].join('\n'));
 }
@@ -71,7 +73,10 @@ function buildCandidateList(options: ResolveExtensionPathOptions): {
   usedOverride: string | undefined;
 } {
   const env = options.env ?? process.env;
-  const overrideInput = options.overridePath ?? env[OMP_EXTENSION_PATH_ENV];
+  const overrideInput =
+    options.overridePath ??
+    env[OMG_EXTENSION_PATH_ENV] ??
+    env[OMP_EXTENSION_PATH_ENV];
   const usedOverride = typeof overrideInput === 'string' && overrideInput.trim().length > 0
     ? overrideInput
     : undefined;
@@ -142,7 +147,7 @@ export async function resolveExtensionPath(
         [
           `Explicit extension override is invalid: ${usedOverride}`,
           `Expected manifest at: ${path.join(candidate.path, EXTENSION_MANIFEST_FILE_NAME)}`,
-          `Check ${OMP_EXTENSION_PATH_ENV} or --extension-path value.`,
+          `Check ${OMG_EXTENSION_PATH_ENV}, ${OMP_EXTENSION_PATH_ENV}, or --extension-path value.`,
         ].join('\n'),
       );
     }
@@ -161,7 +166,7 @@ export async function resolveExtensionPath(
       'Checked manifest candidates:',
       checkedCandidates,
       '',
-      `Set ${OMP_EXTENSION_PATH_ENV}=<path> or pass --extension-path <path>. Canonical package layout prefers extensions/oh-my-gemini/.`,
+      `Set ${OMG_EXTENSION_PATH_ENV}=<path>, ${OMP_EXTENSION_PATH_ENV}=<path>, or pass --extension-path <path>. Canonical package layout prefers extensions/oh-my-gemini/.`,
     ].join('\n'),
   );
 }

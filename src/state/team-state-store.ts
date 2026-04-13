@@ -667,8 +667,10 @@ export class TeamStateStore {
     const cwd = options.cwd ?? process.cwd();
     const configuredRoot =
       options.rootDir ??
+      process.env.OMG_TEAM_STATE_ROOT ??
       process.env.OMP_TEAM_STATE_ROOT ??
       process.env.OMX_TEAM_STATE_ROOT ??
+      process.env.OMG_STATE_ROOT ??
       process.env.OMP_STATE_ROOT ??
       '.omp/state';
 

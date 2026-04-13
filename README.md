@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="docs/assets/omp_logo.png" alt="oh-my-product" width="240" />
+  <img src="docs/assets/omp_logo.png" alt="oh-my-gemini" width="240" />
 </p>
 
-# oh-my-product
+# oh-my-gemini
 
-[![npm version](https://img.shields.io/npm/v/oh-my-product?color=cb3837)](https://www.npmjs.com/package/oh-my-product)
-[![GitHub stars](https://img.shields.io/github/stars/jjongguet/oh-my-product?style=flat&color=yellow)](https://github.com/jjongguet/oh-my-product/stargazers)
+[![npm version](https://img.shields.io/npm/v/oh-my-gemini?color=cb3837)](https://www.npmjs.com/package/oh-my-gemini)
+[![GitHub stars](https://img.shields.io/github/stars/jjongguet/oh-my-gemini?style=flat&color=yellow)](https://github.com/jjongguet/oh-my-gemini/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4%EF%B8%8F-red?style=flat&logo=github)](https://github.com/sponsors/jjongguet)
 
 > **Sister projects:** [oh-my-claudecode (OMC)](https://github.com/Yeachan-Heo/oh-my-claudecode) | [oh-my-codex (OMX)](https://github.com/Yeachan-Heo/oh-my-codex)
 
-**Multi-agent orchestration for Gemini CLI. Zero learning curve.**
+**Multi-agent orchestration for Gemini CLI with OMG branding and OMP compatibility aliases.**
 
 > **Transition status (2026-04-13):** this repo is actively migrating from legacy `oh-my-product` / `omp` surfaces to canonical `oh-my-gemini` / `omg` surfaces. Phase 1 target paths are `extensions/oh-my-gemini/` and `.omg/`. Legacy `omp` / `.omp` references still exist while compatibility work is in progress. See [`docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md`](docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md) for the audited gap list and migration order.
 
@@ -22,12 +22,12 @@
 ## Quick Start
 
 ```bash
-npm install -g oh-my-product
-omp setup --scope project
+npm install -g oh-my-gemini
+omg setup --scope project
 gemini
 ```
 
-After setup, restart Gemini CLI for `/omp:*` commands to appear.
+After setup, restart Gemini CLI for `/omg:*` commands to appear (`/omp:*` remains compatible during migration).
 
 ```bash
 omp doctor                                    # check prerequisites
@@ -43,9 +43,9 @@ tmux-first multi-worker orchestration with persistent state and lifecycle contro
 
 ```bash
 omp team run --task "review src/ for reliability gaps" --workers 4
-omp team status --team oh-my-product --json
-omp team resume --team oh-my-product
-omp team shutdown --team oh-my-product --force
+omp team status --team oh-my-gemini --json
+omp team resume --team oh-my-gemini
+omp team shutdown --team oh-my-gemini --force
 ```
 
 Default backend: `tmux` | Optional: `subagents` for role-tagged runs
@@ -58,7 +58,7 @@ Default backend: `tmux` | Optional: `subagents` for role-tagged runs
 
 | Command | Description |
 |---------|-------------|
-| `omp` | Launch Gemini CLI with the oh-my-product extension |
+| `omp` | Launch Gemini CLI with the oh-my-gemini extension |
 | `omp team run` | Start orchestrated team run |
 | `omp team status/resume/shutdown/cancel` | Team lifecycle |
 | `omp doctor` | Diagnose prerequisites |
@@ -86,7 +86,7 @@ Full command reference: [`docs/omp/commands.md`](docs/omp/commands.md)
 
 ## Compatibility Note
 
-User-facing command and documentation surfaces now use `omp` / `oh-my-product`.
+User-facing command and documentation surfaces now use `omg` / `oh-my-gemini` first, with `omp` / `oh-my-product` kept as compatibility aliases during the migration.
 
 Some internal compatibility identifiers intentionally remain unchanged for now:
 
@@ -142,6 +142,6 @@ MIT
 
 </div>
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jjongguet/oh-my-product&type=date&legend=top-left)](https://www.star-history.com/#jjongguet/oh-my-product&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=jjongguet/oh-my-gemini&type=date&legend=top-left)](https://www.star-history.com/#jjongguet/oh-my-gemini&type=date&legend=top-left)
 
 [![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-%E2%9D%A4%EF%B8%8F-red?style=for-the-badge&logo=github)](https://github.com/sponsors/jjongguet)

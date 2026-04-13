@@ -1,17 +1,40 @@
 # Changelog
 
-All notable changes to `oh-my-product` are documented in this file.
+All notable changes to `oh-my-gemini` are documented in this file.
 
 The format follows a conventional changelog style organized by release and change type, based on the repository's release commits, feature and fix history, and the code present in each release line.
 
 ## Release line summary
 
+- `1.0.0` establishes the canonical `oh-my-gemini` / `omg` release line, adds the packaged `extensions/oh-my-gemini/` scaffold, and hardens release readiness with coverage and workflow gates.
 - `0.1.0` established the initial CLI, tmux runtime foundation, and persisted state model.
 - `0.2.0` expanded OMP into an extension-first orchestration platform with setup, lifecycle, tools, MCP, HUD, providers, and control-plane hardening.
 - `0.3.0` completed major lifecycle parity work for team orchestration and resumable state.
 - `0.3.1` added interactive launch and relaxed Docker assumptions for everyday use.
 - `0.4.0` introduced the hook pipeline, execution modes, learned-skill capture, ask/cost/session flows, and richer notifications.
 - `0.5.x` exposed all skills as native Gemini CLI slash commands, fixed extension loading, and streamlined CI/CD.
+
+## [1.0.0] - 2026-04-13
+
+### Features
+- Rebranded the published package and primary extension metadata to `oh-my-gemini` with `omg` and `oh-my-gemini` bin aliases while preserving `omp` / `oh-my-product` compatibility aliases.
+- Added and validated the canonical `extensions/oh-my-gemini/` scaffold for Gemini CLI packaging and extension-path resolution.
+- Added preferred `OMG_*` environment/state-root alias handling in setup/context/team state flows while preserving legacy `OMP_*` compatibility.
+
+### Fixes
+- Updated setup/help/runtime surfaces to advertise the OMG-first install contract instead of the legacy `oh-my-product` wording.
+- Reconciled Phase 1 foundation branding/state changes with the earlier documentation/scaffold lanes so package metadata, extension manifests, and setup/runtime helpers align on the next release target.
+
+### CI / Quality
+- Added an explicit `test:coverage` gate and enforced Vitest coverage thresholds of 80% for statements, branches, functions, and lines.
+- Updated CI to run coverage as a dedicated combined gate instead of fragmented per-suite coverage runs.
+- Updated the release workflow to publish the checked-in package version only after successful CI completion and `gate:publish`.
+
+### Verification
+- PASS `npm run typecheck`
+- PASS `npm run build`
+- PASS targeted smoke/integration/reliability suites for extension path, setup idempotency, team state root handling, and tmux backend behavior
+- PASS `npx vitest run tests/reliability/gemini-spawn-backend.test.ts`
 
 ## [0.5.9] - 2026-03-12
 

@@ -169,7 +169,7 @@ describe('integration: hook context e2e (write → read round-trip)', () => {
     }
   });
 
-  test('writeWorkerContext uses custom state root from env option', async () => {
+  test('writeWorkerContext prefers OMG state root from env option', async () => {
     const tempRoot = createTempDir('omp-ctx-stateroot-');
 
     try {
@@ -179,13 +179,16 @@ describe('integration: hook context e2e (write → read round-trip)', () => {
         teamName: 'state-team',
         task: 'custom state root test',
         workers: 1,
-        env: { OMP_TEAM_STATE_ROOT: customStateRoot },
+        env: { OMG_TEAM_STATE_ROOT: customStateRoot, OMP_TEAM_STATE_ROOT: '/legacy/state/root' },
       });
 
       const geminiPath = path.join(tempRoot, '.gemini', 'GEMINI.md');
       const content = await fs.readFile(geminiPath, 'utf8');
 
       expect(content).toContain(customStateRoot);
+      expect(content).toContain('OMG_TEAM_STATE_ROOT');
+      expect(content).not.toContain('/legacy/state/root');
+      expect(await fs.stat(path.join(tempRoot, '.omg', 'state'))).toBeDefined();
     } finally {
       removeDir(tempRoot);
     }

@@ -80,16 +80,19 @@ jobs:
         run: npm run build
 
       - name: Smoke tests
-        run: npm run test:smoke -- --coverage
+        run: npm run test:smoke
 
       - name: Integration tests
-        run: npm run test:integration -- --coverage
+        run: npm run test:integration
 
       - name: Reliability tests
-        run: npm run test:reliability -- --coverage
+        run: npm run test:reliability
 
       - name: Verification framework contracts
-        run: npm run test:verification -- --coverage
+        run: npm run test:verification
+
+      - name: Coverage gate (80%+)
+        run: npm run test:coverage
 
       - name: Verify command baseline
         run: npm run verify -- --tier thorough --json

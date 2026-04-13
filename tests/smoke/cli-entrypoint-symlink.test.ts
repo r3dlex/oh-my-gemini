@@ -30,7 +30,7 @@ describe('smoke: cli entrypoint symlink compatibility', () => {
         });
 
         expect(result.status, [result.stderr, result.stdout].join('\n')).toBe(0);
-        expect(result.stdout).toContain('oh-my-product CLI');
+        expect(result.stdout).toContain('oh-my-gemini CLI');
       } finally {
         removeDir(tempDir);
       }

@@ -551,7 +551,7 @@ async function checkExtensionIntegrity(
           required: true,
           status: 'missing',
           details: `unable to resolve extension path: ${details}`,
-          hint: `Set ${OMP_EXTENSION_PATH_ENV}=<path> or run doctor from a repository containing gemini-extension.json at extensions/oh-my-gemini/ (preferred) or the package root.`,
+          hint: `Set ${OMP_EXTENSION_PATH_ENV}=<path> or run doctor from a repository containing gemini-extension.json at the package root.`,
         },
         {
           code: DOCTOR_CODE.EXTENSION_COMMANDS,

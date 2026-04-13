@@ -26,7 +26,7 @@ export interface SetupCommandContext {
 
 /**
  * Remove skill folders from ~/.agents/skills/ that conflict with the
- * oh-my-product extension's built-in skills.  Gemini CLI loads skills from
+ * oh-my-gemini extension's built-in skills. Gemini CLI loads skills from
  * both locations, and duplicates cause "Skill conflict detected" warnings.
  */
 export function cleanLegacySkillConflicts(
@@ -70,8 +70,8 @@ function printSetupHelp(io: CliIo): void {
     'Usage: omp setup [--scope <project|user>] [--dry-run] [--json]',
     '',
     'Post-install contract:',
-    '  After npm install -g oh-my-product, run setup to apply local files.',
-    '  Supported entrypoints: omp setup ... / oh-my-product setup ...',
+    '  After npm install -g oh-my-gemini, run setup to apply local files.',
+    '  Supported entrypoints: omg setup ... / omp setup ... / oh-my-gemini setup ...',
     '',
     'Options:',
     '  --scope <scope>   Installation scope (project | user)',
@@ -100,7 +100,7 @@ function defaultLinkGeminiExtension(input: {
 
 function defaultEnableGeminiExtension(input: { cwd: string }): void {
   try {
-    execFileSync('gemini', ['extensions', 'enable', 'oh-my-product'], {
+    execFileSync('gemini', ['extensions', 'enable', 'oh-my-gemini'], {
       cwd: input.cwd,
       stdio: 'pipe',
       timeout: 15_000,

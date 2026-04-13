@@ -48,22 +48,22 @@ export async function executeVerifyCommand(
     return { exitCode: 0 };
   }
 
-  // Guard: verify only works inside the oh-my-product development repository.
+  // Guard: verify only works inside the oh-my-gemini development repository.
   try {
     const pkgJson = JSON.parse(
       readFileSync(path.join(context.cwd, 'package.json'), 'utf8'),
     ) as { name?: string };
-    if (pkgJson.name !== 'oh-my-product') {
+    if (pkgJson.name !== 'oh-my-gemini' && pkgJson.name !== 'oh-my-product') {
       io.stderr(
-        'omp verify is a development command for the oh-my-product repository.\n' +
-        'Run it from the oh-my-product project root (where package.json has name "oh-my-product").',
+        'omp verify is a development command for the oh-my-gemini repository.\n' +
+        'Run it from the oh-my-gemini project root (where package.json has name "oh-my-gemini" or legacy "oh-my-product").',
       );
       return { exitCode: 1 };
     }
   } catch {
     io.stderr(
       'omp verify requires a package.json in the current directory.\n' +
-      'This command is intended for the oh-my-product development repository.',
+      'This command is intended for the oh-my-gemini development repository.',
     );
     return { exitCode: 1 };
   }

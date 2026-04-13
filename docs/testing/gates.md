@@ -19,7 +19,7 @@ Pass criteria:
   - `scripts/global-install-contract-smoke.sh` (global-prefix alias provenance + setup contract checks),
 - both entrypoints are proven in global context:
   - `omp setup --scope project --json`
-  - `oh-my-product setup --scope project --dry-run --json`.
+  - `oh-my-gemini setup --scope project --dry-run --json` (compat: `omp setup --scope project --dry-run --json`).
 
 Fail criteria:
 
@@ -40,6 +40,7 @@ npm run test:smoke
 npm run test:integration
 npm run test:reliability
 npm run test:verification
+npm run test:coverage
 npm run verify -- --tier thorough --json
 npm run verify -- --tier light --dry-run --json
 ```
@@ -47,6 +48,7 @@ npm run verify -- --tier light --dry-run --json
 Pass criteria:
 
 - all quality checks pass with hard-fail semantics (no hidden `continue-on-error`).
+- coverage gate enforces >=80% statements/functions/branches/lines across the release-critical extension and verification surfaces exercised by CI.
 - legacy compatibility bypass flags remain disabled (`OMP_LEGACY_RUNNING_SUCCESS!=1`, `OMP_LEGACY_VERIFY_GATE_PASS!=1`).
 - verification framework contracts pass (`test runners`, `tier selector`, `assertion helpers`).
 
@@ -65,7 +67,7 @@ npm run gate:publish
 Pass criteria:
 
 - publish flow is gated by C0 + C1 equivalent checks (`gate:publish`),
-- `.github/workflows/release.yml` publish job runs only after `pre_release_blocking`.
+- `.github/workflows/release.yml` publish job runs only after successful CI completion and `gate:publish`.
 
 ### C7 — Legacy bypass governance (blocking in CI/release)
 
@@ -178,7 +180,7 @@ npm run verify
 
 ```bash
 npm run gate:publish
-npm run team:e2e -- "oh-my-product release gate live evidence"
+npm run team:e2e -- "oh-my-gemini release gate live evidence"
 ```
 
 ### Optional feature-wise command
@@ -211,7 +213,7 @@ Reference: [`docs/testing/feature-readiness.md`](feature-readiness.md)
 ### Command
 
 ```bash
-npm run team:e2e -- "oh-my-product live team smoke"
+npm run team:e2e -- "oh-my-gemini live team smoke"
 ```
 
 ### Pass criteria

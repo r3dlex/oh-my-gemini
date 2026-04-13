@@ -4,8 +4,8 @@
  * Provides strict path validation and resolution for .omp/ paths,
  * ensuring all operations stay within the worktree boundary.
  *
- * Supports OMP_STATE_DIR environment variable for centralized state storage.
- * When set, state is stored at $OMP_STATE_DIR/{project-identifier}/ instead
+ * Supports OMG_STATE_DIR / OMP_STATE_DIR environment variables for centralized state storage.
+ * When set, state is stored at $OMG_STATE_DIR or $OMP_STATE_DIR/{project-identifier}/ instead
  * of {worktree}/.omp/. This preserves state across worktree deletions.
  */
 
@@ -100,7 +100,7 @@ export function validatePath(inputPath: string): void {
 }
 
 // ============================================================================
-// OMP_STATE_DIR SUPPORT (Issue #1014)
+// OMG_STATE_DIR / OMP_STATE_DIR SUPPORT (Issue #1014)
 // ============================================================================
 
 /** Track which dual-dir warnings have been logged to avoid repeated warnings */
@@ -151,7 +151,8 @@ export function getProjectIdentifier(worktreeRoot?: string): string {
 /**
  * Get the .omp root directory path.
  *
- * When OMP_STATE_DIR is set, returns $OMP_STATE_DIR/{project-identifier}/
+ * When OMG_STATE_DIR or OMP_STATE_DIR is set, returns the configured centralized
+ * path plus {project-identifier}/
  * instead of {worktree}/.omp/. This allows centralized state storage that
  * survives worktree deletion.
  *
@@ -159,7 +160,7 @@ export function getProjectIdentifier(worktreeRoot?: string): string {
  * @returns Absolute path to the omc root directory
  */
 export function getOmcRoot(worktreeRoot?: string): string {
-  const customDir = process.env.OMP_STATE_DIR;
+  const customDir = process.env.OMG_STATE_DIR ?? process.env.OMP_STATE_DIR;
   if (customDir) {
     const root = worktreeRoot || getWorktreeRoot() || process.cwd();
     const projectId = getProjectIdentifier(root);

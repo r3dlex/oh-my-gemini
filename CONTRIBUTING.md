@@ -1,6 +1,6 @@
-# Contributing to oh-my-product
+# Contributing to oh-my-gemini
 
-Thanks for contributing to `oh-my-product`. This repository ships both the `omp` CLI runtime and the Gemini extension assets that power setup, orchestration, and verification workflows.
+Thanks for contributing to `oh-my-gemini`. This repository ships both the `omp`/`omg` CLI runtime and the Gemini extension assets that power setup, orchestration, and verification workflows.
 
 This guide is intentionally practical: it focuses on the commands and file locations you will actually use while preparing a change.
 
@@ -36,8 +36,8 @@ gh --version
 ### 1) Clone and install dependencies
 
 ```bash
-git clone https://github.com/jjongguet/oh-my-product.git
-cd oh-my-product
+git clone https://github.com/jjongguet/oh-my-gemini.git
+cd oh-my-gemini
 npm install
 ```
 

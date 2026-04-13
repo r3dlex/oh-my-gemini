@@ -1,4 +1,4 @@
-import { writeFileSync } from 'node:fs';
+import { existsSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { describe, expect, test } from 'vitest';
@@ -48,8 +48,9 @@ describe('smoke: setup idempotency', () => {
           mcpServers?: Record<string, { command?: string; args?: string[] }>;
         };
         expect(settings.mcpServers?.omp_cli_tools).toBeDefined();
-        expect(settings.mcpServers?.omp_cli_tools?.command).toBe('oh-my-product');
+        expect(settings.mcpServers?.omp_cli_tools?.command).toBe('oh-my-gemini');
         expect(settings.mcpServers?.omp_cli_tools?.args).toStrictEqual(['tools', 'serve']);
+        expect(existsSync(path.join(sandboxProject, '.omg', 'state'))).toBe(true);
 
         const secondRun = runOmp(['setup', '--scope', 'project'], {
           cwd: sandboxProject
