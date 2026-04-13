@@ -67,7 +67,9 @@ npm run gate:publish
 Pass criteria:
 
 - publish flow is gated by C0 + C1 equivalent checks (`gate:publish`),
-- `.github/workflows/release.yml` publish job runs only after successful CI completion and `gate:publish`.
+- `.github/workflows/release.yml` uses Release Please for stable semver releases,
+- every push to `main` produces a `-pre.<run_number>` npm pre-release,
+- stable publish runs only when Release Please creates a release tag.
 
 ### C7 — Legacy bypass governance (blocking in CI/release)
 

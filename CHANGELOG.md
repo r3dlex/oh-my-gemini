@@ -28,7 +28,7 @@ The format follows a conventional changelog style organized by release and chang
 ### CI / Quality
 - Added an explicit `test:coverage` gate and enforced Vitest coverage thresholds of 80% for statements, branches, functions, and lines.
 - Updated CI to run coverage as a dedicated combined gate instead of fragmented per-suite coverage runs.
-- Updated the release workflow to publish the checked-in package version only after successful CI completion and `gate:publish`.
+- Enabled publish-semver automation with Release Please for stable releases and GitHub Actions pre-release publishing on every `main` push.
 
 ### Verification
 - PASS `npm run typecheck`
