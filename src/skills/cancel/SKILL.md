@@ -2,7 +2,7 @@
 name: cancel
 aliases: ["/cancel", "stop work", "abort"]
 primaryRole: coordinator
-description: Stop or wind down active work safely and summarize the resulting state.
+description: Safely stops active work and summarizes the resulting state. Use when the user wants to stop a run, abort work, or preserve a safe stopping point.
 ---
 
 # Cancel

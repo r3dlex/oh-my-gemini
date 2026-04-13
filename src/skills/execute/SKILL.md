@@ -2,7 +2,7 @@
 name: execute
 aliases: ["/execute", "run task", "do it now"]
 primaryRole: executor
-description: Execute a concrete implementation task with concise progress and validation.
+description: Executes a concrete implementation task with concise progress and validation. Use when the task is sufficiently clear and ready for implementation.
 ---
 
 # Execute

@@ -2,14 +2,18 @@
 name: plan
 aliases: ["/plan", "plan this", "make a plan", "execution plan"]
 primaryRole: planner
-description: Produce a phased execution plan aligned to the oh-my-product roadmap gates.
+description: Produce a phased execution plan aligned to the oh-my-gemini roadmap gates. Use when the user asks for decomposition, milestones, or sequencing.
 ---
 
 # Plan Skill (oh-my-product)
 
+## Quick Start
+
+- Clarify the goal, map the roadmap phase, then return milestones, risks, and verification commands.
+
 Use this skill when a user asks for planning, decomposition, or implementation sequencing.
 
-## Planning template
+## Quick Start
 
 1. **Clarify objective**
    - Desired outcome

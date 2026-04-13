@@ -2,14 +2,18 @@
 name: ralplan
 aliases: ["/ralplan", "consensus plan", "consensus planning"]
 primaryRole: orchestrator
-description: Iterative planning with structured consensus — planner, architect, and critic converge on an approved plan.
+description: Run iterative planner, architect, and critic consensus on an execution plan. Use when a task needs structured plan review before implementation.
 ---
 
 # Ralplan Skill (oh-my-product)
 
+## Quick Start
+
+- Run planner, architect, and critic review rounds until the plan converges or the round limit is reached.
+
 Consensus-based planning that iterates until planner, architect, and critic agree.
 
-## Use when
+## Quick Start
 - The task is complex enough that a single planning pass is insufficient
 - Architecture decisions need structured debate before execution
 - High-risk work requires pre-mortem analysis

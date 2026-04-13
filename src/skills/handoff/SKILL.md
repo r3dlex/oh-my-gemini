@@ -2,7 +2,7 @@
 name: handoff
 aliases: ["/handoff", "handover", "hand off", "transfer context"]
 primaryRole: coordinator
-description: Produce a concise handoff package for the next agent or session.
+description: Produces a concise handoff package for the next agent or session. Use when work needs to continue in another session or ownership lane.
 ---
 
 <Purpose>

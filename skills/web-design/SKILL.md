@@ -2,15 +2,19 @@
 name: web-design
 aliases: ["/design", "design brief", "web design", "UI design", "create design"]
 primaryRole: designer
-description: Activate when the user requests web/UI design work, design briefs, wireframe specs, or wants to create/update a DESIGN.md file. Produces structured design artifacts following the DESIGN.md pattern.
+description: Produce structured web and UI design artifacts following the DESIGN.md pattern. Use when the user wants a design brief, DESIGN.md, or UI design spec.
 ---
 
 # Web Design Skill (oh-my-product)
 
+## Quick Start
+
+- Create DESIGN.md first, then produce the linked implementation or modification artifact.
+
 Use this skill when a user requests web design, UI design, or project design work.
 Follows the DESIGN.md artifact pattern from the Gemini CLI ecosystem.
 
-## Core Artifact Pattern
+## Quick Start
 
 This skill produces and maintains three linked documents:
 

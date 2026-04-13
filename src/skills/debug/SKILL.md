@@ -2,7 +2,7 @@
 name: debug
 aliases: ["/debug", "investigate failure", "diagnose"]
 primaryRole: debugger
-description: Investigate a failure, isolate root cause, and propose or apply a fix.
+description: Investigates a failure, isolates root cause, and validates the fix. Use when the user reports runtime failures, regressions, or broken workflows.
 ---
 
 # Debug

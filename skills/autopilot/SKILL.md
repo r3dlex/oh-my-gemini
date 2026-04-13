@@ -2,14 +2,18 @@
 name: autopilot
 aliases: ["/autopilot", "full auto", "autonomous execution", "build it"]
 primaryRole: orchestrator
-description: Autonomously drive a feature from clarified objective through implementation and verification.
+description: Drive a task from clarified objective through implementation and verification. Use when the user wants end-to-end autonomous execution.
 ---
 
 # Autopilot Skill (oh-my-product)
 
+## Quick Start
+
+- Start from a clear objective, then move through planning, implementation, and verification without manual micromanagement.
+
 Use this skill when the user wants end-to-end execution with minimal supervision.
 
-## Use when
+## Quick Start
 - The request is large enough to require planning, implementation, and verification
 - The user wants the agent to make reasonable assumptions and keep moving
 - A phased workflow is safer than ad hoc editing

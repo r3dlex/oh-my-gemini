@@ -2,14 +2,18 @@
 name: team
 aliases: ["/team", "team run", "run team"]
 primaryRole: orchestrator
-description: Orchestrate parallel tmux workers for a multi-agent team task.
+description: Orchestrate parallel tmux workers for a multi-agent team task. Use when the user wants coordinated multi-worker execution.
 ---
 
 # Team Skill (oh-my-product)
 
+## Quick Start
+
+- Launch `omp team run --task "..." --workers <N>` when the task benefits from parallel workers.
+
 Use this skill when the user wants to run a multi-worker team orchestration task.
 
-## What it does
+## Quick Start
 
 Launches `omp team run` with the specified task and worker count, creating a tmux session with N parallel workers. Each worker receives the team context via GEMINI.md and executes the task, then writes a completion signal.
 

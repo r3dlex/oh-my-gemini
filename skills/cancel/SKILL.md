@@ -2,14 +2,18 @@
 name: cancel
 aliases: ["/cancel", "stop work", "abort", "halt"]
 primaryRole: coordinator
-description: Safely stop active work, note what was interrupted, and preserve resumable context.
+description: Stop active workflow state safely and preserve resumable context. Use when the user wants to stop, abort, or checkpoint ongoing work.
 ---
 
 # Cancel Skill (oh-my-product)
 
+## Quick Start
+
+- Use `omp team cancel --team <name>` or `omp team shutdown --team <name>` to stop safely and preserve resumable context.
+
 Use this skill when the user wants to stop an active workflow or leave a safe checkpoint.
 
-## What it does
+## Quick Start
 - prefers graceful shutdown over abrupt interruption
 - summarizes what completed, what is in progress, and what remains reusable
 - points to concrete stop commands when available

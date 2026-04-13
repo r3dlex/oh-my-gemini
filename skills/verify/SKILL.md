@@ -2,14 +2,18 @@
 name: verify
 aliases: ["/verify", "verify work", "check completion", "validate"]
 primaryRole: verifier
-description: Verify that acceptance criteria are met and work is complete.
+description: Verify acceptance criteria with build, test, state, and smoke-check evidence. Use when the user wants proof that work is complete.
 ---
 
 # Verify Skill (oh-my-product)
 
+## Quick Start
+
+- Map acceptance criteria to build, test, state, and smoke-check evidence before declaring done.
+
 Use this skill when the user wants to verify that a task or feature is complete.
 
-## What it does
+## Quick Start
 
 Checks evidence of completion against acceptance criteria. Runs smoke tests, inspects state files, and reports any gaps between expected and actual outcomes.
 

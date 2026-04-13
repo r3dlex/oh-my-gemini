@@ -2,14 +2,18 @@
 name: context-optimize
 aliases: ["/context-optimize", "optimize context", "compress context"]
 primaryRole: optimizer
-description: Analyze and optimize context for signal-to-noise ratio — deduplicate, compress, prioritize, and prune.
+description: Analyze and compress context for higher signal-to-noise ratio. Use when GEMINI.md or session context is bloated and needs cleanup.
 ---
 
 # Context Optimize Skill (oh-my-product)
 
+## Quick Start
+
+- Measure current context size, identify low-signal sections, then propose the smallest cleanup that improves signal density.
+
 Optimize prompt and context files for maximum signal density.
 
-## Use when
+## Quick Start
 - GEMINI.md or context files have grown large and unfocused
 - Session context feels bloated with stale information
 - Token budget is tight and every token must count

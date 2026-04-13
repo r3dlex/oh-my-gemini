@@ -2,7 +2,7 @@
 name: review
 aliases: ["/review", "code review", "review code", "review pr"]
 primaryRole: reviewer
-description: Perform a structured evidence-based code review with severity ratings.
+description: Performs a structured evidence-based code review with severity ratings. Use when the user asks for PR review, code audit, or change assessment.
 ---
 
 <Purpose>

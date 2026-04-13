@@ -2,14 +2,18 @@
 name: design-system
 aliases: ["/design-system", "extract tokens", "sync design", "design tokens", "color palette"]
 primaryRole: designer
-description: Activate when the user wants to extract, sync, or manage design system tokens. Pulls color palettes, typography scales, spacing tokens from URLs or existing code and updates DESIGN.md.
+description: Extract, normalize, and sync design system tokens into DESIGN.md. Use when the user wants to create, import, or update design tokens.
 ---
 
 # Design System Skill (oh-my-product)
 
+## Quick Start
+
+- Choose a source, extract tokens, map semantic names, then update DESIGN.md.
+
 Use this skill when the user wants to extract, create, or synchronize design system tokens.
 
-## Capabilities
+## Quick Start
 
 1. **Token Extraction** — Extract design tokens from:
    - Live URLs (color palette, typography, spacing from computed styles)

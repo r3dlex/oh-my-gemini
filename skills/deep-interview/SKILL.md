@@ -2,14 +2,18 @@
 name: deep-interview
 aliases: ["/deep-interview", "deep interview", "requirements interview", "clarify requirements"]
 primaryRole: analyst
-description: Run a structured Socratic interview to turn ambiguity into an implementation-ready brief.
+description: Run a structured Socratic interview that turns ambiguity into an implementation-ready brief. Use when the request is broad, vague, or missing scope boundaries.
 ---
 
 # Deep Interview Skill (oh-my-product)
 
+## Quick Start
+
+- Ask one high-value clarification question at a time until the task is implementation-ready.
+
 Use this skill when the request is broad, vague, or underspecified.
 
-## Interview policy
+## Quick Start
 - ask one high-value question at a time
 - prefer concrete tradeoff questions over open-ended brainstorming
 - stop once the work is actionable

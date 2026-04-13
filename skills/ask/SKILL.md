@@ -2,14 +2,18 @@
 name: ask
 aliases: ["/ask", "advisor", "ask gemini", "run advisor prompt"]
 primaryRole: advisor
-description: Run a focused Gemini advisor prompt and save the result as a reusable artifact.
+description: Run a focused Gemini advisor prompt and save the reusable result artifact. Use when the user wants a quick advisor-style answer without a full workflow.
 ---
 
 # Ask Skill (oh-my-product)
 
+## Quick Start
+
+- Run `omp ask gemini --prompt "<prompt>"` for a fast advisor answer and save the artifact.
+
 Use this skill when the user wants a quick advisor-style answer from Gemini without launching a full workflow.
 
-## Preferred route
+## Quick Start
 - `omp ask gemini --prompt "<prompt>"`
 - `omp ask gemini --agent-prompt <role> --prompt "<prompt>"`
 

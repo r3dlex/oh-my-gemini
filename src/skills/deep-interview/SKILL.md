@@ -2,7 +2,7 @@
 name: deep-interview
 aliases: ["/deep-interview", "deep interview", "interview", "requirements interview"]
 primaryRole: analyst
-description: Run a structured Socratic interview before planning or execution.
+description: Runs a structured Socratic interview before planning or execution. Use when the request is broad, vague, or underspecified.
 ---
 
 <Purpose>

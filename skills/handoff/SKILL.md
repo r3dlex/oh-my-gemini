@@ -2,14 +2,18 @@
 name: handoff
 aliases: ["/handoff", "hand off", "transfer context", "pass context"]
 primaryRole: coordinator
-description: Produce a structured handoff document summarizing completed work and next steps.
+description: Produce a structured handoff document summarizing completed work and next steps. Use when work is moving between sessions, agents, or team members.
 ---
 
 # Handoff Skill (oh-my-product)
 
+## Quick Start
+
+- Capture completed work, current state, blockers, and next actions in a structured handoff.
+
 Use this skill when transitioning work between sessions, agents, or team members.
 
-## What it does
+## Quick Start
 
 Produces a structured handoff document that captures:
 - What was accomplished

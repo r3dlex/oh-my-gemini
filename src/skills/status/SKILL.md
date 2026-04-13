@@ -2,7 +2,7 @@
 name: status
 aliases: ["/status", "progress", "what's the status"]
 primaryRole: coordinator
-description: Summarize current progress, state, blockers, and next steps.
+description: Summarizes current progress, state, blockers, and next steps. Use when the user wants a crisp checkpoint on the current task or run.
 ---
 
 # Status

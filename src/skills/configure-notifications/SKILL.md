@@ -2,7 +2,7 @@
 name: configure-notifications
 aliases: ["/configure-notifications", "notifications", "notify setup"]
 primaryRole: writer
-description: Configure notification delivery for Slack, Discord, or Telegram.
+description: Configures notification delivery for Slack, Discord, or Telegram. Use when the user wants to set up or validate notification delivery.
 ---
 
 # Configure Notifications

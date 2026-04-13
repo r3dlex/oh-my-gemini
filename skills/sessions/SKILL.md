@@ -2,14 +2,18 @@
 name: sessions
 aliases: ["/sessions", "session history", "list sessions", "recent sessions"]
 primaryRole: coordinator
-description: Inspect recorded session history and summarize recent runs with metadata.
+description: Inspect recorded session history and summarize recent runs with metadata. Use when the user wants resumable history or recent run status.
 ---
 
 # Sessions Skill (oh-my-product)
 
+## Quick Start
+
+- Run `omp sessions` and summarize recent runs, statuses, and resumable artifacts.
+
 Use this skill when the user wants to inspect prior runs or resumable history.
 
-## Primary command
+## Quick Start
 - `omp sessions`
 
 ## Include

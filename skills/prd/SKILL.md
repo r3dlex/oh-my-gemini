@@ -2,14 +2,18 @@
 name: prd
 aliases: ["/prd", "product requirements", "acceptance criteria"]
 primaryRole: analyst
-description: Transform a request into a measurable PRD with acceptance criteria, non-goals, and constraints.
+description: Transform a request into a measurable PRD with acceptance criteria, non-goals, and constraints. Use when a request needs a locked definition of done.
 ---
 
 # PRD Skill (oh-my-product)
 
+## Quick Start
+
+- Write the objective, acceptance criteria, non-goals, constraints, and verification before execution begins.
+
 Convert vague objectives into precise, locked product requirements.
 
-## Use when
+## Quick Start
 - Starting a new feature or significant change
 - The team needs clear "done" criteria before execution
 - Scope creep is a risk and boundaries must be explicit

@@ -2,14 +2,18 @@
 name: ux-critique
 aliases: ["/ux-review", "ux critique", "usability review", "accessibility audit", "a11y check"]
 primaryRole: designer
-description: Activate when the user requests a UX review, usability critique, or accessibility audit of a page, component, or user flow. Evaluates against Nielsen's heuristics and WCAG guidelines.
+description: Evaluate a UI against usability and accessibility heuristics. Use when the user wants a UX, usability, or a11y review.
 ---
 
 # UX Critique Skill (oh-my-product)
 
+## Quick Start
+
+- Scope the experience, inspect the UI, evaluate heuristics plus WCAG, then prioritize fixes.
+
 Use this skill to evaluate UI/UX quality, usability, and accessibility.
 
-## Evaluation Frameworks
+## Quick Start
 
 ### Nielsen's 10 Usability Heuristics
 1. Visibility of system status

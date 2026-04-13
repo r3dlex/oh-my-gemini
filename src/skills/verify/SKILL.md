@@ -2,7 +2,7 @@
 name: verify
 aliases: ["/verify", "verify work", "check completion", "validate"]
 primaryRole: verifier
-description: Validate completion evidence against acceptance criteria and report pass/fail.
+description: Validates completion evidence against acceptance criteria and reports pass or fail. Use when the user wants to verify that a task or feature is complete.
 ---
 
 <Purpose>

@@ -2,14 +2,18 @@
 name: review
 aliases: ["/review", "code review", "review code", "review pr"]
 primaryRole: reviewer
-description: Perform a structured code review of recent changes or a specific scope.
+description: Perform a structured review of code or recent changes. Use when the user wants correctness, security, maintainability, and coverage findings.
 ---
 
 # Review Skill (oh-my-product)
 
+## Quick Start
+
+- Review correctness, security, maintainability, coverage, and performance; then rank findings by severity.
+
 Use this skill when the user wants to perform a code review.
 
-## What it does
+## Quick Start
 
 Executes a structured code review covering correctness, security, maintainability, and test coverage. Outputs findings with severity ratings (critical / high / medium / low).
 

@@ -2,14 +2,18 @@
 name: configure-notifications
 aliases: ["/configure-notifications", "notifications", "notify setup"]
 primaryRole: writer
-description: Configure notification delivery for Slack, Discord, or Telegram.
+description: Configure notification delivery for Slack, Discord, or Telegram. Use when a user wants to set up or verify notifications.
 ---
 
 # Configure Notifications (oh-my-product)
 
+## Quick Start
+
+- Pick a platform, update the matching notifier module, then send a safe test notification.
+
 Use this skill when a user wants to configure or verify notifications.
 
-## Platforms
+## Quick Start
 - Slack webhook
 - Discord webhook
 - Telegram bot message
