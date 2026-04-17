@@ -19,6 +19,15 @@ omp setup [--scope <project|user>] [--dry-run] [--json]
 - Provisions managed setup artifacts (including `.gemini/agents/catalog.json`)
 - Primary post-install command after global npm installation
 
+## `omp update`
+
+```bash
+omp update [--json]
+```
+
+- Runs the canonical global npm installer path (`npm install -g <package>@latest`)
+- Primary/manual update path used by the launch-time update prompt
+
 ## `omp doctor`
 
 ```bash
@@ -27,6 +36,12 @@ omp doctor [--json] [--strict|--no-strict] [--fix] [--extension-path <path>]
 
 - Checks node/npm/gemini/tmux/container runtime + extension integrity + `.omp/state` writeability
 - `--fix` applies safe remediations and reruns diagnostics
+
+## Launch-time auto-update prompt
+
+- Primary launches (`omp` / `omp launch`) run a TTY-only, non-fatal, 12h-throttled npm version check.
+- Auto-update checks skip command-only flows like `help`, `version`, and `update`.
+- Disable prompting with `OMG_AUTO_UPDATE=0` (compatibility alias: `OMP_AUTO_UPDATE=0`).
 
 ## `omp extension path`
 

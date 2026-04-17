@@ -202,9 +202,26 @@ function runTest(io: CliIo): CommandExecutionResult {
   return { exitCode: 0 };
 }
 
-async function runExec(cwd: string, io: CliIo): Promise<CommandExecutionResult> {
+async function readStdinFromContext(
+  readStdin: HooksCommandContext['readStdin'],
+): Promise<GeminiHookPayload> {
+  if (readStdin) {
+    const raw = await readStdin();
+    if (!raw.trim()) {
+      throw new Error('Gemini hook bridge expected a JSON payload on stdin.');
+    }
+    return JSON.parse(raw) as GeminiHookPayload;
+  }
+  return readGeminiHookPayloadFromStdin();
+}
+
+async function runExec(
+  cwd: string,
+  io: CliIo,
+  readStdin: HooksCommandContext['readStdin'],
+): Promise<CommandExecutionResult> {
   try {
-    const payload = readGeminiHookPayloadFromStdin();
+    const payload = await readStdinFromContext(readStdin);
     const output = await executeGeminiHookBridge({ cwd, payload });
     io.stdout(JSON.stringify(output));
     return { exitCode: output.decision === 'deny' ? 2 : 0 };
@@ -225,7 +242,7 @@ async function runDispatch(rest: string[], context: HooksCommandContext): Promis
     ?? (parsed.positionals[0] ? String(parsed.positionals[0]) : undefined)
     ?? 'BeforeAgent';
   try {
-    const payload = readGeminiHookPayloadFromStdin();
+    const payload = await readStdinFromContext(context.readStdin);
     const output = await dispatchGeminiHook({
       cwd: context.cwd,
       eventName,
@@ -258,15 +275,16 @@ export async function executeHooksCommand(
     case 'init':
       return runInit(cwd, io);
     case 'exec':
-      return runExec(cwd, io);
+      return runExec(cwd, io, context.readStdin);
+    case 'bridge':
+    case 'dispatch':
+      return runDispatch(rest, context);
     case 'status':
       return runStatus(cwd, io);
     case 'validate':
       return runValidate(cwd, io);
     case 'test':
       return runTest(io);
-    case 'dispatch':
-      return runDispatch(rest, context);
     default:
       io.stderr(`Unknown subcommand: ${subcommand}`);
       io.stderr('Run "omg hooks --help" for usage.');

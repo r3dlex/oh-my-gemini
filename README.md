@@ -37,6 +37,9 @@ omg team run --task "..." --workers 2         # parallel work
 omg hud --watch                               # live status
 ```
 
+Primary CLI launches (`omg` / `omg launch`) perform a throttled TTY-only update check (12h cache) and can prompt to run `npm install -g oh-my-gemini@latest`.  
+Disable the prompt with `OMG_AUTO_UPDATE=0` (compatibility alias: `OMP_AUTO_UPDATE=0`).
+
 ---
 
 ## Team Mode
@@ -61,6 +64,7 @@ Default backend: `tmux` | Optional: `subagents` for role-tagged runs
 | Command | Description |
 |---------|-------------|
 | `omg` | Launch Gemini CLI with the oh-my-gemini extension |
+| `omg update` | Update the globally installed package immediately |
 | `omg team run` | Start orchestrated team run |
 | `omg team status/resume/shutdown/cancel` | Team lifecycle |
 | `omg doctor` | Diagnose prerequisites |

@@ -6,6 +6,7 @@ The format follows a conventional changelog style organized by release and chang
 
 ## Release line summary
 
+- `1.0.1` hardened the published package with auto-update, MCP transport fix, verify guard, and OMG-first branding.
 - `1.0.0` establishes the canonical `oh-my-gemini` / `omg` release line, adds the packaged `extensions/oh-my-gemini/` scaffold, and hardens release readiness with coverage and workflow gates.
 - `0.1.0` established the initial CLI, tmux runtime foundation, and persisted state model.
 - `0.2.0` expanded OMP into an extension-first orchestration platform with setup, lifecycle, tools, MCP, HUD, providers, and control-plane hardening.
@@ -13,6 +14,32 @@ The format follows a conventional changelog style organized by release and chang
 - `0.3.1` added interactive launch and relaxed Docker assumptions for everyday use.
 - `0.4.0` introduced the hook pipeline, execution modes, learned-skill capture, ask/cost/session flows, and richer notifications.
 - `0.5.x` exposed all skills as native Gemini CLI slash commands, fixed extension loading, and streamlined CI/CD.
+
+## [Unreleased]
+
+## [1.0.2] - 2026-04-17
+
+### Fixes
+- **Fixed Gemini CLI 400 Bad Request from MCP `transport` key**: Removed `transport: "stdio"` from `GeminiExtensionMcpServerConfig` interface and both `omg_cli_tools` / `omp_cli_tools` server configs in `gemini-extension.json` and `src/cli/tools/index.ts`. Gemini CLI rejects the `transport` key in `settings.json`.
+- **Fixed `omp verify` failing in published package**: Added `@r3dlex/oh-my-gemini` to the package-name guard in `src/cli/commands/verify.ts`.
+- **Fixed `omp hooks bridge` missing case**: Added `bridge` subcommand case in `src/cli/commands/hooks.ts` with proper `readStdinFromContext` helper and injected `readStdin` mock.
+- **Fixed reliability tests expecting `omp` in help text**: Updated regex assertions in `tests/reliability/team-shutdown-command.test.ts` and `tests/reliability/team-status-command.test.ts` to match `omg` CLI output.
+
+### Verification
+- PASS `npm run typecheck`
+- PASS `npm run build`
+- PASS `npm run test:coverage` (87.65% stmts, 93.61% branches, 96.15% funcs, 87.65% lines)
+
+## [1.0.1] - 2026-04-17
+
+### Features
+- Added OMX-style launch-time auto-update checks/prompts for primary CLI invocation with TTY-only guardrails, non-fatal failure handling, 12h cache throttling, and disable env controls (`OMG_AUTO_UPDATE=0`, compatibility `OMP_AUTO_UPDATE=0`).
+- Reused the canonical `omp update` npm installer path for prompted updates and refreshed setup artifacts after successful updates using persisted setup scope precedence (`.omp/setup-scope.json`).
+
+### Verification
+- PASS `npm run typecheck`
+- PASS `npm run build`
+- PASS `npm run test:coverage`
 
 ## [1.0.0] - 2026-04-13
 

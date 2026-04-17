@@ -13,7 +13,6 @@ export interface GeminiExtensionMcpServerConfig {
   command: string;
   args: string[];
   cwd?: string;
-  transport: 'stdio';
   description: string;
 }
 
@@ -109,29 +108,27 @@ export function buildGeminiExtensionMcpServerConfig(options: {
     args.push('--categories', categories.join(','));
   }
 
-  const sharedConfig: GeminiExtensionMcpServerConfig = {
+  const sharedConfig: Omit<GeminiExtensionMcpServerConfig, 'cwd'> = {
     command: binCommand,
     args,
-    transport: 'stdio',
     description: 'oh-my-gemini CLI tools MCP server (file/git/http/process)',
   };
 
   if (options.serverName) {
     return {
-      [options.serverName]: sharedConfig,
+      [options.serverName]: { ...sharedConfig, cwd: '${extensionPath}' },
     };
   }
 
   return {
     [GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME]: {
       ...sharedConfig,
-      cwd: "${extensionPath}",
+      cwd: '${extensionPath}',
     },
     [LEGACY_GEMINI_EXTENSION_CLI_TOOLS_SERVER_NAME]: {
       command: binCommand,
       args,
       cwd: '${extensionPath}',
-      transport: 'stdio',
       description: 'oh-my-gemini CLI tools MCP server compatibility alias (file/git/http/process)',
     },
   };

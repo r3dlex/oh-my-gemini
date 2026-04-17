@@ -50,6 +50,7 @@ import { executeRalphLaunchCommand, type RalphLaunchCommandContext } from './com
 import { executeAutoresearchCommand, type AutoresearchCommandContext } from './commands/autoresearch.js';
 import { executeHooksCommand, type HooksCommandContext } from './commands/hooks.js';
 import { executeCleanupCommand, type CleanupCommandContext } from './commands/cleanup.js';
+import { maybeCheckAndPromptForUpdate } from './auto-update.js';
 import type { CliIo } from './types.js';
 
 async function loadPackageJson(): Promise<{ version: string }> {
@@ -578,7 +579,18 @@ const currentModulePath = resolveCommandPath(fileURLToPath(import.meta.url));
 const invokedPath = process.argv[1] ? resolveCommandPath(process.argv[1]) : '';
 
 if (invokedPath !== '' && currentModulePath === invokedPath) {
-  runCli()
+  const invocation = resolveCliInvocation(process.argv.slice(2));
+  const io = defaultIo();
+  maybeCheckAndPromptForUpdate({
+    cwd: process.cwd(),
+    env: process.env,
+    command: invocation.command,
+    io,
+  })
+    .catch((error) => {
+      io.stderr(`Warning: automatic update check failed: ${(error as Error).message}`);
+    })
+    .then(() => runCli())
     .then((exitCode) => {
       process.exitCode = exitCode;
     })

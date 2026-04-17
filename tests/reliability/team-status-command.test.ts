@@ -40,7 +40,7 @@ describe('reliability: team status command', () => {
     });
 
     expect(result.exitCode).toBe(0);
-    expect(ioCapture.stdout.join('\n')).toMatch(/Usage: omp team status/i);
+    expect(ioCapture.stdout.join('\n')).toMatch(/Usage: omg team status/i);
   });
 
   test('fails with usage error for unknown option', async () => {

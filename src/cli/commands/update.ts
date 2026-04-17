@@ -7,10 +7,35 @@ import { findUnknownOptions, hasFlag, parseCliArgs } from './arg-utils.js';
 
 const execFileAsync = promisify(execFile);
 
+export interface UpdateRunnerOutput {
+  exitCode: number;
+  message: string;
+  details?: Record<string, unknown>;
+}
+
 export interface UpdateCommandContext {
   cwd: string;
   io: CliIo;
-  updateRunner?: () => Promise<{ exitCode: number; message: string; details?: Record<string, unknown> }>;
+  updateRunner?: () => Promise<UpdateRunnerOutput>;
+}
+
+interface PackageMetadata {
+  name?: string;
+}
+
+interface GlobalUpdateOptions {
+  cwd?: string;
+  env?: NodeJS.ProcessEnv;
+  packageName?: string;
+  execFileAsyncImpl?: (
+    file: string,
+    args: readonly string[],
+    options: {
+      cwd: string;
+      env: NodeJS.ProcessEnv;
+      encoding: BufferEncoding;
+    },
+  ) => Promise<{ stdout: string | Buffer; stderr: string | Buffer }>;
 }
 
 function printUpdateHelp(io: CliIo): void {
@@ -25,25 +50,47 @@ function printUpdateHelp(io: CliIo): void {
   ].join('\n'));
 }
 
-async function defaultUpdateRunner(): Promise<{ exitCode: number; message: string; details?: Record<string, unknown> }> {
-  const require = createRequire(import.meta.url);
-  const pkg = require('../../../package.json') as { name?: string };
-  const packageName = pkg.name ?? 'oh-my-gemini';
+export function resolveUpdatePackageName(
+  packageMetadata: PackageMetadata = createRequire(import.meta.url)('../../../package.json') as PackageMetadata,
+): string {
+  return packageMetadata.name ?? 'oh-my-gemini';
+}
 
-  const result = await execFileAsync('npm', ['install', '-g', `${packageName}@latest`], {
-    cwd: process.cwd(),
-    env: process.env,
-  });
+export async function runNpmGlobalUpdate(options: GlobalUpdateOptions = {}): Promise<UpdateRunnerOutput> {
+  const packageName = options.packageName ?? resolveUpdatePackageName();
+  const cwd = options.cwd ?? process.cwd();
+  const env = options.env ?? process.env;
+  const execFileAsyncImpl = options.execFileAsyncImpl ?? execFileAsync;
+
+  const result = await execFileAsyncImpl(
+    'npm',
+    ['install', '-g', `${packageName}@latest`],
+    {
+      cwd,
+      env,
+      encoding: 'utf8',
+    },
+  );
 
   return {
     exitCode: 0,
     message: `Updated ${packageName} to latest via npm install -g.`,
     details: {
       packageName,
-      stdout: result.stdout.trim() || undefined,
-      stderr: result.stderr.trim() || undefined,
+      stdout: result.stdout.toString().trim() || undefined,
+      stderr: result.stderr.toString().trim() || undefined,
     },
   };
+}
+
+async function defaultUpdateRunner(): Promise<UpdateRunnerOutput> {
+  const require = createRequire(import.meta.url);
+  const pkg = require('../../../package.json') as PackageMetadata;
+  return runNpmGlobalUpdate({
+    cwd: process.cwd(),
+    env: process.env,
+    packageName: resolveUpdatePackageName(pkg),
+  });
 }
 
 export async function executeUpdateCommand(

@@ -57,8 +57,6 @@ jobs:
           bash scripts/sync-extension-version.sh
 
       - name: Publish pre-release to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --tag pre --access public --provenance
 
   stable-publish:
@@ -90,8 +88,6 @@ jobs:
         run: bash scripts/sync-extension-version.sh
 
       - name: Publish stable to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --tag latest --access public --provenance
 
       - name: Update floating major tag

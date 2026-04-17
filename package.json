@@ -1,16 +1,16 @@
 {
-  "name": "oh-my-gemini",
-  "version": "1.0.0",
+  "name": "@r3dlex/oh-my-gemini",
+  "version": "1.0.2",
   "private": false,
   "description": "Orchestration layer for Gemini CLI workflows",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jjongguet/oh-my-gemini.git"
+    "url": "git+https://github.com/r3dlex/oh-my-gemini.git"
   },
-  "homepage": "https://github.com/jjongguet/oh-my-gemini",
+  "homepage": "https://github.com/r3dlex/oh-my-gemini",
   "bugs": {
-    "url": "https://github.com/jjongguet/oh-my-gemini/issues"
+    "url": "https://github.com/r3dlex/oh-my-gemini/issues"
   },
   "publishConfig": {
     "access": "public"

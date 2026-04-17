@@ -39,7 +39,7 @@ describe('reliability: team shutdown command', () => {
     });
 
     expect(result.exitCode).toBe(0);
-    expect(ioCapture.stdout.join('\n')).toMatch(/Usage: omp team shutdown/i);
+    expect(ioCapture.stdout.join('\n')).toMatch(/Usage: omg team shutdown/i);
   });
 
   test('fails with usage error for unknown option', async () => {

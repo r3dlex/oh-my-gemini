@@ -53,10 +53,14 @@ export async function executeVerifyCommand(
     const pkgJson = JSON.parse(
       readFileSync(path.join(context.cwd, 'package.json'), 'utf8'),
     ) as { name?: string };
-    if (pkgJson.name !== 'oh-my-gemini' && pkgJson.name !== 'oh-my-product') {
+    if (
+      pkgJson.name !== 'oh-my-gemini' &&
+      pkgJson.name !== 'oh-my-product' &&
+      pkgJson.name !== '@r3dlex/oh-my-gemini'
+    ) {
       io.stderr(
         'omp verify is a development command for the oh-my-gemini repository.\n' +
-        'Run it from the oh-my-gemini project root (where package.json has name "oh-my-gemini" or legacy "oh-my-product").',
+        'Run it from the oh-my-gemini project root (where package.json has name "oh-my-gemini", "@r3dlex/oh-my-gemini", or legacy "oh-my-product").',
       );
       return { exitCode: 1 };
     }
