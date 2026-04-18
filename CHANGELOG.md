@@ -6,7 +6,7 @@ The format follows a conventional changelog style organized by release and chang
 
 ## Release line summary
 
-- `1.0.1` hardened the published package with auto-update, MCP transport fix, verify guard, and OMG-first branding.
+- `1.0.2` hardens the published package with auto-update, MCP transport fixes, verify guard corrections, hooks bridge parity, and OMG-first branding readiness for the next release.
 - `1.0.0` establishes the canonical `oh-my-gemini` / `omg` release line, adds the packaged `extensions/oh-my-gemini/` scaffold, and hardens release readiness with coverage and workflow gates.
 - `0.1.0` established the initial CLI, tmux runtime foundation, and persisted state model.
 - `0.2.0` expanded OMP into an extension-first orchestration platform with setup, lifecycle, tools, MCP, HUD, providers, and control-plane hardening.

@@ -1,12 +1,12 @@
 {
   "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/packages/cli/schemas/gemini-extension.json",
   "name": "oh-my-gemini",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Canonical OMG extension scaffold for Gemini CLI packaging, hook bridging, and migration.",
-  "author": "jjongguet",
+  "author": "r3dlex",
   "license": "MIT",
-  "homepage": "https://github.com/jjongguet/oh-my-gemini",
-  "sourceUrl": "https://github.com/jjongguet/oh-my-gemini",
+  "homepage": "https://github.com/r3dlex/oh-my-gemini",
+  "sourceUrl": "https://github.com/r3dlex/oh-my-gemini",
   "contextFileName": "GEMINI.md",
   "settings": [
     {
@@ -30,7 +30,6 @@
         "serve"
       ],
       "cwd": "${extensionPath}",
-      "transport": "stdio",
       "description": "oh-my-gemini CLI tools MCP server (file/git/http/process)"
     },
     "omp_cli_tools": {
@@ -40,7 +39,6 @@
         "serve"
       ],
       "cwd": "${extensionPath}",
-      "transport": "stdio",
       "description": "oh-my-gemini CLI tools MCP server compatibility alias (file/git/http/process)"
     }
   }
