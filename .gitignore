@@ -5,7 +5,9 @@ coverage/
 
 # Runtime state
 .omg/
-.omc/
+.omc/logs/
+.omc/state/
+.omc/sessions/
 .omx/
 
 # Internal docs
