@@ -15,6 +15,17 @@ The format follows a conventional changelog style organized by release and chang
 - `0.4.0` introduced the hook pipeline, execution modes, learned-skill capture, ask/cost/session flows, and richer notifications.
 - `0.5.x` exposed all skills as native Gemini CLI slash commands, fixed extension loading, and streamlined CI/CD.
 
+## [Unreleased]
+
+### Features
+
+- **vscode-omg**: Add VS Code extension for real-time workflow/agent visualization
+  - Workflows, Agents, Tasks panels in the activity bar
+  - StateReader interface with OmgStateAdapter (reads `.omc/state/subagent-tracker.json`)
+  - 200ms debounced FileSystemWatcher — prevents UI thrashing during heavy execution
+  - Live status bar showing active workflow count and running agents
+  - MCP server provider registration
+
 ## [1.2.0](https://github.com/r3dlex/oh-my-gemini/compare/oh-my-gemini-v1.1.0...oh-my-gemini-v1.2.0) (2026-04-21)
 
 

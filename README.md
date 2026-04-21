@@ -102,6 +102,30 @@ Full command reference: [`docs/omg/commands.md`](docs/omg/commands.md)
 
 ---
 
+## VS Code Extension
+
+**vscode-omg** provides real-time workflow and agent visualization directly in VS Code.
+
+### Features
+
+- **Activity bar panels**: Workflows, Agents, and Tasks views update live as omg executes
+- **StateReader / OmgStateAdapter**: reads `.omc/state/subagent-tracker.json` — no polling server required
+- **200ms debounced FileSystemWatcher**: prevents UI thrashing during heavy multi-agent runs
+- **Status bar**: shows active workflow count and running agent count at a glance
+- **MCP server provider**: registers `omg_cli_tools` so VS Code extensions can call omg MCP tools directly
+
+### Installation
+
+```bash
+# From the repo root
+cd vscode-omg
+npm install
+npm run build
+# Then install the generated .vsix via VS Code Extensions panel → "Install from VSIX…"
+```
+
+---
+
 ## Compatibility Note
 
 User-facing command and documentation surfaces use `omg` / `oh-my-gemini`. The legacy `omg` / `oh-my-gemini` bin entries have been removed from the package.

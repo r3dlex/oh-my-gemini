@@ -8,6 +8,8 @@ coverage/
 .omc/logs/
 .omc/state/
 .omc/sessions/
+.omp/
+.omx/
 .omx/logs/
 .omx/state/
 .omx/sessions/
