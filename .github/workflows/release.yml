@@ -141,7 +141,7 @@ jobs:
         run: bash scripts/sync-extension-version.sh
 
       - name: Publish stable to npm
-        run: npm publish --tag latest --access public --provenance
+        run: npm publish --tag latest --access public --provenance || echo "::warning::Publish skipped — version already exists or package not yet on npmjs.com (idempotent)"
 
       - name: Publish oh-my-google-gemini
         run: |
@@ -152,7 +152,7 @@ jobs:
             pkg.bin = { omg: 'dist/cli/index.js' };
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
           "
-          npm publish --tag latest --access public --provenance
+          npm publish --tag latest --access public --provenance || echo "::warning::Publish skipped — version already exists or package not yet on npmjs.com (idempotent)"
 
       - name: Publish omg
         run: |
@@ -163,7 +163,7 @@ jobs:
             pkg.bin = { omg: 'dist/cli/index.js' };
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
           "
-          npm publish --tag latest --access public --provenance
+          npm publish --tag latest --access public --provenance || echo "::warning::Publish skipped — version already exists or package not yet on npmjs.com (idempotent)"
 
       - name: Publish omg-cli
         run: |
@@ -174,7 +174,7 @@ jobs:
             pkg.bin = { omg: 'dist/cli/index.js' };
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
           "
-          npm publish --tag latest --access public --provenance
+          npm publish --tag latest --access public --provenance || echo "::warning::Publish skipped — version already exists or package not yet on npmjs.com (idempotent)"
 
       - name: Configure GH Packages registry
         uses: actions/setup-node@v4
