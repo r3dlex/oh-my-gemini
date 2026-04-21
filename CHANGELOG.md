@@ -15,6 +15,18 @@ The format follows a conventional changelog style organized by release and chang
 - `0.4.0` introduced the hook pipeline, execution modes, learned-skill capture, ask/cost/session flows, and richer notifications.
 - `0.5.x` exposed all skills as native Gemini CLI slash commands, fixed extension loading, and streamlined CI/CD.
 
+## [1.3.0](https://github.com/r3dlex/oh-my-gemini/compare/oh-my-gemini-v1.2.0...oh-my-gemini-v1.3.0) (2026-04-21)
+
+
+### Features
+
+* **vscode:** add vscode-omg extension for agent/workflow visualization ([bcc8c94](https://github.com/r3dlex/oh-my-gemini/commit/bcc8c949cfb88f4c4916d6387f3b7798e58c1476))
+
+
+### Bug Fixes
+
+* **release:** make all npm publish steps idempotent — suppress 404 on first-time package creation ([33c6486](https://github.com/r3dlex/oh-my-gemini/commit/33c64862fb24426de3948e9fbf19b382b7805292))
+
 ## [Unreleased]
 
 ### Features
