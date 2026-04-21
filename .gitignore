@@ -8,7 +8,9 @@ coverage/
 .omc/logs/
 .omc/state/
 .omc/sessions/
-.omx/
+.omx/logs/
+.omx/state/
+.omx/sessions/
 
 # Internal docs
 .internal/
