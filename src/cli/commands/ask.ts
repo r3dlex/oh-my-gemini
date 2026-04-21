@@ -44,11 +44,11 @@ interface ParsedAskRequest {
 
 function printAskHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp ask gemini <prompt>',
-    '   or: omp ask claude <prompt>',
-    '   or: omp ask codex <prompt>',
-    '   or: omp ask <provider> --prompt "<prompt>"',
-    '   or: omp ask <provider> --agent-prompt <role> --prompt "<prompt>"',
+    'Usage: omg ask gemini <prompt>',
+    '   or: omg ask claude <prompt>',
+    '   or: omg ask codex <prompt>',
+    '   or: omg ask <provider> --prompt "<prompt>"',
+    '   or: omg ask <provider> --agent-prompt <role> --prompt "<prompt>"',
     '',
     'Providers:',
     '  gemini   Google Gemini CLI',
@@ -192,7 +192,7 @@ export async function executeAskCommand(
   });
 
   const completedAt = (context.now?.() ?? new Date()).toISOString();
-  const artifactDir = path.join(context.cwd, '.omp', 'artifacts', 'ask');
+  const artifactDir = path.join(context.cwd, '.omg', 'artifacts', 'ask');
   await fs.mkdir(artifactDir, { recursive: true });
   const artifactBase = `${request.provider}-${slugify(request.prompt)}-${completedAt.replace(/[:.]/g, '-')}`;
   const artifactPath = path.join(artifactDir, `${artifactBase}.md`);
@@ -201,7 +201,7 @@ export async function executeAskCommand(
   const rateLimited = detectGeminiRateLimitFromOutput(combinedOutput);
 
   const artifactLines = [
-    `# omp ask ${request.provider}`,
+    `# omg ask ${request.provider}`,
     '',
     `- Session: ${sessionId}`,
     `- Started: ${startedAt}`,
@@ -284,7 +284,7 @@ export async function executeAskCommand(
     context.io.stdout(`Ask completed via ${request.provider}.`);
     context.io.stdout(`Artifact: ${artifactRelativePath}`);
     if (rateLimited) {
-      context.io.stdout('Gemini output indicates a rate limit condition. Run `omp wait` for status.');
+      context.io.stdout('Gemini output indicates a rate limit condition. Run `omg wait` for status.');
     }
     if (result.stdout.trim()) {
       context.io.stdout('');

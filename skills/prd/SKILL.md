@@ -5,7 +5,7 @@ primaryRole: analyst
 description: Transform a request into a measurable PRD with acceptance criteria, non-goals, and constraints. Use when a request needs a locked definition of done.
 ---
 
-# PRD Skill (oh-my-product)
+# PRD Skill (oh-my-gemini)
 
 ## Quick Start
 
@@ -54,8 +54,8 @@ Convert vague objectives into precise, locked product requirements.
 - Non-goals are mandatory — minimum 2 items
 - Constraints must reference concrete limits (not "be fast")
 - Once locked, changes require explicit unlock + re-approval
-- PRD persisted to `.omp/state/prd.md`
+- PRD persisted to `.omg/state/prd.md`
 
 ## Related commands
-- `/omp:team/prd` — team-scoped PRD creation
-- `/omp:taskboard sync` — generate tasks from PRD criteria
+- `/omg:team/prd` — team-scoped PRD creation
+- `/omg:taskboard sync` — generate tasks from PRD criteria

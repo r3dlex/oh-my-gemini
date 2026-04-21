@@ -98,7 +98,7 @@ describe('integration: subagents team run flow', () => {
   test.runIf(cliEntrypointExists())(
     'team run with subagents backend completes and persists deterministic state',
     async () => {
-      const tempRoot = createTempDir('omp-subagents-integration-');
+      const tempRoot = createTempDir('omg-subagents-integration-');
       const teamName = 'integration-subagents';
 
       try {
@@ -158,7 +158,7 @@ describe('integration: subagents team run flow', () => {
 
         const snapshotPath = path.join(
           tempRoot,
-          '.omp',
+          '.omg',
           'state',
           'team',
           teamName,
@@ -201,7 +201,7 @@ describe('integration: subagents team run flow', () => {
   test.runIf(cliEntrypointExists())(
     'leading $ or / tags auto-select subagents backend and assignment',
     async () => {
-      const tempRoot = createTempDir('omp-subagents-keyword-integration-');
+      const tempRoot = createTempDir('omg-subagents-keyword-integration-');
       const teamName = 'integration-subagents-keywords';
 
       try {
@@ -243,7 +243,7 @@ describe('integration: subagents team run flow', () => {
   test.runIf(cliEntrypointExists())(
     'leading skill tags map to canonical role assignments during runtime resolution',
     async () => {
-      const tempRoot = createTempDir('omp-subagents-skill-keyword-integration-');
+      const tempRoot = createTempDir('omg-subagents-skill-keyword-integration-');
       const teamName = 'integration-subagents-skill-keywords';
 
       try {
@@ -278,7 +278,7 @@ describe('integration: subagents team run flow', () => {
 
         const snapshotPath = path.join(
           tempRoot,
-          '.omp',
+          '.omg',
           'state',
           'team',
           teamName,
@@ -299,7 +299,7 @@ describe('integration: subagents team run flow', () => {
   test.runIf(cliEntrypointExists())(
     'alias tags resolve to canonical subagent assignments',
     async () => {
-      const tempRoot = createTempDir('omp-subagents-alias-keyword-integration-');
+      const tempRoot = createTempDir('omg-subagents-alias-keyword-integration-');
       const teamName = 'integration-subagents-alias-keywords';
 
       try {
@@ -335,7 +335,7 @@ describe('integration: subagents team run flow', () => {
 
         const snapshotPath = path.join(
           tempRoot,
-          '.omp',
+          '.omg',
           'state',
           'team',
           teamName,

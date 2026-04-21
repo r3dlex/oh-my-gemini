@@ -17,7 +17,7 @@ export interface VersionCommandContext {
 }
 
 interface VersionReport {
-  omp: string;
+  omg: string;
   node: string;
   tmux: string;
   gemini: string;
@@ -25,7 +25,7 @@ interface VersionReport {
 
 function printVersionHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp version [--json]',
+    'Usage: omg version [--json]',
     '',
     'Options:',
     '  --json    Print machine-readable version output',
@@ -99,7 +99,7 @@ export async function collectVersionReport(context: VersionCommandContext): Prom
   const probeVersion = context.probeVersion ?? defaultProbeVersion;
   const resolveOmpVersion = context.resolveOmpVersion ?? defaultResolveOmpVersion;
 
-  const [omp, nodeRaw, tmuxRaw, geminiRaw] = await Promise.all([
+  const [omg, nodeRaw, tmuxRaw, geminiRaw] = await Promise.all([
     resolveOmpVersion(),
     probeVersion('node', ['--version'], context.cwd),
     probeVersion('tmux', ['-V'], context.cwd),
@@ -107,7 +107,7 @@ export async function collectVersionReport(context: VersionCommandContext): Prom
   ]);
 
   return {
-    omp,
+    omg,
     node: normalizeNodeVersion(nodeRaw),
     tmux: normalizeTmuxVersion(tmuxRaw),
     gemini: normalizeGeminiVersion(geminiRaw),
@@ -144,7 +144,7 @@ export async function executeVersionCommand(
   if (hasFlag(parsed.options, ['json'])) {
     io.stdout(JSON.stringify({
       name: 'oh-my-gemini',
-      version: report.omp,
+      version: report.omg,
       node: report.node,
       tmux: report.tmux,
       gemini: report.gemini,
@@ -153,7 +153,7 @@ export async function executeVersionCommand(
   }
 
   io.stdout([
-    `oh-my-gemini v${report.omp}`,
+    `oh-my-gemini v${report.omg}`,
     `  node:    ${report.node}`,
     `  tmux:    ${report.tmux}`,
     `  gemini:  ${report.gemini}`,

@@ -5,15 +5,13 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
-
 jobs:
   release-please:
     name: Release Please
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
@@ -30,7 +28,11 @@ jobs:
     needs: release-please
     if: github.event_name == 'push' && needs.release-please.outputs.release_created != 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -59,12 +61,63 @@ jobs:
       - name: Publish pre-release to npm
         run: npm publish --tag pre --access public --provenance
 
+      - name: Publish oh-my-google-gemini pre-release
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json'));
+            pkg.name = 'oh-my-google-gemini';
+            pkg.bin = { omg: 'dist/cli/index.js' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          npm publish --tag pre --access public --provenance
+
+      - name: Publish omg pre-release
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json'));
+            pkg.name = 'omg';
+            pkg.bin = { omg: 'dist/cli/index.js' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          npm publish --tag pre --access public --provenance
+
+      - name: Publish omg-cli pre-release
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json'));
+            pkg.name = 'omg-cli';
+            pkg.bin = { omg: 'dist/cli/index.js' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          npm publish --tag pre --access public --provenance
+
+      - name: Configure GH Packages registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Publish pre-release to GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm pkg set name="@r3dlex/oh-my-gemini"
+          # --provenance omitted: GitHub Packages does not support npm provenance attestations
+          npm publish --tag pre --access public --ignore-scripts
+
   stable-publish:
     name: Publish stable release
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -89,6 +142,53 @@ jobs:
 
       - name: Publish stable to npm
         run: npm publish --tag latest --access public --provenance
+
+      - name: Publish oh-my-google-gemini
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json'));
+            pkg.name = 'oh-my-google-gemini';
+            pkg.bin = { omg: 'dist/cli/index.js' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          npm publish --tag latest --access public --provenance
+
+      - name: Publish omg
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json'));
+            pkg.name = 'omg';
+            pkg.bin = { omg: 'dist/cli/index.js' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          npm publish --tag latest --access public --provenance
+
+      - name: Publish omg-cli
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json'));
+            pkg.name = 'omg-cli';
+            pkg.bin = { omg: 'dist/cli/index.js' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          npm publish --tag latest --access public --provenance
+
+      - name: Configure GH Packages registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Publish stable to GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm pkg set name="@r3dlex/oh-my-gemini"
+          # --provenance omitted: GitHub Packages does not support npm provenance attestations
+          npm publish --tag latest --access public --ignore-scripts
 
       - name: Update floating major tag
         env:

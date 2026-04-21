@@ -27,8 +27,8 @@ describe('reliability: provider model configuration', () => {
 
   test('resolveTierModels supports global and provider-specific env overrides', () => {
     const env: NodeJS.ProcessEnv = {
-      OMP_GEMINI_MODEL_LOW: 'gemini-global-low',
-      OMP_GEMINI_MODEL_VERTEX_AI_HIGH: 'gemini-vertex-high',
+      OMG_GEMINI_MODEL_LOW: 'gemini-global-low',
+      OMG_GEMINI_MODEL_VERTEX_AI_HIGH: 'gemini-vertex-high',
     };
 
     expect(resolveTierModels('google-ai', env)).toStrictEqual({
@@ -46,9 +46,9 @@ describe('reliability: provider model configuration', () => {
 
   test('env overrides can select Gemini 2.5 models for backward compatibility', () => {
     const env: NodeJS.ProcessEnv = {
-      OMP_GEMINI_MODEL_HIGH: 'gemini-2.5-pro',
-      OMP_GEMINI_MODEL_MEDIUM: 'gemini-2.5-flash',
-      OMP_GEMINI_MODEL_LOW: 'gemini-2.5-flash-lite',
+      OMG_GEMINI_MODEL_HIGH: 'gemini-2.5-pro',
+      OMG_GEMINI_MODEL_MEDIUM: 'gemini-2.5-flash',
+      OMG_GEMINI_MODEL_LOW: 'gemini-2.5-flash-lite',
     };
 
     expect(resolveTierModels('google-ai', env)).toStrictEqual({

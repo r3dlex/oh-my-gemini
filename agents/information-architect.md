@@ -8,7 +8,7 @@ tools:
   - glob
 ---
 
-You are the information-architect agent for oh-my-product.
+You are the information-architect agent for oh-my-gemini.
 
 ## Mission
 

@@ -16,9 +16,9 @@ describe('reliability: feature config module', () => {
   test('loads default gemini tier models with env overrides', () => {
     const env = {
       ...process.env,
-      OMP_MODEL_LOW: 'gemini-low-custom',
-      OMP_MODEL_MEDIUM: 'gemini-medium-custom',
-      OMP_MODEL_HIGH: 'gemini-high-custom',
+      OMG_MODEL_LOW: 'gemini-low-custom',
+      OMG_MODEL_MEDIUM: 'gemini-medium-custom',
+      OMG_MODEL_HIGH: 'gemini-high-custom',
     };
 
     expect(getDefaultTierModels(env)).toEqual({
@@ -29,7 +29,7 @@ describe('reliability: feature config module', () => {
   });
 
   test('merges user/project/env config with precedence', async () => {
-    const tempRoot = createTempDir('omp-feature-config-');
+    const tempRoot = createTempDir('omg-feature-config-');
     const userConfigPath = path.join(tempRoot, 'user-config.jsonc');
     const projectConfigPath = path.join(tempRoot, 'project-config.jsonc');
 
@@ -55,7 +55,7 @@ describe('reliability: feature config module', () => {
 
       const env = {
         ...process.env,
-        OMP_ROUTING_DEFAULT_TIER: 'MEDIUM',
+        OMG_ROUTING_DEFAULT_TIER: 'MEDIUM',
       };
 
       const loaded = loadConfig({
@@ -90,8 +90,8 @@ describe('reliability: feature config module', () => {
     const defaults = getDefaultExternalModels({
       ...process.env,
       DEFAULT_FRONTIER_MODEL: 'gpt-5.4',
-      OMP_EXTERNAL_MODELS_DEFAULT_CODEX_MODEL: 'gpt-5.2-codex',
-      OMP_EXTERNAL_MODELS_DEFAULT_GEMINI_MODEL: 'gemini-2.5-pro',
+      OMG_EXTERNAL_MODELS_DEFAULT_CODEX_MODEL: 'gpt-5.2-codex',
+      OMG_EXTERNAL_MODELS_DEFAULT_GEMINI_MODEL: 'gemini-2.5-pro',
     });
 
     expect(defaults.codexModel).toBe('gpt-5.2-codex');
@@ -139,46 +139,46 @@ describe('reliability: feature config module', () => {
         cwd: process.cwd(),
         env: {
           ...process.env,
-          OMP_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER: 'gemini,unknown,codex',
+          OMG_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER: 'gemini,unknown,codex',
         },
         configPaths: {
           user: '/__missing__/user.jsonc',
           project: '/__missing__/project.jsonc',
         },
       }),
-    ).toThrow('OMP_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER contains invalid provider(s): unknown');
+    ).toThrow('OMG_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER contains invalid provider(s): unknown');
   });
 
 
-  test('fails closed on invalid OMP_MAX_BACKGROUND_TASKS', () => {
+  test('fails closed on invalid OMG_MAX_BACKGROUND_TASKS', () => {
     expect(() =>
       loadConfig({
         cwd: process.cwd(),
         env: {
           ...process.env,
-          OMP_MAX_BACKGROUND_TASKS: 'not-a-number',
+          OMG_MAX_BACKGROUND_TASKS: 'not-a-number',
         },
         configPaths: {
           user: '/__missing__/user.jsonc',
           project: '/__missing__/project.jsonc',
         },
       }),
-    ).toThrow('OMP_MAX_BACKGROUND_TASKS must be an integer');
+    ).toThrow('OMG_MAX_BACKGROUND_TASKS must be an integer');
   });
 
-  test('fails closed on invalid OMP_MAX_ESCALATIONS', () => {
+  test('fails closed on invalid OMG_MAX_ESCALATIONS', () => {
     expect(() =>
       loadConfig({
         cwd: process.cwd(),
         env: {
           ...process.env,
-          OMP_MAX_ESCALATIONS: 'oops',
+          OMG_MAX_ESCALATIONS: 'oops',
         },
         configPaths: {
           user: '/__missing__/user.jsonc',
           project: '/__missing__/project.jsonc',
         },
       }),
-    ).toThrow('OMP_MAX_ESCALATIONS/OMP_ROUTING_MAX_ESCALATIONS must be an integer');
+    ).toThrow('OMG_MAX_ESCALATIONS/OMG_ROUTING_MAX_ESCALATIONS must be an integer');
   });
 });

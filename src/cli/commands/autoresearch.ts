@@ -26,16 +26,16 @@ export interface AutoresearchCommandContext {
 
 function printAutoresearchHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp autoresearch "<mission>"',
-    '   or: omp autoresearch --mission "<mission>"',
+    'Usage: omg autoresearch "<mission>"',
+    '   or: omg autoresearch --mission "<mission>"',
     '',
     'Options:',
     '  --mission <text>   Research mission or question',
     '  --help             Show command help',
     '',
     'Examples:',
-    '  omp autoresearch "compare auth libraries"',
-    '  omp autoresearch --mission "what logging do we have"',
+    '  omg autoresearch "compare auth libraries"',
+    '  omg autoresearch --mission "what logging do we have"',
   ].join('\n'));
 }
 
@@ -91,7 +91,7 @@ export async function executeAutoresearchCommand(
 
   if (!mission) {
     context.io.stderr('Missing mission. Provide a mission as a positional argument or via --mission.');
-    context.io.stderr('Run `omp autoresearch --help` for usage.');
+    context.io.stderr('Run `omg autoresearch --help` for usage.');
     return { exitCode: 2 };
   }
 
@@ -109,7 +109,7 @@ export async function executeAutoresearchCommand(
   const now = context.now?.() ?? new Date();
   const timestamp = now.toISOString().replace(/[:.]/g, '-');
   const slug = slugify(mission);
-  const artifactDir = path.join(context.cwd, '.omp', 'artifacts', 'autoresearch');
+  const artifactDir = path.join(context.cwd, '.omg', 'artifacts', 'autoresearch');
 
   try {
     await fs.mkdir(artifactDir, { recursive: true });
@@ -117,7 +117,7 @@ export async function executeAutoresearchCommand(
     const artifactRelativePath = path.relative(context.cwd, artifactPath) || artifactPath;
 
     const artifactLines = [
-      '# omp autoresearch',
+      '# omg autoresearch',
       '',
       `- Mission: ${mission}`,
       `- Completed: ${now.toISOString()}`,

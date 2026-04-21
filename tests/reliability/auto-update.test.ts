@@ -61,7 +61,7 @@ describe('reliability: launch-time auto-update prompt', () => {
       );
 
       const persisted = JSON.parse(
-        await readFile(path.join(cwd, '.omp', 'state', 'update-check.json'), 'utf8'),
+        await readFile(path.join(cwd, '.omg', 'state', 'update-check.json'), 'utf8'),
       ) as { last_seen_latest?: string };
 
       expect(updateAttempts).toBe(1);

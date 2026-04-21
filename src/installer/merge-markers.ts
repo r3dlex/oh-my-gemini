@@ -20,8 +20,8 @@ export interface MergeMarkerFileOptions {
 }
 
 export const DEFAULT_MARKER: MarkerConfig = {
-  start: '# >>> oh-my-product (managed) >>>',
-  end: '# <<< oh-my-product (managed) <<<',
+  start: '# >>> oh-my-gemini (managed) >>>',
+  end: '# <<< oh-my-gemini (managed) <<<',
 };
 
 function ensureTrailingNewline(content: string): string {

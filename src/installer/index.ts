@@ -256,9 +256,9 @@ async function ensureManagedGeminiNote(
     'This section is managed by oh-my-gemini setup.',
     '',
     `- Active setup scope: ${scope}`,
-    '- Scope precedence: CLI flag > persisted (.omp/setup-scope.json) > default (project)',
-    '- Run `oh-my-gemini doctor` (aliases: `omg doctor`, `omp doctor`) after setup to validate dependencies.',
-    '- Run `oh-my-gemini verify` (aliases: `omg verify`, `omp verify`) to execute typecheck/smoke/integration/reliability checks.',
+    '- Scope precedence: CLI flag > persisted (.omg/setup-scope.json) > default (project)',
+    '- Run `oh-my-gemini doctor` (alias: `omg doctor`) after setup to validate dependencies.',
+    '- Run `oh-my-gemini verify` (alias: `omg verify`) to execute typecheck/smoke/integration/reliability checks.',
   ];
 
   const result = await mergeMarkedBlockInFile(filePath, managedLines, {
@@ -365,7 +365,7 @@ export async function runSetup(options: SetupOptions = {}): Promise<SetupResult>
   const fsImpl = options.fsImpl ?? fs;
   const dryRun = options.dryRun ?? false;
 
-  await assertSetupDirectory(path.join(cwd, '.omp'), 'setup state (.omp)', fsImpl);
+  await assertSetupDirectory(path.join(cwd, '.omg'), 'setup state (.omg)', fsImpl);
   await assertSetupDirectory(path.join(cwd, '.gemini'), 'Gemini config (.gemini)', fsImpl);
   await assertSetupDirectory(
     path.join(cwd, '.gemini', 'agents'),

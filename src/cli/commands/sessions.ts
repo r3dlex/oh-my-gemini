@@ -9,7 +9,7 @@ export interface SessionsCommandContext {
 
 function printSessionsHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp sessions [--json] [--limit <n>]',
+    'Usage: omg sessions [--json] [--limit <n>]',
     '',
     'Options:',
     '  --limit <n>  Maximum rows to print (default: 20)',

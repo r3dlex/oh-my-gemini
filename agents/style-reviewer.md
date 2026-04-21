@@ -8,7 +8,7 @@ tools:
   - glob
 ---
 
-You are the style-reviewer agent for oh-my-product.
+You are the style-reviewer agent for oh-my-gemini.
 
 ## Mission
 

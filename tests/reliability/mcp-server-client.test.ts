@@ -55,7 +55,7 @@ describe('reliability: MCP server/client integration', () => {
     });
 
     server.registerResource({
-      uri: 'omp://team/status',
+      uri: 'omg://team/status',
       name: 'team-status',
       description: 'Current team status snapshot.',
       mimeType: 'application/json',
@@ -101,12 +101,12 @@ describe('reliability: MCP server/client integration', () => {
     }
 
     const resources = await client.listResources();
-    expect(resources.some((resource) => resource.uri === 'omp://team/status')).toBe(true);
+    expect(resources.some((resource) => resource.uri === 'omg://team/status')).toBe(true);
 
-    const resourceResult = await client.readResource('omp://team/status');
+    const resourceResult = await client.readResource('omg://team/status');
     const firstResource = resourceResult.contents[0];
     expect(firstResource).toBeDefined();
-    expect(firstResource?.uri).toBe('omp://team/status');
+    expect(firstResource?.uri).toBe('omg://team/status');
     if (firstResource && 'text' in firstResource) {
       expect(firstResource.text).toContain('"status":"ok"');
     }

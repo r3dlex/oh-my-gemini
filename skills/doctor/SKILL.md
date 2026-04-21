@@ -5,16 +5,16 @@ primaryRole: diagnostician
 description: Inspect setup, extension assets, runtime prerequisites, and state health. Use when the user needs environment, install, or state diagnostics.
 ---
 
-# Doctor Skill (oh-my-product)
+# Doctor Skill (oh-my-gemini)
 
 ## Quick Start
 
-- Run `omp doctor` and summarize the smallest safe fix for anything that fails.
+- Run `omg doctor` and summarize the smallest safe fix for anything that fails.
 
 Use this skill when the user needs environment or installation diagnostics.
 
 ## Quick Start
-- `omp doctor`
+- `omg doctor`
 
 ## Typical checks
 - Node, npm, Gemini CLI, tmux, and container runtime availability
@@ -22,4 +22,4 @@ Use this skill when the user needs environment or installation diagnostics.
 - persisted state writeability and team state integrity
 
 ## Follow-up
-If the issue is environmental, recommend `omp setup` or the smallest safe corrective action.
+If the issue is environmental, recommend `omg setup` or the smallest safe corrective action.

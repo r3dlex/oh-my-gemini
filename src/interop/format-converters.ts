@@ -11,7 +11,7 @@ export type OmcTaskStatus =
 export type OmpTaskStatus = PersistedTaskStatus;
 
 export interface StatusMappingAnnotation {
-  originalSystem: 'omc' | 'omp';
+  originalSystem: 'omc' | 'omg';
   originalStatus: string;
   mappedStatus: string;
   mappedAt: string;
@@ -25,7 +25,7 @@ const OMC_STATUS_VALUES = new Set<OmcTaskStatus>([
   'failed',
 ]);
 
-const OMP_STATUS_VALUES = new Set<OmpTaskStatus>([
+const OMG_STATUS_VALUES = new Set<OmpTaskStatus>([
   'pending',
   'in_progress',
   'blocked',
@@ -37,7 +37,7 @@ const OMP_STATUS_VALUES = new Set<OmpTaskStatus>([
 ]);
 
 export function isOmpTaskStatus(value: unknown): value is OmpTaskStatus {
-  return typeof value === 'string' && OMP_STATUS_VALUES.has(value as OmpTaskStatus);
+  return typeof value === 'string' && OMG_STATUS_VALUES.has(value as OmpTaskStatus);
 }
 
 export function isOmcTaskStatus(value: unknown): value is OmcTaskStatus {
@@ -57,7 +57,7 @@ export function omgStatusToOmc(
       return {
         status,
         annotation: {
-          originalSystem: 'omp',
+          originalSystem: 'omg',
           originalStatus: status,
           mappedStatus: status,
           mappedAt,
@@ -68,7 +68,7 @@ export function omgStatusToOmc(
       return {
         status: 'pending',
         annotation: {
-          originalSystem: 'omp',
+          originalSystem: 'omg',
           originalStatus: status,
           mappedStatus: 'pending',
           mappedAt,
@@ -88,7 +88,7 @@ function resolveInteropAnnotation(
 
   const candidate = raw as Record<string, unknown>;
   if (
-    (candidate.originalSystem !== 'omc' && candidate.originalSystem !== 'omp') ||
+    (candidate.originalSystem !== 'omc' && candidate.originalSystem !== 'omg') ||
     typeof candidate.originalStatus !== 'string' ||
     typeof candidate.mappedStatus !== 'string' ||
     typeof candidate.mappedAt !== 'string' ||
@@ -113,7 +113,7 @@ export function omcStatusToOmp(
   const annotation = resolveInteropAnnotation(metadata);
   if (
     annotation?.lossy &&
-    annotation.originalSystem === 'omp' &&
+    annotation.originalSystem === 'omg' &&
     isOmpTaskStatus(annotation.originalStatus)
   ) {
     return annotation.originalStatus;
@@ -178,7 +178,7 @@ export interface InteropMessagePayload {
 }
 
 function getGeminiRoleForSource(source: string): GeminiContent['role'] {
-  return source.toLowerCase() === 'omp' ? 'model' : 'user';
+  return source.toLowerCase() === 'omg' ? 'model' : 'user';
 }
 
 export function interopMessageToGeminiContent(
@@ -263,8 +263,8 @@ export function extractTextFromGeminiContent(content: GeminiContent): string {
 
 export function geminiContentToInteropMessage(input: {
   content: GeminiContent;
-  source: 'omc' | 'omp';
-  target: 'omc' | 'omp';
+  source: 'omc' | 'omg';
+  target: 'omc' | 'omg';
   metadata?: Record<string, unknown>;
 }): InteropMessagePayload {
   const now = new Date().toISOString();

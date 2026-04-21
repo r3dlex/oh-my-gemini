@@ -45,7 +45,7 @@ function resolveTokenLogPath(cwd: string): string {
 }
 
 function resolveLegacyTokenLogPath(cwd: string): string {
-  return path.join(cwd, '.omp', 'state', 'tokens', 'usage.ndjson');
+  return path.join(cwd, '.omx', 'state', 'tokens', 'usage.ndjson');
 }
 
 async function fileExists(filePath: string): Promise<boolean> {

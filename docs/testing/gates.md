@@ -18,15 +18,15 @@ Pass criteria:
   - `scripts/consumer-contract-smoke.sh` (local `.bin` + extension asset + deterministic invocation checks),
   - `scripts/global-install-contract-smoke.sh` (global-prefix alias provenance + setup contract checks),
 - both entrypoints are proven in global context:
-  - `omp setup --scope project --json`
-  - `oh-my-gemini setup --scope project --dry-run --json` (compat: `omp setup --scope project --dry-run --json`).
+  - `omg setup --scope project --json`
+  - `oh-my-gemini setup --scope project --dry-run --json` (compat: `omg setup --scope project --dry-run --json`).
 
 Fail criteria:
 
 - installed bin execution fails,
 - extension assets are missing from the tarball,
 - global alias provenance/setup contract checks fail,
-- `npx` invocation without `--no-install` for `omp` is detected in checked scripts/docs/prompts/tests/CI.
+- `npx` invocation without `--no-install` for `omg` is detected in checked scripts/docs/prompts/tests/CI.
 
 ### C1 — Quality baseline (blocking)
 
@@ -49,7 +49,7 @@ Pass criteria:
 
 - all quality checks pass with hard-fail semantics (no hidden `continue-on-error`).
 - coverage gate enforces >=80% statements/functions/branches/lines across the release-critical extension and verification surfaces exercised by CI.
-- legacy compatibility bypass flags remain disabled (`OMG_LEGACY_RUNNING_SUCCESS!=1`, `OMG_LEGACY_VERIFY_GATE_PASS!=1`; `OMP_*` aliases remain blocked too).
+- legacy compatibility bypass flags remain disabled (`OMG_LEGACY_RUNNING_SUCCESS!=1`, `OMG_LEGACY_VERIFY_GATE_PASS!=1`; `OMG_*` aliases remain blocked too).
 - verification framework contracts pass (`test runners`, `tier selector`, `assertion helpers`).
 
 Fail criteria:
@@ -82,7 +82,7 @@ npm run gate:legacy-bypass
 Pass criteria:
 
 - blocking workflows (`.github/workflows/ci.yml`, `.github/workflows/release.yml`) execute the policy gate before quality/release checks.
-- no blocking job relies on `OMG_LEGACY_RUNNING_SUCCESS=1` or `OMG_LEGACY_VERIFY_GATE_PASS=1` (or their `OMP_*` compatibility aliases).
+- no blocking job relies on `OMG_LEGACY_RUNNING_SUCCESS=1` or `OMG_LEGACY_VERIFY_GATE_PASS=1` (or their `OMG_*` compatibility aliases).
 
 Fail criteria:
 
@@ -126,7 +126,7 @@ npm run setup:subagents
 
 - `npm run verify` runs deterministic suites (`typecheck`, `smoke`, `integration`, `reliability`) by default.
 - tier bundles can scope execution: `light` (`typecheck,smoke`), `standard` (`typecheck,smoke,integration`), `thorough` (default full bundle).
-- `npm run omp -- verify --dry-run` is plan-only output; skipped suites are not treated as executed pass.
+- `npm run omg -- verify --dry-run` is plan-only output; skipped suites are not treated as executed pass.
 - Live Gemini/tmux operator-path evidence is collected separately in Gate 3 via `team:e2e`.
 - Optional key-authenticated Docker live smoke:
   `GEMINI_API_KEY=<key> npm run test:docker:full`.
@@ -142,10 +142,10 @@ npm run verify
 
 ### Pass criteria
 
-- `npm run omp -- team run` exits `0`
+- `npm run omg -- team run` exits `0`
 - `team run` enforces worker-count contract (`--workers 1..8`, default `3`)
 - successful runs persist canonical terminal phase `completed` (legacy `complete` normalized on read)
-- lifecycle artifacts recorded under `.omp/state`
+- lifecycle artifacts recorded under `.omg/state`
 - verify confirms expected workflow behavior
 
 ## Gate 2 — Reliability Hardening
@@ -166,7 +166,7 @@ npm run verify
   - watchdog failures (stale/invalid snapshot timestamps),
 - orchestrator enforces fix-loop cap (default `3`) and records a deterministic `failed` phase,
 - persisted worker heartbeat/status signals are merged into monitor snapshots,
-- runtime snapshots expose `verifyBaselinePassed`; absent/false verify gate signals fail deterministically unless explicit legacy compatibility flags are enabled (`OMG_LEGACY_VERIFY_GATE_PASS`, `OMG_LEGACY_RUNNING_SUCCESS`, or their `OMP_*` compatibility aliases),
+- runtime snapshots expose `verifyBaselinePassed`; absent/false verify gate signals fail deterministically unless explicit legacy compatibility flags are enabled (`OMG_LEGACY_VERIFY_GATE_PASS`, `OMG_LEGACY_RUNNING_SUCCESS`, or their `OMG_*` compatibility aliases),
 - state store writes canonical task/mailbox artifacts (`tasks/task-<id>.json`, `mailbox/<worker>.ndjson`) with compatibility reads for legacy payloads,
 - monitor/runtime failure paths surface actionable `failed` reasons.
 

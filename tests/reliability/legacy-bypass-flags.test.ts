@@ -12,7 +12,7 @@ import {
 } from '../../src/constants.js';
 
 describe('reliability: legacy bypass flag naming', () => {
-  test('accepts both OMG-first and OMP compatibility env flags', () => {
+  test('accepts both OMG-first and OMG compatibility env flags', () => {
     expect(isLegacyRunningSuccessEnabled({
       [CANONICAL_LEGACY_RUNNING_SUCCESS_ENV_FLAG]: '1',
     })).toBe(true);
@@ -37,9 +37,9 @@ describe('reliability: legacy bypass flag naming', () => {
     });
 
     expect(warnings[0]).toContain('OMG_LEGACY_RUNNING_SUCCESS=1');
-    expect(warnings[0]).toContain('OMP_LEGACY_RUNNING_SUCCESS=1');
+    expect(warnings[0]).toContain('OMG_LEGACY_RUNNING_SUCCESS=1');
     expect(warnings[1]).toContain('OMG_LEGACY_VERIFY_GATE_PASS=1');
-    expect(warnings[1]).toContain('OMP_LEGACY_VERIFY_GATE_PASS=1');
+    expect(warnings[1]).toContain('OMG_LEGACY_VERIFY_GATE_PASS=1');
 
     const usages = getLegacyBypassUsages({
       [COMPAT_LEGACY_RUNNING_SUCCESS_ENV_FLAG]: '1',

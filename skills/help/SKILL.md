@@ -1,11 +1,11 @@
 ---
 name: help
-aliases: ["/help", "usage", "how do I use this", "what can omp do"]
+aliases: ["/help", "usage", "how do I use this", "what can omg do"]
 primaryRole: writer
 description: Explain the most relevant oh-my-gemini commands, skills, and workflow choices. Use when the user asks how to use the project.
 ---
 
-# Help Skill (oh-my-product)
+# Help Skill (oh-my-gemini)
 
 ## Quick Start
 
@@ -19,8 +19,8 @@ Use this skill when the user needs guidance on commands, skills, or workflow sel
 - mention adjacent commands only when they unblock the user
 
 ## Common entry points
-- `omp setup`
-- `omp doctor`
-- `omp ask gemini --prompt "..."`
-- `omp team run --task "..."`
-- `omp verify`
+- `omg setup`
+- `omg doctor`
+- `omg ask gemini --prompt "..."`
+- `omg team run --task "..."`
+- `omg verify`

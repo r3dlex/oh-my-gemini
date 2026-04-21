@@ -16,8 +16,8 @@ export const CLI_USAGE_ERROR_EXIT_CODE = CLI_USAGE_EXIT_CODE;
 
 export const CANONICAL_LEGACY_RUNNING_SUCCESS_ENV_FLAG = 'OMG_LEGACY_RUNNING_SUCCESS';
 export const CANONICAL_LEGACY_VERIFY_GATE_PASS_ENV_FLAG = 'OMG_LEGACY_VERIFY_GATE_PASS';
-export const COMPAT_LEGACY_RUNNING_SUCCESS_ENV_FLAG = 'OMP_LEGACY_RUNNING_SUCCESS';
-export const COMPAT_LEGACY_VERIFY_GATE_PASS_ENV_FLAG = 'OMP_LEGACY_VERIFY_GATE_PASS';
+export const COMPAT_LEGACY_RUNNING_SUCCESS_ENV_FLAG = 'OMX_LEGACY_RUNNING_SUCCESS';
+export const COMPAT_LEGACY_VERIFY_GATE_PASS_ENV_FLAG = 'OMX_LEGACY_VERIFY_GATE_PASS';
 
 export const LEGACY_RUNNING_SUCCESS_ENV_FLAG = CANONICAL_LEGACY_RUNNING_SUCCESS_ENV_FLAG;
 export const LEGACY_RUNNING_SUCCESS_ENV = LEGACY_RUNNING_SUCCESS_ENV_FLAG;
@@ -49,7 +49,7 @@ const LEGACY_BYPASS_DESCRIPTORS = {
     mode: 'running-success',
     description: 'treat runtime status=running as a successful terminal completion',
     warning:
-      'Deprecated compatibility bypass: OMG_LEGACY_RUNNING_SUCCESS=1 (legacy alias: OMP_LEGACY_RUNNING_SUCCESS=1) allows running snapshots to pass. Remove this temporary flag.',
+      'Deprecated compatibility bypass: OMG_LEGACY_RUNNING_SUCCESS=1 (legacy alias: OMX_LEGACY_RUNNING_SUCCESS=1) allows running snapshots to pass. Remove this temporary flag.',
   },
   verifyGatePass: {
     envFlag: LEGACY_VERIFY_GATE_PASS_ENV_FLAG,
@@ -57,7 +57,7 @@ const LEGACY_BYPASS_DESCRIPTORS = {
     mode: 'verify-gate-pass',
     description: 'treat missing verifyBaselinePassed as a successful verify gate',
     warning:
-      'Deprecated compatibility bypass: OMG_LEGACY_VERIFY_GATE_PASS=1 (legacy alias: OMP_LEGACY_VERIFY_GATE_PASS=1) allows missing verify baseline signals to pass. Remove this temporary flag.',
+      'Deprecated compatibility bypass: OMG_LEGACY_VERIFY_GATE_PASS=1 (legacy alias: OMX_LEGACY_VERIFY_GATE_PASS=1) allows missing verify baseline signals to pass. Remove this temporary flag.',
   },
 } as const satisfies Record<string, LegacyBypassDescriptor>;
 

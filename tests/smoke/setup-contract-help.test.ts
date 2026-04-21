@@ -45,7 +45,7 @@ describe('smoke: install-to-setup help contract', () => {
 
     expect(result.status, [result.stderr, result.stdout].join('\n')).toBe(0);
     expect(result.stdout).toContain('After npm install -g oh-my-gemini, run setup to apply local files');
-    expect(result.stdout).toContain('omg setup ... / omp setup ... / oh-my-gemini setup ...');
+    expect(result.stdout).toContain('omg setup ... / omg setup ... / oh-my-gemini setup ...');
   });
 
   test('rejects unknown options with exit code 2', async () => {
@@ -72,7 +72,7 @@ describe('smoke: install-to-setup help contract', () => {
         scope: 'project',
         scopeSource: 'cli',
         changed: false,
-        persistenceFilePath: '/tmp/test/.omp/setup-scope.json',
+        persistenceFilePath: '/tmp/test/.omg/setup-scope.json',
         actions: [],
       };
     };
@@ -107,7 +107,7 @@ describe('smoke: install-to-setup help contract', () => {
       scope: 'project',
       scopeSource: 'cli',
       changed: false,
-      persistenceFilePath: '/tmp/test/.omp/setup-scope.json',
+      persistenceFilePath: '/tmp/test/.omg/setup-scope.json',
       actions: [],
     });
 

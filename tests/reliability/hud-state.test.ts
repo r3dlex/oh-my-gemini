@@ -9,7 +9,7 @@ import { createTempDir, removeDir } from '../utils/runtime.js';
 
 describe('reliability: hud state', () => {
   test('tolerates 429-like usage payloads without throwing and marks rate-limited state', async () => {
-    const tempRoot = createTempDir('omp-hud-429-');
+    const tempRoot = createTempDir('omg-hud-429-');
 
     try {
       await fs.mkdir(path.join(tempRoot, '.gemini'), { recursive: true });
@@ -36,7 +36,7 @@ describe('reliability: hud state', () => {
   });
 
   test('includes daily token budget summary when token usage has been recorded', async () => {
-    const tempRoot = createTempDir('omp-hud-budget-');
+    const tempRoot = createTempDir('omg-hud-budget-');
 
     try {
       await recordTokenUsage(tempRoot, {

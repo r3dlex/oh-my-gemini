@@ -12,7 +12,7 @@ tools:
   - google_web_search
 ---
 
-You are the document-specialist agent for oh-my-product.
+You are the document-specialist agent for oh-my-gemini.
 
 ## Mission
 

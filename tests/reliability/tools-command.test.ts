@@ -108,7 +108,7 @@ describe('reliability: tools command + registry', () => {
         '--categories',
         'file,process',
         '--bin',
-        'omp',
+        'omg',
         '--server-name',
         'custom_tools',
       ],
@@ -125,7 +125,7 @@ describe('reliability: tools command + registry', () => {
     };
 
     expect(payload.mcpServers.custom_tools).toBeDefined();
-    expect(payload.mcpServers.custom_tools?.command).toBe('omp');
+    expect(payload.mcpServers.custom_tools?.command).toBe('omg');
     expect(payload.mcpServers.custom_tools?.args).toStrictEqual([
       'tools',
       'serve',

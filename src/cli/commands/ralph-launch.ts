@@ -22,9 +22,9 @@ export interface RalphLaunchCommandContext {
 
 function printRalphHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp ralph "<task>"',
-    '   or: omp ralph --task "<task>"',
-    '   or: omp ralph --max-iterations <N> "<task>"',
+    'Usage: omg ralph "<task>"',
+    '   or: omg ralph --task "<task>"',
+    '   or: omg ralph --max-iterations <N> "<task>"',
     '',
     'Options:',
     '  --task <text>          Task description to run in ralph mode',
@@ -32,8 +32,8 @@ function printRalphHelp(io: CliIo): void {
     '  --help                 Show command help',
     '',
     'Examples:',
-    '  omp ralph "implement user auth with tests"',
-    '  omp ralph --max-iterations 5 "fix all failing tests"',
+    '  omg ralph "implement user auth with tests"',
+    '  omg ralph --max-iterations 5 "fix all failing tests"',
   ].join('\n'));
 }
 
@@ -44,8 +44,8 @@ async function defaultRunRalph(input: RalphLaunchInput): Promise<RalphLaunchOutp
       cwd: input.cwd,
       env: {
         ...input.env,
-        OMP_MODE: 'ralph',
-        OMP_RALPH_MAX_ITERATIONS: String(input.maxIterations),
+        OMG_MODE: 'ralph',
+        OMG_RALPH_MAX_ITERATIONS: String(input.maxIterations),
       },
       stdio: 'inherit',
     });
@@ -73,7 +73,7 @@ export async function executeRalphLaunchCommand(
 
   if (!task) {
     context.io.stderr('Missing task. Provide a task as a positional argument or via --task.');
-    context.io.stderr('Run `omp ralph --help` for usage.');
+    context.io.stderr('Run `omg ralph --help` for usage.');
     return { exitCode: 2 };
   }
 

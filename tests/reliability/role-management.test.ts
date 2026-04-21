@@ -78,7 +78,7 @@ describe('reliability: role management', () => {
       {
         env: {
           ...process.env,
-          OMP_GEMINI_MODEL_REASONING: 'gemini-3.1-pro-preview',
+          OMG_GEMINI_MODEL_REASONING: 'gemini-3.1-pro-preview',
         },
       },
     );

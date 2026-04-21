@@ -5,7 +5,7 @@ primaryRole: documenter
 description: Extract a reusable lesson, checklist, or future skill idea from the current work. Use when the session produced a durable pattern worth saving.
 ---
 
-# Learn Skill (oh-my-product)
+# Learn Skill (oh-my-gemini)
 
 ## Quick Start
 

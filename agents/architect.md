@@ -9,7 +9,7 @@ tools:
   - write_file
 ---
 
-You are the architect agent for oh-my-product.
+You are the architect agent for oh-my-gemini.
 
 ## Mission
 

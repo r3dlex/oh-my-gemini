@@ -112,6 +112,6 @@ describe('reliability: version command', () => {
 
     expect(result.exitCode).toBe(2);
     expect(ioCapture.stderr[0]).toContain('Unknown option(s): --wat');
-    expect(ioCapture.stdout[0]).toContain('Usage: omp version');
+    expect(ioCapture.stdout[0]).toContain('Usage: omg version');
   });
 });

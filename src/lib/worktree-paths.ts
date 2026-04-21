@@ -1,12 +1,12 @@
 /**
  * Worktree Path Enforcement
  *
- * Provides strict path validation and resolution for .omp/ paths,
+ * Provides strict path validation and resolution for .omg/ paths,
  * ensuring all operations stay within the worktree boundary.
  *
- * Supports OMG_STATE_DIR / OMP_STATE_DIR environment variables for centralized state storage.
- * When set, state is stored at $OMG_STATE_DIR or $OMP_STATE_DIR/{project-identifier}/ instead
- * of {worktree}/.omp/. This preserves state across worktree deletions.
+ * Supports OMG_STATE_DIR / OMG_STATE_DIR environment variables for centralized state storage.
+ * When set, state is stored at $OMG_STATE_DIR or $OMG_STATE_DIR/{project-identifier}/ instead
+ * of {worktree}/.omg/. This preserves state across worktree deletions.
  */
 
 import { createHash } from 'crypto';
@@ -15,22 +15,22 @@ import { existsSync, mkdirSync, realpathSync, readdirSync } from 'fs';
 import { homedir } from 'os';
 import { resolve, normalize, relative, sep, join, isAbsolute, basename, dirname } from 'path';
 
-/** Standard .omp subdirectories */
+/** Standard .omg subdirectories */
 export const OmcPaths = {
-  ROOT: '.omp',
-  STATE: '.omp/state',
-  SESSIONS: '.omp/state/sessions',
-  PLANS: '.omp/plans',
-  RESEARCH: '.omp/research',
-  NOTEPAD: '.omp/notepad.md',
-  PROJECT_MEMORY: '.omp/project-memory.json',
-  DRAFTS: '.omp/drafts',
-  NOTEPADS: '.omp/notepads',
-  LOGS: '.omp/logs',
-  SCIENTIST: '.omp/scientist',
-  AUTOPILOT: '.omp/autopilot',
-  SKILLS: '.omp/skills',
-  SHARED_MEMORY: '.omp/state/shared-memory',
+  ROOT: '.omg',
+  STATE: '.omg/state',
+  SESSIONS: '.omg/state/sessions',
+  PLANS: '.omg/plans',
+  RESEARCH: '.omg/research',
+  NOTEPAD: '.omg/notepad.md',
+  PROJECT_MEMORY: '.omg/project-memory.json',
+  DRAFTS: '.omg/drafts',
+  NOTEPADS: '.omg/notepads',
+  LOGS: '.omg/logs',
+  SCIENTIST: '.omg/scientist',
+  AUTOPILOT: '.omg/autopilot',
+  SKILLS: '.omg/skills',
+  SHARED_MEMORY: '.omg/state/shared-memory',
 } as const;
 
 /**
@@ -100,7 +100,7 @@ export function validatePath(inputPath: string): void {
 }
 
 // ============================================================================
-// OMG_STATE_DIR / OMP_STATE_DIR SUPPORT (Issue #1014)
+// OMG_STATE_DIR / OMG_STATE_DIR SUPPORT (Issue #1014)
 // ============================================================================
 
 /** Track which dual-dir warnings have been logged to avoid repeated warnings */
@@ -149,24 +149,24 @@ export function getProjectIdentifier(worktreeRoot?: string): string {
 }
 
 /**
- * Get the .omp root directory path.
+ * Get the .omg root directory path.
  *
- * When OMG_STATE_DIR or OMP_STATE_DIR is set, returns the configured centralized
+ * When OMG_STATE_DIR or OMG_STATE_DIR is set, returns the configured centralized
  * path plus {project-identifier}/
- * instead of {worktree}/.omp/. This allows centralized state storage that
+ * instead of {worktree}/.omg/. This allows centralized state storage that
  * survives worktree deletion.
  *
  * @param worktreeRoot - Optional worktree root
  * @returns Absolute path to the omc root directory
  */
 export function getOmcRoot(worktreeRoot?: string): string {
-  const customDir = process.env.OMG_STATE_DIR ?? process.env.OMP_STATE_DIR;
+  const customDir = process.env.OMG_STATE_DIR ?? process.env.OMG_STATE_DIR;
   if (customDir) {
     const root = worktreeRoot || getWorktreeRoot() || process.cwd();
     const projectId = getProjectIdentifier(root);
     const centralizedPath = join(customDir, projectId);
 
-    // Log notice if both legacy .omp/ and new centralized dir exist
+    // Log notice if both legacy .omg/ and new centralized dir exist
     const legacyPath = join(root, OmcPaths.ROOT);
     const warningKey = `${legacyPath}:${centralizedPath}`;
     if (!dualDirWarnings.has(warningKey) && existsSync(legacyPath) && existsSync(centralizedPath)) {
@@ -184,10 +184,10 @@ export function getOmcRoot(worktreeRoot?: string): string {
 }
 
 /**
- * Resolve a relative path under .omp/ to an absolute path.
+ * Resolve a relative path under .omg/ to an absolute path.
  * Validates the path is within the omc boundary.
  *
- * @param relativePath - Path relative to .omp/ (e.g., "state/ralph.json")
+ * @param relativePath - Path relative to .omg/ (e.g., "state/ralph.json")
  * @param worktreeRoot - Optional worktree root (auto-detected if not provided)
  * @returns Absolute path
  * @throws Error if path would escape omc boundary
@@ -224,10 +224,10 @@ export function resolveStatePath(stateName: string, worktreeRoot?: string): stri
 }
 
 /**
- * Ensure a directory exists under .omp/.
+ * Ensure a directory exists under .omg/.
  * Creates parent directories as needed.
  *
- * @param relativePath - Path relative to .omp/
+ * @param relativePath - Path relative to .omg/
  * @param worktreeRoot - Optional worktree root
  * @returns Absolute path to the created directory
  */
@@ -292,7 +292,7 @@ export function resolveWisdomPath(planName: string, worktreeRoot?: string): stri
 }
 
 /**
- * Check if an absolute path is under the .omp directory.
+ * Check if an absolute path is under the .omg directory.
  * @param absolutePath - Absolute path to check
  */
 export function isPathUnderOmc(absolutePath: string, worktreeRoot?: string): boolean {
@@ -303,7 +303,7 @@ export function isPathUnderOmc(absolutePath: string, worktreeRoot?: string): boo
 }
 
 /**
- * Ensure all standard .omp subdirectories exist.
+ * Ensure all standard .omg subdirectories exist.
  */
 export function ensureAllOmcDirs(worktreeRoot?: string): void {
   const omcRoot = getOmcRoot(worktreeRoot);
@@ -422,10 +422,10 @@ export function isValidTranscriptPath(transcriptPath: string): boolean {
   const normalized = normalize(expandedPath);
   const home = homedir();
 
-  // Allowed: ~/.gemini/..., ~/.omp/..., /tmp/...
+  // Allowed: ~/.gemini/..., ~/.omg/..., /tmp/...
   const allowedPrefixes = [
     join(home, '.gemini'),
-    join(home, '.omp'),
+    join(home, '.omg'),
     '/tmp',
     '/var/folders', // macOS temp
   ];
@@ -509,7 +509,7 @@ export function ensureSessionStateDir(sessionId: string, worktreeRoot?: string):
  * Walks up from `directory` using `git rev-parse --show-toplevel`.
  * Falls back to `getWorktreeRoot(process.cwd())`, then `process.cwd()`.
  *
- * This ensures .omp/ state is always written at the worktree root,
+ * This ensures .omg/ state is always written at the worktree root,
  * even when called from a subdirectory (fixes #576).
  *
  * @param directory - Any directory inside a git worktree (optional)
@@ -650,7 +650,7 @@ export function resolveTranscriptPath(transcriptPath: string | undefined, cwd?: 
  * The trusted root is derived from process.cwd(), NOT from user input.
  *
  * Always returns a git worktree root — never a subdirectory.
- * This prevents .omp/state/ from being created in subdirectories (#576).
+ * This prevents .omg/state/ from being created in subdirectories (#576).
  *
  * @param workingDirectory - User-supplied working directory
  * @returns The validated worktree root
@@ -713,6 +713,6 @@ export function validateWorkingDirectory(workingDirectory?: string): string {
   }
 
   // Directory is under trusted root but git failed — return trusted root,
-  // never the subdirectory, to prevent .omp/ creation in subdirs (#576).
+  // never the subdirectory, to prevent .omg/ creation in subdirs (#576).
   return trustedRoot;
 }

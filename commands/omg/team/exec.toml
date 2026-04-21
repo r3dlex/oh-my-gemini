@@ -18,7 +18,7 @@ Execution flow:
 
 Worker management:
 - Spawn agents per task assignment from plan
-- Route to tmux workers when available (`omp team run`)
+- Route to tmux workers when available (`omg team run`)
 - Fall back to subagent dispatch for simpler tasks
 - Respect reasoning effort settings from `/omg:reasoning`
 

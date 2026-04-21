@@ -30,12 +30,12 @@ describe('integration: team lifecycle commands', () => {
   test.runIf(cliEntrypointExists())(
     'status/resume/shutdown commands operate on persisted state contracts',
     async () => {
-      const tempRoot = createTempDir('omp-team-lifecycle-integration-');
+      const tempRoot = createTempDir('omg-team-lifecycle-integration-');
       const teamName = 'integration-lifecycle';
       const now = new Date().toISOString();
 
       try {
-        const teamDir = path.join(tempRoot, '.omp', 'state', 'team', teamName);
+        const teamDir = path.join(tempRoot, '.omg', 'state', 'team', teamName);
         const eventsDir = path.join(teamDir, 'events');
 
         await fs.mkdir(eventsDir, { recursive: true });

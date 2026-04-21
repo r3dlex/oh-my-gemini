@@ -155,7 +155,7 @@ describe('reliability: role output contract', () => {
   });
 
   test('fails when artifact evidence file is missing under deterministic root', async () => {
-    const tempRoot = createTempDir('omp-role-contract-evidence-');
+    const tempRoot = createTempDir('omg-role-contract-evidence-');
 
     try {
       const snapshot = createSnapshot({
@@ -170,7 +170,7 @@ describe('reliability: role output contract', () => {
             status: 'completed',
             summary: 'planner summary',
             artifacts: {
-              json: '.omp/state/team/role-contract-test/artifacts/roles/worker-1/planner.json',
+              json: '.omg/state/team/role-contract-test/artifacts/roles/worker-1/planner.json',
             },
             plan: {
               steps: ['step-1'],
@@ -189,7 +189,7 @@ describe('reliability: role output contract', () => {
 
       const artifactPath = path.join(
         tempRoot,
-        '.omp',
+        '.omg',
         'state',
         'team',
         'role-contract-test',

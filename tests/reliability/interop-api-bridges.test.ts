@@ -45,14 +45,14 @@ describe('reliability: interop MCP API bridges', () => {
   let tempRoot: string;
 
   beforeEach(() => {
-    tempRoot = createTempDir('omp-interop-api-bridge-');
+    tempRoot = createTempDir('omg-interop-api-bridge-');
   });
 
   afterEach(() => {
     removeDir(tempRoot);
   });
 
-  test('exposes interop tools through default OMP MCP server', () => {
+  test('exposes interop tools through default OMG MCP server', () => {
     const server = createDefaultOmpMcpServer({ cwd: tempRoot });
     const names = server.listTools().map((tool) => tool.name);
 
@@ -67,7 +67,7 @@ describe('reliability: interop MCP API bridges', () => {
 
     const sendResult = await sendTask.handler(
       {
-        target: 'omp',
+        target: 'omg',
         type: 'implement',
         description: 'Port API bridge handlers.',
       },
@@ -76,7 +76,7 @@ describe('reliability: interop MCP API bridges', () => {
 
     expect(toCallToolResult(sendResult).isError).not.toBe(true);
     const sendText = readToolText(sendResult);
-    expect(sendText).toContain('Task Sent to OMP');
+    expect(sendText).toContain('Task Sent to OMG');
 
     const readResult = await readResults.handler(
       {
@@ -90,13 +90,13 @@ describe('reliability: interop MCP API bridges', () => {
     expect(readText).toContain('Port API bridge handlers.');
   });
 
-  test('interop OMP direct message bridge is fail-closed when disabled', async () => {
+  test('interop OMG direct message bridge is fail-closed when disabled', async () => {
     const tools = createInteropMcpTools({
       cwd: tempRoot,
       env: {
-        OMP_OMC_INTEROP_ENABLED: '0',
-        OMP_INTEROP_TOOLS_ENABLED: '0',
-        OMP_OMC_INTEROP_MODE: 'off',
+        OMG_OMC_INTEROP_ENABLED: '0',
+        OMG_INTEROP_TOOLS_ENABLED: '0',
+        OMG_OMC_INTEROP_MODE: 'off',
       },
     });
 
@@ -124,7 +124,7 @@ describe('reliability: interop MCP API bridges', () => {
     const requestResult = await buildRequest.handler(
       {
         source: 'omc',
-        target: 'omp',
+        target: 'omg',
         message: 'Please review interop queue.',
         task: {
           id: 'task-17',
@@ -161,7 +161,7 @@ describe('reliability: interop MCP API bridges', () => {
           role: 'model',
           parts: [{ text: 'Interop bridge response received.' }],
         },
-        source: 'omp',
+        source: 'omg',
         target: 'omc',
       },
       context,

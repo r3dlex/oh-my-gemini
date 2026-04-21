@@ -25,7 +25,7 @@ describe('reliability: legacy bypass env aliases', () => {
     ).toBe(true);
   });
 
-  test('falls back to legacy OMP aliases when canonical flags are absent', () => {
+  test('falls back to legacy OMG aliases when canonical flags are absent', () => {
     expect(
       isLegacyRunningSuccessEnabled({
         [LEGACY_RUNNING_SUCCESS_ENV_ALIAS]: '1',
@@ -55,8 +55,8 @@ describe('reliability: legacy bypass env aliases', () => {
     });
 
     expect(warnings.join('\n')).toContain('OMG_LEGACY_RUNNING_SUCCESS=1');
-    expect(warnings.join('\n')).toContain('OMP_LEGACY_RUNNING_SUCCESS=1');
+    expect(warnings.join('\n')).toContain('OMG_LEGACY_RUNNING_SUCCESS=1');
     expect(warnings.join('\n')).toContain('OMG_LEGACY_VERIFY_GATE_PASS=1');
-    expect(warnings.join('\n')).toContain('OMP_LEGACY_VERIFY_GATE_PASS=1');
+    expect(warnings.join('\n')).toContain('OMG_LEGACY_VERIFY_GATE_PASS=1');
   });
 });

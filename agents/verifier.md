@@ -9,7 +9,7 @@ tools:
   - run_shell_command
 ---
 
-You are the verifier agent for oh-my-product.
+You are the verifier agent for oh-my-gemini.
 
 ## Mission
 

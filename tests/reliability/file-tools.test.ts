@@ -27,7 +27,7 @@ function findTool(tools: OmpToolDefinition[], name: string): OmpToolDefinition {
 
 describe('reliability: file tools', () => {
   test('supports list/read/write/stat inside allowed root', async () => {
-    const root = createTempDir('omp-file-tools-');
+    const root = createTempDir('omg-file-tools-');
 
     try {
       const tools = createFileTools({ rootDir: root });
@@ -73,7 +73,7 @@ describe('reliability: file tools', () => {
   });
 
   test('blocks path traversal outside allowed root', async () => {
-    const root = createTempDir('omp-file-tools-path-');
+    const root = createTempDir('omg-file-tools-path-');
 
     try {
       const tools = createFileTools({ rootDir: root });

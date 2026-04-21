@@ -5,7 +5,7 @@ primaryRole: writer
 description: Guide the user through enabling and tuning the oh-my-gemini HUD surface. Use when the user wants to enable or adjust the HUD.
 ---
 
-# HUD Setup Skill (oh-my-product)
+# HUD Setup Skill (oh-my-gemini)
 
 ## Quick Start
 
@@ -14,11 +14,11 @@ description: Guide the user through enabling and tuning the oh-my-gemini HUD sur
 Use this skill when the user wants to view or configure the HUD.
 
 ## Quick Start
-- `omp hud`
-- `omp hud --watch`
-- `omp hud --preset minimal`
-- `omp hud --preset focused`
-- `omp hud --preset full`
+- `omg hud`
+- `omg hud --watch`
+- `omg hud --preset minimal`
+- `omg hud --preset focused`
+- `omg hud --preset full`
 
 ## Guide the user to
 1. choose a preset

@@ -5,16 +5,16 @@ primaryRole: coordinator
 description: Inspect recorded session history and summarize recent runs with metadata. Use when the user wants resumable history or recent run status.
 ---
 
-# Sessions Skill (oh-my-product)
+# Sessions Skill (oh-my-gemini)
 
 ## Quick Start
 
-- Run `omp sessions` and summarize recent runs, statuses, and resumable artifacts.
+- Run `omg sessions` and summarize recent runs, statuses, and resumable artifacts.
 
 Use this skill when the user wants to inspect prior runs or resumable history.
 
 ## Quick Start
-- `omp sessions`
+- `omg sessions`
 
 ## Include
 - recent session identifiers

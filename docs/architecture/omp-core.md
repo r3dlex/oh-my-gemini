@@ -114,9 +114,9 @@ plan → prd → exec → verify → fix (loop) → done
 
 ## State Management
 
-All state persisted under `.omp/state/`:
+All state persisted under `.omg/state/`:
 ```
-.omp/state/
+.omg/state/
   mode.json           — active operating profile
   approval.json       — approval posture
   reasoning.json      — reasoning effort config

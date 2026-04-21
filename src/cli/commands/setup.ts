@@ -67,11 +67,11 @@ export function cleanLegacySkillConflicts(
 
 function printSetupHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp setup [--scope <project|user>] [--dry-run] [--json]',
+    'Usage: omg setup [--scope <project|user>] [--dry-run] [--json]',
     '',
     'Post-install contract:',
     '  After npm install -g oh-my-gemini, run setup to apply local files.',
-    '  Supported entrypoints: omg setup ... / omp setup ... / oh-my-gemini setup ...',
+    '  Supported entrypoints: omg setup ... / omg setup ... / oh-my-gemini setup ...',
     '',
     'Options:',
     '  --scope <scope>   Installation scope (project | user)',
@@ -186,7 +186,7 @@ export async function executeSetupCommand(
       enableGeminiExtension({ cwd: context.cwd });
 
       if (!jsonOutput) {
-        io.stdout('Gemini extension linked successfully. Restart Gemini CLI for /omg:* commands to appear (/omp:* remains available as a compatibility alias).');
+        io.stdout('Gemini extension linked successfully. Restart Gemini CLI for /omg:* commands to appear (/omg:* remains available as a compatibility alias).');
       }
     } else {
       io.stderr(

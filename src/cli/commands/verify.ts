@@ -25,7 +25,7 @@ function printVerifyHelp(io: CliIo): void {
   const defaultSuites = parseVerifySuites(undefined).join(',');
 
   io.stdout([
-    'Usage: omp verify [--suite typecheck,smoke,integration,reliability] [--tier light|standard|thorough] [--dry-run] [--json]',
+    'Usage: omg verify [--suite typecheck,smoke,integration,reliability] [--tier light|standard|thorough] [--dry-run] [--json]',
     '',
     'Options:',
     `  --suite <list>    Comma-separated suites. Defaults to ${defaultSuites}`,
@@ -55,18 +55,18 @@ export async function executeVerifyCommand(
     ) as { name?: string };
     if (
       pkgJson.name !== 'oh-my-gemini' &&
-      pkgJson.name !== 'oh-my-product' &&
+      pkgJson.name !== 'oh-my-gemini' &&
       pkgJson.name !== '@r3dlex/oh-my-gemini'
     ) {
       io.stderr(
-        'omp verify is a development command for the oh-my-gemini repository.\n' +
-        'Run it from the oh-my-gemini project root (where package.json has name "oh-my-gemini", "@r3dlex/oh-my-gemini", or legacy "oh-my-product").',
+        'omg verify is a development command for the oh-my-gemini repository.\n' +
+        'Run it from the oh-my-gemini project root (where package.json has name "oh-my-gemini", "@r3dlex/oh-my-gemini", or legacy "oh-my-gemini").',
       );
       return { exitCode: 1 };
     }
   } catch {
     io.stderr(
-      'omp verify requires a package.json in the current directory.\n' +
+      'omg verify requires a package.json in the current directory.\n' +
       'This command is intended for the oh-my-gemini development repository.',
     );
     return { exitCode: 1 };

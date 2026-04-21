@@ -18,7 +18,7 @@ import {
 } from '../state/index.js';
 import { TeamControlPlane } from '../team/control-plane/index.js';
 
-export type InteropSystem = 'omc' | 'omp';
+export type InteropSystem = 'omc' | 'omg';
 
 export type InteropMode = 'off' | 'observe' | 'active';
 
@@ -69,7 +69,7 @@ export interface ReadSharedMessagesFilter {
 
 export function getInteropMode(env: NodeJS.ProcessEnv = process.env): InteropMode {
   const raw = (
-    env.OMP_OMC_INTEROP_MODE ??
+    env.OMG_OMC_INTEROP_MODE ??
     env.OMX_OMC_INTEROP_MODE ??
     'off'
   ).toLowerCase();
@@ -85,11 +85,11 @@ export function canUseOmpDirectWriteBridge(
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
   const interopEnabled =
-    env.OMP_OMC_INTEROP_ENABLED === '1' ||
+    env.OMG_OMC_INTEROP_ENABLED === '1' ||
     env.OMX_OMC_INTEROP_ENABLED === '1';
 
   const toolsEnabled =
-    env.OMP_INTEROP_TOOLS_ENABLED === '1' ||
+    env.OMG_INTEROP_TOOLS_ENABLED === '1' ||
     env.OMC_INTEROP_TOOLS_ENABLED === '1';
 
   return interopEnabled && toolsEnabled && getInteropMode(env) === 'active';
@@ -124,7 +124,7 @@ function ensureInteropScaffold(cwd: string): void {
 }
 
 export function getInteropDir(cwd: string): string {
-  return path.join(cwd, '.omp', 'state', 'interop');
+  return path.join(cwd, '.omg', 'state', 'interop');
 }
 
 export function initInteropSession(
@@ -477,7 +477,7 @@ function readRunRequestSafe(
 ): Promise<Record<string, unknown> | null> {
   const runRequestPath = path.join(
     cwd,
-    '.omp',
+    '.omg',
     'state',
     'team',
     teamName,
@@ -652,7 +652,7 @@ export async function broadcastOmpMessage(
 ): Promise<OmpTeamMailboxMessage[]> {
   const config = await readOmpTeamConfig(teamName, cwd);
   if (!config) {
-    throw new Error(`OMP team ${teamName} not found.`);
+    throw new Error(`OMG team ${teamName} not found.`);
   }
 
   const recipients = config.workers

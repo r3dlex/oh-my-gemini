@@ -38,7 +38,7 @@ describe('reliability: providers management', () => {
 
   test('detectProviderFromEnv honors explicit override first', () => {
     const env: NodeJS.ProcessEnv = {
-      OMP_GEMINI_PROVIDER: 'vertex-ai',
+      OMG_GEMINI_PROVIDER: 'vertex-ai',
       GEMINI_API_KEY: 'api-key',
     };
 

@@ -30,8 +30,8 @@ export interface ExploreCommandContext {
 
 function printExploreHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp explore <prompt>',
-    '   or: omp explore --prompt "<prompt>"',
+    'Usage: omg explore <prompt>',
+    '   or: omg explore --prompt "<prompt>"',
     '',
     'Read-only codebase exploration via Gemini CLI.',
     '',
@@ -108,7 +108,7 @@ export async function executeExploreCommand(
   const userPrompt = (promptFromFlag ?? parsed.positionals.join(' ')).trim();
 
   if (!userPrompt) {
-    context.io.stderr('Missing prompt text. Usage: omp explore <prompt>');
+    context.io.stderr('Missing prompt text. Usage: omg explore <prompt>');
     return { exitCode: 2 };
   }
 
@@ -122,7 +122,7 @@ export async function executeExploreCommand(
     cwd: context.cwd,
   });
 
-  const artifactDir = path.join(context.cwd, '.omp', 'artifacts', 'explore');
+  const artifactDir = path.join(context.cwd, '.omg', 'artifacts', 'explore');
   await fs.mkdir(artifactDir, { recursive: true });
 
   const artifactBase = `${slugify(userPrompt)}-${completedAtLabel}`;
@@ -130,7 +130,7 @@ export async function executeExploreCommand(
   const artifactRelativePath = path.relative(context.cwd, artifactPath) || artifactPath;
 
   const artifactLines = [
-    '# omp explore',
+    '# omg explore',
     '',
     `- Started: ${now.toISOString()}`,
     '',

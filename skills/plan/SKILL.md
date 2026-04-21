@@ -5,7 +5,7 @@ primaryRole: planner
 description: Produce a phased execution plan aligned to the oh-my-gemini roadmap gates. Use when the user asks for decomposition, milestones, or sequencing.
 ---
 
-# Plan Skill (oh-my-product)
+# Plan Skill (oh-my-gemini)
 
 ## Quick Start
 

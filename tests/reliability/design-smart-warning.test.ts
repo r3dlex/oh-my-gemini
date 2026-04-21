@@ -27,6 +27,6 @@ describe('reliability: design-smart-warning', () => {
     const warning = getDesignWarning();
     expect(warning.length).toBeGreaterThan(0);
     expect(warning).toContain('omg design init');
-    expect(warning).toContain('omp design init');
+    expect(warning).toContain('omg design init');
   });
 });

@@ -3,7 +3,7 @@
  *
  * Reads OpenClaw config from ~/.gemini/omp_config.openclaw.json.
  * Config is cached after first read.
- * Config file path can be overridden via OMP_OPENCLAW_CONFIG env var.
+ * Config file path can be overridden via OMG_OPENCLAW_CONFIG env var.
  */
 
 import { readFileSync, existsSync } from 'fs';
@@ -21,7 +21,7 @@ function getGeminiConfigDir(): string {
 }
 
 const CONFIG_FILE =
-  process.env.OMP_OPENCLAW_CONFIG ??
+  process.env.OMG_OPENCLAW_CONFIG ??
   join(getGeminiConfigDir(), 'omp_config.openclaw.json');
 
 /** Cached config (null = not yet read, undefined = read but file missing/invalid) */
@@ -31,13 +31,13 @@ let _cachedConfig: OpenClawConfig | undefined | null = null;
  * Read and cache the OpenClaw configuration.
  *
  * Returns null when:
- * - OMP_OPENCLAW env var is not "1"
+ * - OMG_OPENCLAW env var is not "1"
  * - Config file does not exist
  * - Config file is invalid JSON
  * - Config has enabled: false
  */
 export function getOpenClawConfig(): OpenClawConfig | null {
-  if (process.env.OMP_OPENCLAW !== '1') {
+  if (process.env.OMG_OPENCLAW !== '1') {
     return null;
   }
 

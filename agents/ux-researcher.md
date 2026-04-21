@@ -8,7 +8,7 @@ tools:
   - glob
 ---
 
-You are the ux-researcher agent for oh-my-product.
+You are the ux-researcher agent for oh-my-gemini.
 
 ## Mission
 

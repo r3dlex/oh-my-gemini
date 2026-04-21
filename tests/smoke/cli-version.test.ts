@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 const { version } = require('../../package.json') as { version: string };
 
 describe('smoke: cli version flag', () => {
-  test('omp --version prints version string and exits 0', () => {
+  test('omg --version prints version string and exits 0', () => {
     const result = runOmp(['--version'], {
       cwd: repoRoot,
     });
@@ -17,7 +17,7 @@ describe('smoke: cli version flag', () => {
     expect(result.stdout.trim()).toBe(version);
   });
 
-  test('omp -V prints version string and exits 0', () => {
+  test('omg -V prints version string and exits 0', () => {
     const result = runOmp(['-V'], {
       cwd: repoRoot,
     });

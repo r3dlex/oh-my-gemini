@@ -1,8 +1,8 @@
 import type { RuntimeBackend } from '../team/runtime/runtime-backend.js';
 
-export const OMP_PLUGIN_ENABLE_ENV = 'OMP_PLUGINS';
-export const OMP_NPM_PLUGINS_ENV = 'OMP_NPM_PLUGINS';
-export const OMP_NPM_PLUGIN_PREFIX = 'oh-my-product-plugin-';
+export const OMG_PLUGIN_ENABLE_ENV = 'OMG_PLUGINS';
+export const OMG_NPM_PLUGINS_ENV = 'OMG_NPM_PLUGINS';
+export const OMG_NPM_PLUGIN_PREFIX = 'oh-my-gemini-plugin-';
 
 export type OmpPluginDiscoverySource =
   | 'explicit'

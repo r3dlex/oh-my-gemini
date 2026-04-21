@@ -17,7 +17,7 @@ import {
 import { createTempDir, removeDir } from '../utils/runtime.js';
 
 describe('reliability: canonical OMG runtime paths', () => {
-  test('token tracking writes to .omg and reads legacy .omp fallback', async () => {
+  test('token tracking writes to .omg and reads legacy .omx fallback', async () => {
     const tempRoot = createTempDir('omg-token-tracking-');
 
     try {
@@ -34,13 +34,13 @@ describe('reliability: canonical OMG runtime paths', () => {
       const canonicalPath = path.join(tempRoot, '.omg', 'state', 'tokens', 'usage.ndjson');
       expect(existsSync(canonicalPath)).toBe(true);
 
-      const legacyPath = path.join(tempRoot, '.omp', 'state', 'tokens', 'usage.ndjson');
+      const legacyPath = path.join(tempRoot, '.omx', 'state', 'tokens', 'usage.ndjson');
       await fs.mkdir(path.dirname(legacyPath), { recursive: true });
       await fs.writeFile(
         legacyPath,
         `${JSON.stringify({
           sessionId: 'session-legacy',
-          command: 'omp verify',
+          command: 'omg verify',
           provider: 'gemini',
           startedAt: '2026-04-12T00:00:00.000Z',
           completedAt: '2026-04-12T00:02:00.000Z',
@@ -90,7 +90,7 @@ describe('reliability: canonical OMG runtime paths', () => {
       expect(readFileSync(summaryPath, 'utf8')).toContain('oh-my-gemini');
 
       await fs.rm(path.join(tempRoot, '.omg'), { recursive: true, force: true });
-      const legacyConfigPath = path.join(tempRoot, '.omp', 'notifications', 'stop-callbacks.json');
+      const legacyConfigPath = path.join(tempRoot, '.omg', 'notifications', 'stop-callbacks.json');
       await fs.mkdir(path.dirname(legacyConfigPath), { recursive: true });
       await fs.writeFile(
         legacyConfigPath,

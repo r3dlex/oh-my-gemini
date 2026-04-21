@@ -118,7 +118,7 @@ export function shouldSkipAutoUpdateForCommand(command: string): boolean {
 }
 
 export function isAutoUpdateDisabled(env: NodeJS.ProcessEnv): boolean {
-  const rawValue = env.OMG_AUTO_UPDATE ?? env.OMP_AUTO_UPDATE;
+  const rawValue = env.OMG_AUTO_UPDATE ?? env.OMG_AUTO_UPDATE;
   if (!rawValue) {
     return false;
   }
@@ -127,7 +127,7 @@ export function isAutoUpdateDisabled(env: NodeJS.ProcessEnv): boolean {
 }
 
 function resolveStateRoot(cwd: string, env: NodeJS.ProcessEnv): string {
-  const configuredRoot = env.OMG_STATE_ROOT ?? env.OMP_STATE_ROOT ?? path.join('.omp', 'state');
+  const configuredRoot = env.OMG_STATE_ROOT ?? env.OMG_STATE_ROOT ?? path.join('.omg', 'state');
   return path.isAbsolute(configuredRoot)
     ? configuredRoot
     : path.resolve(cwd, configuredRoot);

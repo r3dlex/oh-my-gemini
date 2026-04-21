@@ -40,7 +40,7 @@ function sanitizeSessionToken(value: string): string {
 
 export function buildLaunchSessionName(cwd: string, now: number = Date.now()): string {
   const dirToken = sanitizeSessionToken(path.basename(cwd) || 'workspace');
-  return `omp-${dirToken}-${now}`.slice(0, 120);
+  return `omg-${dirToken}-${now}`.slice(0, 120);
 }
 
 export function resolveLaunchTarget(env: NodeJS.ProcessEnv = process.env): LaunchTarget {

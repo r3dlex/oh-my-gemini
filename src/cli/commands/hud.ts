@@ -37,7 +37,7 @@ export interface HudCommandContext {
 
 function printHudHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp hud [--team <name>] [--preset <minimal|focused|full>] [--json] [--watch]',
+    'Usage: omg hud [--team <name>] [--preset <minimal|focused|full>] [--json] [--watch]',
     '',
     'Options:',
     '  --team <name>     Team namespace to visualize (default: oh-my-gemini)',

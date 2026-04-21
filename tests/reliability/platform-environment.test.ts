@@ -64,7 +64,7 @@ describe('reliability: platform environment abstraction', () => {
         SECRET_TOKEN: 'hidden',
       },
       overrides: {
-        OMP_TEAM_WORKER: 'team/worker-1',
+        OMG_TEAM_WORKER: 'team/worker-1',
       },
     });
 
@@ -72,7 +72,7 @@ describe('reliability: platform environment abstraction', () => {
     expect(env.HOME).toBe('/home/tester');
     expect(env.GEMINI_API_KEY).toBe('google-key');
     expect(env.GOOGLE_API_KEY).toBe('google-key');
-    expect(env.OMP_TEAM_WORKER).toBe('team/worker-1');
+    expect(env.OMG_TEAM_WORKER).toBe('team/worker-1');
     expect(env.SECRET_TOKEN).toBeUndefined();
   });
 

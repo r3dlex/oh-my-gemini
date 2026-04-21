@@ -17,6 +17,28 @@ The format follows a conventional changelog style organized by release and chang
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-04-21
+
+### Features
+
+- **GitHub Packages dual-registry publish** — stable and pre-release jobs now publish `@r3dlex/oh-my-gemini` to GitHub Packages (`npm.pkg.github.com`) in addition to npmjs.com; uses `GITHUB_TOKEN` with `packages: write` permission; `--provenance` omitted for GH Packages (unsupported)
+
+### Fixes
+
+- **Duplicate export in extension-path.ts** — removed duplicate `export const OMG_EXTENSION_PATH_ENV` declaration that caused all esbuild-compiled smoke/integration tests to fail with `TransformError: Multiple exports with the same name`
+- **Duplicate compat env var constants** — `COMPAT_LEGACY_RUNNING_SUCCESS_ENV_FLAG` and `COMPAT_LEGACY_VERIFY_GATE_PASS_ENV_FLAG` were incorrectly set to the same string as the canonical `OMG_` flags; corrected to `OMX_LEGACY_RUNNING_SUCCESS` and `OMX_LEGACY_VERIFY_GATE_PASS` so canonical `=0` correctly overrides legacy `=1`
+- **Duplicate env chain in team-state-store** — second `process.env.OMG_TEAM_STATE_ROOT` reference replaced with `OMP_TEAM_STATE_ROOT`; second `OMG_STATE_ROOT` replaced with `OMP_STATE_ROOT`
+- **Duplicate env chain in context-writer** — second `input.env?.OMG_TEAM_STATE_ROOT` replaced with `OMP_TEAM_STATE_ROOT`
+- **Legacy token log path** — `resolveLegacyTokenLogPath` was returning the same `.omg` path as the canonical function; corrected to `.omx`
+- **Syntax error in interop-format-converters test** — `expect(mapped.annotation.originalSystem: 'omg')` corrected to `expect(mapped.annotation.originalSystem).toBe('omg')`
+- **Duplicate key in hook-context-e2e test** — env object `{ OMG_TEAM_STATE_ROOT: ..., OMG_TEAM_STATE_ROOT: ... }` corrected to use `OMX_TEAM_STATE_ROOT` for the legacy slot
+
+### Verification
+
+- All 120 integration/smoke/reliability test files pass (9 skipped)
+- Coverage: statements 87.63% / branches 93.61% / functions 96.15% — all above 80%
+- Build and typecheck pass
+
 ## [1.0.2] - 2026-04-17
 
 ### Fixes

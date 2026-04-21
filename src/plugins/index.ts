@@ -23,7 +23,7 @@ export type {
   OmpPluginModule,
 } from './types.js';
 export {
-  OMP_NPM_PLUGIN_PREFIX,
-  OMP_NPM_PLUGINS_ENV,
-  OMP_PLUGIN_ENABLE_ENV,
+  OMG_NPM_PLUGIN_PREFIX,
+  OMG_NPM_PLUGINS_ENV,
+  OMG_PLUGIN_ENABLE_ENV,
 } from './types.js';

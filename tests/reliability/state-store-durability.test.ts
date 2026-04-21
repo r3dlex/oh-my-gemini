@@ -11,11 +11,11 @@ import { createTempDir, removeDir } from '../utils/runtime.js';
 
 describe('reliability: team state store durability contract', () => {
   test('ensureTeamScaffold creates deterministic team directories', async () => {
-    const tempRoot = createTempDir('omp-state-scaffold-');
+    const tempRoot = createTempDir('omg-state-scaffold-');
 
     try {
       const stateStore = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await stateStore.ensureTeamScaffold('durable-team');
@@ -34,11 +34,11 @@ describe('reliability: team state store durability contract', () => {
   });
 
   test('task persistence uses canonical task-<id>.json path, monotonic versioning, and CAS', async () => {
-    const tempRoot = createTempDir('omp-state-task-cas-');
+    const tempRoot = createTempDir('omg-state-task-cas-');
 
     try {
       const stateStore = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       const created = await stateStore.writeTask('durable-team', {
@@ -134,11 +134,11 @@ describe('reliability: team state store durability contract', () => {
   });
 
   test('phase reader normalizes legacy \"complete\" terminal phase to canonical \"completed\"', async () => {
-    const tempRoot = createTempDir('omp-state-phase-compat-');
+    const tempRoot = createTempDir('omg-state-phase-compat-');
 
     try {
       const stateStore = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
       const teamName = 'phase-compat-team';
 
@@ -190,11 +190,11 @@ describe('reliability: team state store durability contract', () => {
   });
 
   test('mailbox appends are serialized for concurrent producers', async () => {
-    const tempRoot = createTempDir('omp-state-mailbox-');
+    const tempRoot = createTempDir('omg-state-mailbox-');
 
     try {
       const stateStore = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       const writes = Array.from({ length: 40 }, (_, index) =>

@@ -5,7 +5,7 @@ primaryRole: designer
 description: Evaluate a UI against usability and accessibility heuristics. Use when the user wants a UX, usability, or a11y review.
 ---
 
-# UX Critique Skill (oh-my-product)
+# UX Critique Skill (oh-my-gemini)
 
 ## Quick Start
 

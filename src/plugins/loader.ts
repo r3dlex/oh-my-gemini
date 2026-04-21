@@ -6,9 +6,9 @@ import { pathToFileURL } from 'node:url';
 
 import type { RuntimeBackend } from '../team/runtime/runtime-backend.js';
 import {
-  OMP_NPM_PLUGIN_PREFIX,
-  OMP_NPM_PLUGINS_ENV,
-  OMP_PLUGIN_ENABLE_ENV,
+  OMG_NPM_PLUGIN_PREFIX,
+  OMG_NPM_PLUGINS_ENV,
+  OMG_PLUGIN_ENABLE_ENV,
   type OmpLoadedPlugin,
   type OmpNpmPluginCandidate,
   type OmpNpmPluginPackageJson,
@@ -126,14 +126,14 @@ function pushCandidates(
 }
 
 export function isPluginSystemEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  return parseBooleanFlag(env[OMP_PLUGIN_ENABLE_ENV]);
+  return parseBooleanFlag(env[OMG_PLUGIN_ENABLE_ENV]);
 }
 
 export async function discoverNpmPluginCandidates(
   options: OmpPluginDiscoveryOptions,
 ): Promise<OmpNpmPluginCandidate[]> {
   const env = options.env ?? process.env;
-  const packagePrefix = options.packagePrefix ?? OMP_NPM_PLUGIN_PREFIX;
+  const packagePrefix = options.packagePrefix ?? OMG_NPM_PLUGIN_PREFIX;
   const includeDevDependencies = options.includeDevDependencies ?? true;
   const includeOptionalDependencies = options.includeOptionalDependencies ?? true;
 
@@ -141,7 +141,7 @@ export async function discoverNpmPluginCandidates(
   const seen = new Set<string>();
 
   pushCandidates(candidates, seen, options.explicitPackages ?? [], 'explicit');
-  pushCandidates(candidates, seen, parsePluginList(env[OMP_NPM_PLUGINS_ENV]), 'env');
+  pushCandidates(candidates, seen, parsePluginList(env[OMG_NPM_PLUGINS_ENV]), 'env');
 
   const projectPackageJsonPath = path.join(options.cwd, 'package.json');
   const projectPackage = await readJsonFile<OmpNpmPluginPackageJson>(projectPackageJsonPath);

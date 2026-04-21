@@ -25,7 +25,7 @@ export interface WorkerRunCommandContext {
 
 const GEMINI_PROMPT_MAX_CHARS = 12_000;
 
-type WorkerCliMode = 'omp' | 'gemini';
+type WorkerCliMode = 'omg' | 'gemini';
 type WorkerSkillId = 'plan' | 'team' | 'review' | 'verify' | 'handoff';
 type SignalForwardingMode = 'wrapper-forward';
 
@@ -46,8 +46,8 @@ interface ParsedGeminiPromptResult {
 }
 
 function resolveWorkerCliMode(env: NodeJS.ProcessEnv): WorkerCliMode {
-  const raw = (env.OMP_TEAM_WORKER_CLI ?? env.OMX_TEAM_WORKER_CLI ?? 'omp').trim().toLowerCase();
-  return raw === 'gemini' ? 'gemini' : 'omp';
+  const raw = (env.OMG_TEAM_WORKER_CLI ?? env.OMX_TEAM_WORKER_CLI ?? 'omg').trim().toLowerCase();
+  return raw === 'gemini' ? 'gemini' : 'omg';
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -246,7 +246,7 @@ function sanitizeArtifactSegment(raw: string): string {
 
 function buildRoleArtifactRoot(teamName: string): string {
   const team = sanitizeArtifactSegment(teamName) || 'team';
-  return path.posix.join('.omp', 'state', 'team', team, 'artifacts', 'roles');
+  return path.posix.join('.omg', 'state', 'team', team, 'artifacts', 'roles');
 }
 
 function buildDefaultRoleArtifactBase(
@@ -540,11 +540,11 @@ async function updateWorkerIdentityMetadata(params: {
 
 function printWorkerRunHelp(io: CliIo): { exitCode: number } {
   io.stdout([
-    'Usage: omp worker run --team <name> --worker <name>',
+    'Usage: omg worker run --team <name> --worker <name>',
     '',
     'Options:',
-    '  --team <name>    Team name (fallback: OMP_TEAM_WORKER)',
-    '  --worker <name>  Worker name (fallback: OMP_WORKER_NAME / OMP_TEAM_WORKER)',
+    '  --team <name>    Team name (fallback: OMG_TEAM_WORKER)',
+    '  --worker <name>  Worker name (fallback: OMG_WORKER_NAME / OMG_TEAM_WORKER)',
     '  --help           Show command help',
   ].join('\n'));
   return { exitCode: 0 };
@@ -578,13 +578,13 @@ export async function executeWorkerRunCommand(
   let workerName = getStringOption(parsed.options, ['worker']);
 
   if (!teamName) {
-    const combined = process.env.OMP_TEAM_WORKER;
+    const combined = process.env.OMG_TEAM_WORKER;
     teamName = combined?.split('/')[0];
   }
   if (!workerName) {
     workerName =
-      process.env.OMP_WORKER_NAME ??
-      process.env.OMP_TEAM_WORKER?.split('/')[1];
+      process.env.OMG_WORKER_NAME ??
+      process.env.OMG_TEAM_WORKER?.split('/')[1];
   }
 
   if (!teamName || !workerName) {
@@ -598,8 +598,8 @@ export async function executeWorkerRunCommand(
   const stateStore = new TeamStateStore({ cwd });
   let workerIdentity = await stateStore.readWorkerIdentity(teamName, workerName).catch(() => null);
   const executionContract = parseWorkerExecutionContract(teamName, workerName, workerIdentity);
-  const preClaimedTaskId = process.env.OMP_WORKER_TASK_ID;
-  const preClaimedToken = process.env.OMP_WORKER_CLAIM_TOKEN;
+  const preClaimedTaskId = process.env.OMG_WORKER_TASK_ID;
+  const preClaimedToken = process.env.OMG_WORKER_CLAIM_TOKEN;
   let heartbeatWriteChain: Promise<void> = Promise.resolve();
 
   const queueHeartbeatWrite = (alive: boolean): void => {

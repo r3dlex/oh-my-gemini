@@ -31,7 +31,7 @@ describe('reliability: interop protocol adapters', () => {
   let tempRoot: string;
 
   beforeEach(() => {
-    tempRoot = createTempDir('omp-interop-protocol-');
+    tempRoot = createTempDir('omg-interop-protocol-');
   });
 
   afterEach(() => {
@@ -39,26 +39,26 @@ describe('reliability: interop protocol adapters', () => {
   });
 
   test('reads interop mode and direct-write gate from environment', () => {
-    expect(getInteropMode({ OMP_OMC_INTEROP_MODE: 'active' } as NodeJS.ProcessEnv)).toBe(
+    expect(getInteropMode({ OMG_OMC_INTEROP_MODE: 'active' } as NodeJS.ProcessEnv)).toBe(
       'active',
     );
-    expect(getInteropMode({ OMP_OMC_INTEROP_MODE: 'weird' } as NodeJS.ProcessEnv)).toBe(
+    expect(getInteropMode({ OMG_OMC_INTEROP_MODE: 'weird' } as NodeJS.ProcessEnv)).toBe(
       'off',
     );
 
     expect(
       canUseOmpDirectWriteBridge({
-        OMP_OMC_INTEROP_ENABLED: '1',
-        OMP_OMC_INTEROP_MODE: 'active',
-        OMP_INTEROP_TOOLS_ENABLED: '1',
+        OMG_OMC_INTEROP_ENABLED: '1',
+        OMG_OMC_INTEROP_MODE: 'active',
+        OMG_INTEROP_TOOLS_ENABLED: '1',
       } as NodeJS.ProcessEnv),
     ).toBe(true);
 
     expect(
       canUseOmpDirectWriteBridge({
-        OMP_OMC_INTEROP_ENABLED: '1',
-        OMP_OMC_INTEROP_MODE: 'observe',
-        OMP_INTEROP_TOOLS_ENABLED: '1',
+        OMG_OMC_INTEROP_ENABLED: '1',
+        OMG_OMC_INTEROP_MODE: 'observe',
+        OMG_INTEROP_TOOLS_ENABLED: '1',
       } as NodeJS.ProcessEnv),
     ).toBe(false);
   });
@@ -77,14 +77,14 @@ describe('reliability: interop protocol adapters', () => {
   test('adds, reads, updates, and cleans shared tasks/messages', () => {
     const task = addSharedTask(tempRoot, {
       source: 'omc',
-      target: 'omp',
+      target: 'omg',
       type: 'implement',
       description: 'Port protocol adapter logic',
       files: ['src/interop/protocol-adapters.ts'],
     });
 
     const message = addSharedMessage(tempRoot, {
-      source: 'omp',
+      source: 'omg',
       target: 'omc',
       content: 'Started adapter implementation.',
     });
@@ -113,13 +113,13 @@ describe('reliability: interop protocol adapters', () => {
     expect(cleaned.messagesDeleted).toBe(1);
   });
 
-  test('discovers OMP teams and exposes config/task/mailbox adapters', async () => {
+  test('discovers OMG teams and exposes config/task/mailbox adapters', async () => {
     const teamName = 'interop-alpha';
     const stateStore = new TeamStateStore({ cwd: tempRoot });
     await stateStore.ensureTeamScaffold(teamName);
 
     await fs.writeFile(
-      path.join(tempRoot, '.omp', 'state', 'team', teamName, 'run-request.json'),
+      path.join(tempRoot, '.omg', 'state', 'team', teamName, 'run-request.json'),
       `${JSON.stringify(
         {
           schemaVersion: 1,

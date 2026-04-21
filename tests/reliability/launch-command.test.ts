@@ -98,7 +98,7 @@ describe('reliability: launch command surface', () => {
     });
   });
 
-  test('runCli dispatches bare omp to interactive launch runner', async () => {
+  test('runCli dispatches bare omg to interactive launch runner', async () => {
     const ioCapture = createIoCapture();
     let observed: LaunchRunnerInput | undefined;
 
@@ -120,7 +120,7 @@ describe('reliability: launch command surface', () => {
     expect(exitCode).toBe(0);
     expect(ioCapture.stderr).toStrictEqual([]);
     expect(observed?.target).toBe('new-tmux-session');
-    expect(observed?.sessionName).toMatch(/^omp-/);
+    expect(observed?.sessionName).toMatch(/^omg-/);
     expect(observed?.geminiArgs[0]).toBe('--extensions');
     expect(observed?.geminiArgs[1]).toBe('oh-my-gemini');
     // Default model injected when none specified

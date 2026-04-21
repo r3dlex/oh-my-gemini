@@ -5,7 +5,7 @@ primaryRole: optimizer
 description: Analyze and compress context for higher signal-to-noise ratio. Use when GEMINI.md or session context is bloated and needs cleanup.
 ---
 
-# Context Optimize Skill (oh-my-product)
+# Context Optimize Skill (oh-my-gemini)
 
 ## Quick Start
 
@@ -46,11 +46,11 @@ Savings: 33% token reduction
 
 ## 5-Layer Context Model
 
-oh-my-product contexts follow this priority hierarchy:
+oh-my-gemini contexts follow this priority hierarchy:
 
 1. **System/Runtime**: Gemini CLI constraints (immutable)
-2. **Project Standards**: GEMINI.md + context/omp-core.md
-3. **Session Memory**: .omp/state/, memory entries
+2. **Project Standards**: GEMINI.md + context/omg-core.md
+3. **Session Memory**: .omg/state/, memory entries
 4. **Active Task**: Current plan, taskboard, PRD
 5. **Execution Traces**: Recent iteration results
 
@@ -63,5 +63,5 @@ Optimization targets layers 2-5 (layer 1 is immutable).
 - Back up original before modifying
 
 ## Related commands
-- `/omp:optimize` — quick context optimization command
-- `/omp:memory compact` — compact memory entries specifically
+- `/omg:optimize` — quick context optimization command
+- `/omg:memory compact` — compact memory entries specifically

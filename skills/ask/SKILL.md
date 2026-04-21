@@ -5,21 +5,21 @@ primaryRole: advisor
 description: Run a focused Gemini advisor prompt and save the reusable result artifact. Use when the user wants a quick advisor-style answer without a full workflow.
 ---
 
-# Ask Skill (oh-my-product)
+# Ask Skill (oh-my-gemini)
 
 ## Quick Start
 
-- Run `omp ask gemini --prompt "<prompt>"` for a fast advisor answer and save the artifact.
+- Run `omg ask gemini --prompt "<prompt>"` for a fast advisor answer and save the artifact.
 
 Use this skill when the user wants a quick advisor-style answer from Gemini without launching a full workflow.
 
 ## Quick Start
-- `omp ask gemini --prompt "<prompt>"`
-- `omp ask gemini --agent-prompt <role> --prompt "<prompt>"`
+- `omg ask gemini --prompt "<prompt>"`
+- `omg ask gemini --agent-prompt <role> --prompt "<prompt>"`
 
 ## Artifact location
 Results should be stored under:
-- `.omp/artifacts/ask/`
+- `.omg/artifacts/ask/`
 
 ## Good use cases
 - second opinion on a design

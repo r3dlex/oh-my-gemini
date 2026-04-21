@@ -5,7 +5,7 @@ primaryRole: debugger
 description: Reproduce or inspect a failure, isolate root cause, and validate a fix. Use when the user reports a bug, failing test, or broken CLI behavior.
 ---
 
-# Debug Skill (oh-my-product)
+# Debug Skill (oh-my-gemini)
 
 ## Quick Start
 

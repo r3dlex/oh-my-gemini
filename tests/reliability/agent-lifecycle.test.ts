@@ -59,7 +59,7 @@ describe('reliability: agent lifecycle', () => {
           status: 'completed',
           summary: 'planner complete',
           artifacts: {
-            json: '.omp/state/team/t1/artifacts/roles/worker-1/planner.json',
+            json: '.omg/state/team/t1/artifacts/roles/worker-1/planner.json',
           },
         },
         {
@@ -67,7 +67,7 @@ describe('reliability: agent lifecycle', () => {
           status: 'failed',
           summary: 'executor failed',
           artifacts: {
-            markdown: '.omp/state/team/t1/artifacts/roles/worker-2/executor.md',
+            markdown: '.omg/state/team/t1/artifacts/roles/worker-2/executor.md',
           },
         },
       ],

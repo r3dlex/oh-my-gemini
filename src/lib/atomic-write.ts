@@ -1,5 +1,5 @@
 /**
- * Atomic, durable file writes for oh-my-product.
+ * Atomic, durable file writes for oh-my-gemini.
  * Self-contained module with no external dependencies.
  */
 

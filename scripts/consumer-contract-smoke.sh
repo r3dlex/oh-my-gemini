@@ -54,8 +54,8 @@ npm_config_cache="$NPM_CACHE_DIR" npm init -y >/dev/null 2>&1
 npm_config_cache="$NPM_CACHE_DIR" npm install --no-audit --no-fund "$TARBALL_PATH" >/dev/null
 
 BIN_MAIN="./node_modules/.bin/oh-my-gemini"
-BIN_COMPAT="./node_modules/.bin/oh-my-product"
-BIN_ALIAS="./node_modules/.bin/omp"
+BIN_COMPAT="./node_modules/.bin/oh-my-gemini"
+BIN_ALIAS="./node_modules/.bin/omg"
 
 if [[ ! -x "$BIN_MAIN" ]]; then
   echo "[consumer-contract] missing executable bin: $BIN_MAIN" >&2
@@ -76,7 +76,7 @@ echo "[consumer-contract] validating local package bins"
 "$BIN_MAIN" --help >/dev/null
 "$BIN_COMPAT" --help >/dev/null
 "$BIN_ALIAS" --help >/dev/null
-npx --no-install omp --help >/dev/null
+npx --no-install omg --help >/dev/null
 
 echo "[consumer-contract] running setup and extension path checks"
 "$BIN_ALIAS" setup --scope project >/dev/null
@@ -86,17 +86,17 @@ extension_path="$(node -e "const payload = JSON.parse(process.argv[1]); process.
 manifest_path="$(node -e "const payload = JSON.parse(process.argv[1]); process.stdout.write(payload.manifestPath ?? '');" "$extension_path_json")"
 
 if [[ -z "$extension_path" || ! -d "$extension_path" ]]; then
-  echo "[consumer-contract] invalid extension path from omp extension path: $extension_path" >&2
+  echo "[consumer-contract] invalid extension path from omg extension path: $extension_path" >&2
   exit 1
 fi
 
 if [[ -z "$manifest_path" || ! -f "$manifest_path" ]]; then
-  echo "[consumer-contract] invalid manifest path from omp extension path: $manifest_path" >&2
+  echo "[consumer-contract] invalid manifest path from omg extension path: $manifest_path" >&2
   exit 1
 fi
 
 echo "[consumer-contract] verifying default suite contract"
-verify_report="$(cd "$ROOT_DIR" && "$CONSUMER_DIR/node_modules/.bin/omp" verify --dry-run --json)"
+verify_report="$(cd "$ROOT_DIR" && "$CONSUMER_DIR/node_modules/.bin/omg" verify --dry-run --json)"
 node -e "
 const report = JSON.parse(process.argv[1]);
 const suites = Array.isArray(report.suites) ? report.suites.map((entry) => entry?.suite) : [];
@@ -122,7 +122,7 @@ if (!report.extension || typeof report.extension.path !== 'string' || report.ext
 cd "$ROOT_DIR"
 
 echo "[consumer-contract] enforcing deterministic invocation policy"
-if rg -n -P "\\bnpx(?!\\s+--no-install)\\s+omp\\b" \
+if rg -n -P "\\bnpx(?!\\s+--no-install)\\s+omg\\b" \
   README.md \
   docs \
   extensions \
@@ -132,7 +132,7 @@ if rg -n -P "\\bnpx(?!\\s+--no-install)\\s+omp\\b" \
   package.json \
   --glob '!scripts/consumer-contract-smoke.sh' \
   >/tmp/consumer-contract-npx-plain.txt; then
-  echo "[consumer-contract] plain npx omp usage detected (use local bin or npx --no-install)." >&2
+  echo "[consumer-contract] plain npx omg usage detected (use local bin or npx --no-install)." >&2
   cat /tmp/consumer-contract-npx-plain.txt >&2
   rm -f /tmp/consumer-contract-npx-plain.txt
   exit 1

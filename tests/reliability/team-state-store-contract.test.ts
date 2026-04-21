@@ -12,11 +12,11 @@ import { createTempDir, removeDir } from '../utils/runtime.js';
 
 describe('reliability: team state store durable contract', () => {
   test('canonicalizes mixed-case and spaced team names to deterministic lowercase namespace', async () => {
-    const tempRoot = createTempDir('omp-state-team-canonical-');
+    const tempRoot = createTempDir('omg-state-team-canonical-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await store.ensureTeamScaffold('My Team');
@@ -31,7 +31,7 @@ describe('reliability: team state store durable contract', () => {
 
       const canonicalTeamDir = path.join(
         tempRoot,
-        '.omp',
+        '.omg',
         'state',
         'team',
         'my-team',
@@ -43,7 +43,7 @@ describe('reliability: team state store durable contract', () => {
   });
 
   test('resolves state root env precedence: OMG_TEAM_STATE_ROOT > OMP_TEAM_STATE_ROOT > OMX_TEAM_STATE_ROOT > OMG_STATE_ROOT > OMP_STATE_ROOT', () => {
-    const tempRoot = createTempDir('omp-state-root-env-precedence-');
+    const tempRoot = createTempDir('omg-state-root-env-precedence-');
 
     const previousOmgTeamStateRoot = process.env.OMG_TEAM_STATE_ROOT;
     const previousOmpTeamStateRoot = process.env.OMP_TEAM_STATE_ROOT;
@@ -125,11 +125,11 @@ describe('reliability: team state store durable contract', () => {
   });
 
   test('rejects path traversal identifiers for mailbox message and audit event ids', async () => {
-    const tempRoot = createTempDir('omp-state-id-guard-');
+    const tempRoot = createTempDir('omg-state-id-guard-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await expect(
@@ -138,7 +138,7 @@ describe('reliability: team state store durable contract', () => {
           fromWorker: 'worker-1',
           body: 'blocked',
         }),
-      ).rejects.toThrow(/\[OMP_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
+      ).rejects.toThrow(/\[OMG_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
 
       await expect(
         store.appendTaskAuditEvent('contract-team', {
@@ -147,22 +147,22 @@ describe('reliability: team state store durable contract', () => {
           action: 'claim',
           worker: 'worker-1',
         }),
-      ).rejects.toThrow(/\[OMP_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
+      ).rejects.toThrow(/\[OMG_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
     } finally {
       removeDir(tempRoot);
     }
   });
 
   test('rejects path traversal identifiers for team/worker/task state paths', async () => {
-    const tempRoot = createTempDir('omp-state-identifier-guard-');
+    const tempRoot = createTempDir('omg-state-identifier-guard-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await expect(store.ensureTeamScaffold('../escape')).rejects.toThrow(
-        /\[OMP_STATE_IDENTIFIER_PATH_TRAVERSAL\]/,
+        /\[OMG_STATE_IDENTIFIER_PATH_TRAVERSAL\]/,
       );
 
       await expect(
@@ -170,7 +170,7 @@ describe('reliability: team state store durable contract', () => {
           fromWorker: 'worker-1',
           body: 'blocked',
         }),
-      ).rejects.toThrow(/\[OMP_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
+      ).rejects.toThrow(/\[OMG_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
 
       await expect(
         store.writeTask('contract-team', {
@@ -178,23 +178,23 @@ describe('reliability: team state store durable contract', () => {
           subject: 'blocked',
           status: 'pending',
         }),
-      ).rejects.toThrow(/\[OMP_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
+      ).rejects.toThrow(/\[OMG_STATE_IDENTIFIER_PATH_TRAVERSAL\]/);
     } finally {
       removeDir(tempRoot);
     }
   });
 
   test('ensureTeamScaffold creates deterministic tasks/mailbox/events/workers directories', async () => {
-    const tempRoot = createTempDir('omp-state-scaffold-');
+    const tempRoot = createTempDir('omg-state-scaffold-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await store.ensureTeamScaffold('contract-team');
 
-      const teamDir = path.join(tempRoot, '.omp', 'state', 'team', 'contract-team');
+      const teamDir = path.join(tempRoot, '.omg', 'state', 'team', 'contract-team');
       expect(existsSync(path.join(teamDir, 'events'))).toBe(true);
       expect(existsSync(path.join(teamDir, 'workers'))).toBe(true);
       expect(existsSync(path.join(teamDir, 'tasks'))).toBe(true);
@@ -205,11 +205,11 @@ describe('reliability: team state store durable contract', () => {
   });
 
   test('task writes enforce monotonic version CAS on canonical task-<id>.json files', async () => {
-    const tempRoot = createTempDir('omp-state-task-cas-');
+    const tempRoot = createTempDir('omg-state-task-cas-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       const created = await store.writeTask('contract-team', {
@@ -259,7 +259,7 @@ describe('reliability: team state store durable contract', () => {
 
       const taskFilePath = path.join(
         tempRoot,
-        '.omp',
+        '.omg',
         'state',
         'team',
         'contract-team',
@@ -273,11 +273,11 @@ describe('reliability: team state store durable contract', () => {
   });
 
   test('task lifecycle mutations reject direct state-store writes without control-plane scope', async () => {
-    const tempRoot = createTempDir('omp-state-task-lifecycle-guard-');
+    const tempRoot = createTempDir('omg-state-task-lifecycle-guard-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await store.writeTask('contract-team', {
@@ -305,11 +305,11 @@ describe('reliability: team state store durable contract', () => {
   });
 
   test('readPhaseState maps legacy "complete" terminal phase to canonical "completed"', async () => {
-    const tempRoot = createTempDir('omp-state-phase-compat-');
+    const tempRoot = createTempDir('omg-state-phase-compat-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
       await store.ensureTeamScaffold('contract-team');
 
@@ -349,11 +349,11 @@ describe('reliability: team state store durable contract', () => {
   });
 
   test('mailbox append/list uses ndjson with stable message_id records', async () => {
-    const tempRoot = createTempDir('omp-state-mailbox-');
+    const tempRoot = createTempDir('omg-state-mailbox-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await store.appendMailboxMessage('contract-team', 'leader-fixed', {
@@ -376,7 +376,7 @@ describe('reliability: team state store durable contract', () => {
 
       const mailboxPath = path.join(
         tempRoot,
-        '.omp',
+        '.omg',
         'state',
         'team',
         'contract-team',
@@ -390,11 +390,11 @@ describe('reliability: team state store durable contract', () => {
   });
 
   test('task audit append/list uses ndjson with stable claim/transition entries', async () => {
-    const tempRoot = createTempDir('omp-state-task-audit-');
+    const tempRoot = createTempDir('omg-state-task-audit-');
 
     try {
       const store = new TeamStateStore({
-        rootDir: path.join(tempRoot, '.omp', 'state'),
+        rootDir: path.join(tempRoot, '.omg', 'state'),
       });
 
       await store.appendTaskAuditEvent('contract-team', {
@@ -404,7 +404,7 @@ describe('reliability: team state store durable contract', () => {
         fromStatus: 'pending',
         toStatus: 'in_progress',
         claimTokenDigest: 'claim-token-digest',
-        reasonCode: 'OMP_CP_TASK_CLAIM_ACCEPTED',
+        reasonCode: 'OMG_CP_TASK_CLAIM_ACCEPTED',
       });
       await store.appendTaskAuditEvent('contract-team', {
         taskId: '1',
@@ -422,7 +422,7 @@ describe('reliability: team state store durable contract', () => {
         'transition',
       ]);
       expect(events.map((event) => event.reasonCode)).toStrictEqual([
-        'OMP_CP_TASK_CLAIM_ACCEPTED',
+        'OMG_CP_TASK_CLAIM_ACCEPTED',
         undefined,
       ]);
       expect(events.map((event) => event.taskId)).toStrictEqual(['1', '1']);
@@ -432,7 +432,7 @@ describe('reliability: team state store durable contract', () => {
 
       const auditPath = path.join(
         tempRoot,
-        '.omp',
+        '.omg',
         'state',
         'team',
         'contract-team',

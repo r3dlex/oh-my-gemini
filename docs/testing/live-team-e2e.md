@@ -2,7 +2,7 @@
 
 This runbook validates the **real tmux-backed `omx team` lifecycle** against this repository.
 
-It complements `omp team run` by exercising the operator path:
+It complements `omg team run` by exercising the operator path:
 
 1. `omx team ...` start
 2. `omx team status ...` monitoring

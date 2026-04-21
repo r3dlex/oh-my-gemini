@@ -1,4 +1,4 @@
-# oh-my-product Team Context
+# oh-my-gemini Team Context
 
 ## Team: test-team
 ## Task: Test task for baseline
@@ -8,7 +8,7 @@
 ## Environment Variables
 - `OMP_TEAM_WORKER`: `<teamName>/<workerId>` — combined identifier
 - `OMP_WORKER_NAME`: `<workerId>` — this worker's ID
-- `OMP_TEAM_STATE_ROOT`: path to `.omp/state/`
+- `OMP_TEAM_STATE_ROOT`: path to `.omg/state/`
 - `OMP_WORKER_TASK_ID`: pre-assigned task ID for this worker (if set)
 - `OMP_WORKER_CLAIM_TOKEN`: claim token to use with transitionTaskStatus (if set)
 

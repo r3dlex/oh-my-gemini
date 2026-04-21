@@ -11,15 +11,15 @@ export interface ExternalModelDefaults {
 }
 
 export function getDefaultModelHigh(env: NodeJS.ProcessEnv = process.env): string {
-  return env.OMP_MODEL_HIGH || BUILTIN_MODEL_HIGH;
+  return env.OMG_MODEL_HIGH || BUILTIN_MODEL_HIGH;
 }
 
 export function getDefaultModelMedium(env: NodeJS.ProcessEnv = process.env): string {
-  return env.OMP_MODEL_MEDIUM || BUILTIN_MODEL_MEDIUM;
+  return env.OMG_MODEL_MEDIUM || BUILTIN_MODEL_MEDIUM;
 }
 
 export function getDefaultModelLow(env: NodeJS.ProcessEnv = process.env): string {
-  return env.OMP_MODEL_LOW || BUILTIN_MODEL_LOW;
+  return env.OMG_MODEL_LOW || BUILTIN_MODEL_LOW;
 }
 
 export function getDefaultTierModels(
@@ -39,12 +39,12 @@ export function getDefaultExternalModels(
 
   return {
     codexModel:
-      env.OMP_EXTERNAL_MODELS_DEFAULT_CODEX_MODEL ||
-      env.OMP_CODEX_DEFAULT_MODEL ||
+      env.OMG_EXTERNAL_MODELS_DEFAULT_CODEX_MODEL ||
+      env.OMG_CODEX_DEFAULT_MODEL ||
       frontierModel,
     geminiModel:
-      env.OMP_EXTERNAL_MODELS_DEFAULT_GEMINI_MODEL ||
-      env.OMP_GEMINI_DEFAULT_MODEL ||
+      env.OMG_EXTERNAL_MODELS_DEFAULT_GEMINI_MODEL ||
+      env.OMG_GEMINI_DEFAULT_MODEL ||
       env.GEMINI_MODEL ||
       getDefaultModelMedium(env),
   };
@@ -63,7 +63,7 @@ export function isGoogleGeminiEndpoint(baseUrl: string): boolean {
 }
 
 export function isNonGeminiProvider(env: NodeJS.ProcessEnv = process.env): boolean {
-  if (env.OMP_ROUTING_FORCE_INHERIT === 'true') {
+  if (env.OMG_ROUTING_FORCE_INHERIT === 'true') {
     return true;
   }
 
@@ -72,7 +72,7 @@ export function isNonGeminiProvider(env: NodeJS.ProcessEnv = process.env): boole
     return true;
   }
 
-  const model = env.GEMINI_MODEL ?? env.OMP_MODEL_HIGH ?? '';
+  const model = env.GEMINI_MODEL ?? env.OMG_MODEL_HIGH ?? '';
   if (model && !model.toLowerCase().includes('gemini')) {
     return true;
   }

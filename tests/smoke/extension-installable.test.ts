@@ -18,9 +18,9 @@ describe('smoke: native Gemini extension package layout', () => {
     const contextFilePath = path.join(extensionRoot, 'GEMINI.md');
     const hooksFilePath = path.join(extensionRoot, 'hooks', 'hooks.json');
     const commandFiles = [
-      path.join(extensionRoot, 'commands', 'omp', 'doctor.toml'),
-      path.join(extensionRoot, 'commands', 'omp', 'setup.toml'),
-      path.join(extensionRoot, 'commands', 'omp', 'team', 'run.toml'),
+      path.join(extensionRoot, 'commands', 'omg', 'doctor.toml'),
+      path.join(extensionRoot, 'commands', 'omg', 'setup.toml'),
+      path.join(extensionRoot, 'commands', 'omg', 'team', 'run.toml'),
       path.join(extensionRoot, 'commands', 'omg', 'doctor.toml'),
       path.join(extensionRoot, 'commands', 'omg', 'team', 'run.toml'),
     ];

@@ -1,10 +1,10 @@
 # Contributing to oh-my-gemini
 
-Thanks for contributing to `oh-my-gemini`. This repository ships both the `omp`/`omg` CLI runtime and the Gemini extension assets that power setup, orchestration, and verification workflows.
+Thanks for contributing to `oh-my-gemini`. This repository ships the `omg` / `oh-my-gemini` CLI runtime and the Gemini extension assets that power setup, orchestration, and verification workflows.
 
 This guide is intentionally practical: it focuses on the commands and file locations you will actually use while preparing a change.
 
-> **OMG transition note (2026-04-13):** the repo is actively moving from legacy `oh-my-product` / `omp` surfaces toward canonical `oh-my-gemini` / `omg` surfaces, including `extensions/oh-my-gemini/` and `.omg/`. Review [`docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md`](docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md) before changing branding, extension layout, or runtime-state paths.
+> **OMG branding (2026-04-13):** the repo uses canonical `oh-my-gemini` / `omg` surfaces, including `extensions/oh-my-gemini/` and `.omg/`. The legacy `oh-my-gemini` / `omg` bin names have been removed. Review [`docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md`](docs/analysis/2026-04-13-oh-my-gemini-phase-1-doc-and-quality-review.md) before changing branding, extension layout, or runtime-state paths.
 
 ## Prerequisites
 
@@ -71,7 +71,7 @@ gemini extensions link .
 If you want to verify the resolved extension path through the CLI first:
 
 ```bash
-npm run omp -- extension path
+npm run omg -- extension path
 ```
 
 ## Branch naming
@@ -199,9 +199,9 @@ Useful targeted commands while iterating:
 npm run test:smoke
 npm run test:integration
 npm run test:reliability
-npm run omp -- verify --tier light --dry-run --json
-npm run omp -- verify --tier standard --dry-run --json
-npm run omp -- verify --tier thorough --dry-run --json
+npm run omg -- verify --tier light --dry-run --json
+npm run omg -- verify --tier standard --dry-run --json
+npm run omg -- verify --tier thorough --dry-run --json
 ```
 
 When you change orchestration, runtime lifecycle, worker health, or persistence behavior, also run:
@@ -227,7 +227,7 @@ When you change documentation, verify that every command example still matches t
 Do not hand-edit generated or managed runtime artifacts unless the task is explicitly about them:
 
 - `dist/`
-- `.omp/`
+- `.omg/`
 - `.omx/`
 
 ### Documentation style
@@ -239,13 +239,13 @@ Do not hand-edit generated or managed runtime artifacts unless the task is expli
 
 ## Contributing skills and prompts
 
-`oh-my-product` has two related contribution surfaces:
+`oh-my-gemini` has two related contribution surfaces:
 
-- `src/skills/` for repo-local skill runtime behavior used by `npm run omp -- skill ...`
+- `src/skills/` for repo-local skill runtime behavior used by `npm run omg -- skill ...`
 - `skills/` for extension-facing packaged skills
 - `src/prompts/` for role prompts used by orchestration workers
 
-There is currently no separate `omp skill register` command. In practice, "registering" a skill means adding a discoverable `SKILL.md` file in the correct catalog directory and then validating it with `omp skill list` or `omp skill <name>`.
+There is currently no separate `omg skill register` command. In practice, "registering" a skill means adding a discoverable `SKILL.md` file in the correct catalog directory and then validating it with `omg skill list` or `omg skill <name>`.
 
 ### Add a repo-local skill
 
@@ -277,8 +277,8 @@ SKILL
 Then validate it locally:
 
 ```bash
-npm run omp -- skill list
-npm run omp -- skill release-check "prepare the next release candidate"
+npm run omg -- skill list
+npm run omg -- skill release-check "prepare the next release candidate"
 ```
 
 ### Ship the same skill through the Gemini extension
@@ -312,28 +312,28 @@ Use these commands when you want to exercise the tmux-backed runtime in a real r
 ### Dry-run the launch configuration
 
 ```bash
-npm run omp -- team run --task "review src/team lifecycle behavior" --workers 4 --dry-run --json
+npm run omg -- team run --task "review src/team lifecycle behavior" --workers 4 --dry-run --json
 ```
 
 ### Start a local run
 
 ```bash
-npm run omp -- team run --task "review src/team lifecycle behavior" --workers 4
+npm run omg -- team run --task "review src/team lifecycle behavior" --workers 4
 ```
 
 ### Monitor progress
 
 ```bash
-npm run omp -- hud --team oh-my-product --preset focused
-npm run omp -- hud --watch --interval-ms 1000
-npm run omp -- team status --team oh-my-product --json
+npm run omg -- hud --team oh-my-gemini --preset focused
+npm run omg -- hud --watch --interval-ms 1000
+npm run omg -- team status --team oh-my-gemini --json
 ```
 
 ### Resume or stop a run
 
 ```bash
-npm run omp -- team resume --team oh-my-product --max-fix-loop 1
-npm run omp -- team shutdown --team oh-my-product --force --json
+npm run omg -- team resume --team oh-my-gemini --max-fix-loop 1
+npm run omg -- team shutdown --team oh-my-gemini --force --json
 ```
 
 If you want a quick integration-style smoke instead of a manual task, use the helper script:

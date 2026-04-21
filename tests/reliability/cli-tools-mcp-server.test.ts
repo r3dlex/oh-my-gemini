@@ -17,7 +17,7 @@ async function closeQuietly(
 
 describe('reliability: cli tools MCP server', () => {
   test('registers selected categories and executes file tool handlers', async () => {
-    const cwd = createTempDir('omp-cli-tools-mcp-');
+    const cwd = createTempDir('omg-cli-tools-mcp-');
     const server = createCliToolsMcpServer({
       defaultCwd: cwd,
       categories: ['file'],

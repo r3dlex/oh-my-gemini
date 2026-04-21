@@ -263,10 +263,10 @@ function getTierOverrideEnvKeys(
   const providerToken = normalizeProviderEnvToken(provider);
 
   return [
-    `OMP_GEMINI_MODEL_${providerToken}_${upperTier}`,
-    `OMP_GEMINI_MODEL_${upperTier}`,
+    `OMG_GEMINI_MODEL_${providerToken}_${upperTier}`,
+    `OMG_GEMINI_MODEL_${upperTier}`,
     `GEMINI_MODEL_${upperTier}`,
-    `OMP_MODEL_${upperTier}`,
+    `OMG_MODEL_${upperTier}`,
   ];
 }
 

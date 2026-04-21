@@ -27,9 +27,9 @@ export interface ToolsCommandContext {
 function printToolsHelp(io: CliIo): void {
   io.stdout([
     'Usage:',
-    '  omp tools list [--json] [--categories <file,git,http,process>]',
-    '  omp tools serve [--categories <file,git,http,process>]',
-    '  omp tools manifest [--json] [--categories <file,git,http,process>] [--bin <command>] [--server-name <name>]',
+    '  omg tools list [--json] [--categories <file,git,http,process>]',
+    '  omg tools serve [--categories <file,git,http,process>]',
+    '  omg tools manifest [--json] [--categories <file,git,http,process>] [--bin <command>] [--server-name <name>]',
     '',
     'Subcommands:',
     '  list      List available CLI MCP tools by category',

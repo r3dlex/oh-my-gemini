@@ -5,7 +5,7 @@ primaryRole: analyst
 description: Run a structured Socratic interview that turns ambiguity into an implementation-ready brief. Use when the request is broad, vague, or missing scope boundaries.
 ---
 
-# Deep Interview Skill (oh-my-product)
+# Deep Interview Skill (oh-my-gemini)
 
 ## Quick Start
 
@@ -31,4 +31,4 @@ Produce an implementation-ready summary with:
 - in scope / out of scope
 - acceptance criteria
 - open risks
-- recommended next command (`omp skill plan` or direct execution)
+- recommended next command (`omg skill plan` or direct execution)

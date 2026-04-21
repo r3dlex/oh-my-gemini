@@ -65,7 +65,7 @@ interface ParsedTaskKeywords {
   requestedBackend?: TeamBackend;
   conflictingBackends: TeamBackend[];
   providerWorkers?: number;
-  providerCli?: 'omp' | 'gemini' | 'claude' | 'codex';
+  providerCli?: 'omg' | 'gemini' | 'claude' | 'codex';
 }
 
 const SUBAGENTS_BACKEND_KEYWORDS = new Set([
@@ -82,7 +82,7 @@ const SUBAGENT_KEYWORD_TOKEN_PATTERN = /^([/$])([a-zA-Z0-9][a-zA-Z0-9._-]*)$/;
 
 function printTeamRunHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp team run --task "<description>" [--team <name>] [--backend tmux|subagents|gemini-spawn] [--workers <1..8>] [--subagents <ids>] [--max-fix-loop <n>] [--dry-run] [--json]',
+    'Usage: omg team run --task "<description>" [--team <name>] [--backend tmux|subagents|gemini-spawn] [--workers <1..8>] [--subagents <ids>] [--max-fix-loop <n>] [--dry-run] [--json]',
     '',
     'Options:',
     '  --task <text>        Required task description for orchestration',
@@ -220,13 +220,13 @@ function extractLeadingSubagentKeywords(rawTask: string): ParsedTaskKeywords {
   }
 
   // N:provider shorthand: e.g., "3:codex build auth"
-  const PROVIDER_SHORTHAND = /^(\d+):(codex|claude|gemini|omp|omp)$/i;
+  const PROVIDER_SHORTHAND = /^(\d+):(codex|claude|gemini|omg|omg)$/i;
   const tokens = trimmed.split(/\s+/);
   const firstMatch = tokens[0]?.match(PROVIDER_SHORTHAND);
   if (firstMatch) {
     const providerWorkers = parseInt(firstMatch[1]!, 10);
     const cliRaw = firstMatch[2]!.toLowerCase();
-    const providerCli = cliRaw === 'omp' ? 'omp' : cliRaw;
+    const providerCli = cliRaw === 'omg' ? 'omg' : cliRaw;
     tokens.shift();
     return {
       cleanedTask: tokens.join(' '),
@@ -234,7 +234,7 @@ function extractLeadingSubagentKeywords(rawTask: string): ParsedTaskKeywords {
       requestedBackend: 'tmux',
       conflictingBackends: [],
       providerWorkers,
-      providerCli: providerCli as 'omp' | 'gemini' | 'claude' | 'codex',
+      providerCli: providerCli as 'omg' | 'gemini' | 'claude' | 'codex',
     };
   }
   const keywordTokens: string[] = [];
@@ -443,7 +443,7 @@ export async function runTeamCommand(input: TeamRunInput): Promise<TeamRunOutput
     nonReportingMs: input.nonReportingMs,
     env: input.env,
     metadata: {
-      invokedBy: 'omp team run',
+      invokedBy: 'omg team run',
     },
   });
 
@@ -686,7 +686,7 @@ export async function executeTeamRunCommand(
         : workers;
     const providerEnv: Record<string, string> | undefined =
       keywordResolution.providerCli !== undefined
-        ? { OMP_TEAM_WORKER_CLI: keywordResolution.providerCli }
+        ? { OMG_TEAM_WORKER_CLI: keywordResolution.providerCli }
         : undefined;
     input = {
       teamName,

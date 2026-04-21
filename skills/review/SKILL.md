@@ -5,7 +5,7 @@ primaryRole: reviewer
 description: Perform a structured review of code or recent changes. Use when the user wants correctness, security, maintainability, and coverage findings.
 ---
 
-# Review Skill (oh-my-product)
+# Review Skill (oh-my-gemini)
 
 ## Quick Start
 
@@ -47,5 +47,5 @@ Executes a structured code review covering correctness, security, maintainabilit
 
 Run via skill dispatch:
 ```
-omp skill review [--scope <files or description>]
+omg skill review [--scope <files or description>]
 ```

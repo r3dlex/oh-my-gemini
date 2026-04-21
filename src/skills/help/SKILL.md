@@ -2,7 +2,7 @@
 name: help
 aliases: ["/help", "usage", "how do I use this"]
 primaryRole: writer
-description: Explains the relevant oh-my-product command, workflow, or skill surface. Use when the user needs guidance on commands, workflows, or expected usage patterns.
+description: Explains the relevant oh-my-gemini command, workflow, or skill surface. Use when the user needs guidance on commands, workflows, or expected usage patterns.
 ---
 
 # Help

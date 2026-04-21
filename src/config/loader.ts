@@ -110,7 +110,7 @@ function createDefaultConfig(env: NodeJS.ProcessEnv): OmpConfig {
 export function getConfigPaths(cwd: string = process.cwd()): ConfigPaths {
   return {
     user: path.join(homedir(), '.config', 'oh-my-gemini', 'config.jsonc'),
-    project: path.join(cwd, '.gemini', 'omp.jsonc'),
+    project: path.join(cwd, '.gemini', 'omg.jsonc'),
   };
 }
 
@@ -214,7 +214,7 @@ function parseProviderOrder(
   const invalidEntries = rawEntries.filter((entry) => entry !== 'gemini' && entry !== 'codex');
   if (invalidEntries.length > 0) {
     throw new Error(
-      `[config] OMP_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER contains invalid provider(s): ${invalidEntries.join(', ')}`,
+      `[config] OMG_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER contains invalid provider(s): ${invalidEntries.join(', ')}`,
     );
   }
 
@@ -248,9 +248,9 @@ function parsePositiveInt(value: string | undefined): number | undefined {
 }
 
 function parseRetryEnv(env: NodeJS.ProcessEnv): OmpGeminiRetryConfig | undefined {
-  const maxRetries = parsePositiveInt(env.OMP_RETRY_MAX_RETRIES);
-  const initialDelayMs = parsePositiveInt(env.OMP_RETRY_INITIAL_DELAY_MS);
-  const maxDelayMs = parsePositiveInt(env.OMP_RETRY_MAX_DELAY_MS);
+  const maxRetries = parsePositiveInt(env.OMG_RETRY_MAX_RETRIES);
+  const initialDelayMs = parsePositiveInt(env.OMG_RETRY_INITIAL_DELAY_MS);
+  const maxDelayMs = parsePositiveInt(env.OMG_RETRY_MAX_DELAY_MS);
 
   if (maxRetries === undefined && initialDelayMs === undefined && maxDelayMs === undefined) {
     return undefined;
@@ -267,11 +267,11 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): Partial<Omp
   const partial: Partial<OmpConfig> = {};
 
   const featureFlags = {
-    parallelExecution: parseBoolean(env.OMP_PARALLEL_EXECUTION),
-    continuationEnforcement: parseBoolean(env.OMP_CONTINUATION_ENFORCEMENT),
-    autoContextInjection: parseBoolean(env.OMP_AUTO_CONTEXT_INJECTION),
-    commandTemplates: parseBoolean(env.OMP_COMMAND_TEMPLATES),
-    runtimePlugins: parseBoolean(env.OMP_RUNTIME_PLUGINS),
+    parallelExecution: parseBoolean(env.OMG_PARALLEL_EXECUTION),
+    continuationEnforcement: parseBoolean(env.OMG_CONTINUATION_ENFORCEMENT),
+    autoContextInjection: parseBoolean(env.OMG_AUTO_CONTEXT_INJECTION),
+    commandTemplates: parseBoolean(env.OMG_COMMAND_TEMPLATES),
+    runtimePlugins: parseBoolean(env.OMG_RUNTIME_PLUGINS),
   };
 
   if (Object.values(featureFlags).some((value) => value !== undefined)) {
@@ -284,11 +284,11 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): Partial<Omp
     };
   }
 
-  if (env.OMP_MAX_BACKGROUND_TASKS !== undefined) {
-    const parsed = Number.parseInt(env.OMP_MAX_BACKGROUND_TASKS, 10);
+  if (env.OMG_MAX_BACKGROUND_TASKS !== undefined) {
+    const parsed = Number.parseInt(env.OMG_MAX_BACKGROUND_TASKS, 10);
     if (!Number.isFinite(parsed)) {
       throw new Error(
-        `[config] OMP_MAX_BACKGROUND_TASKS must be an integer, got: ${env.OMP_MAX_BACKGROUND_TASKS}`,
+        `[config] OMG_MAX_BACKGROUND_TASKS must be an integer, got: ${env.OMG_MAX_BACKGROUND_TASKS}`,
       );
     }
 
@@ -300,15 +300,15 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): Partial<Omp
     };
   }
 
-  const routingEnabled = parseBoolean(env.OMP_ROUTING_ENABLED);
-  const forceInherit = parseBoolean(env.OMP_ROUTING_FORCE_INHERIT);
-  const escalationEnabled = parseBoolean(env.OMP_ESCALATION_ENABLED);
-  const defaultTier = parseTier(env.OMP_ROUTING_DEFAULT_TIER);
-  const maxEscalationsRaw = env.OMP_MAX_ESCALATIONS ?? env.OMP_ROUTING_MAX_ESCALATIONS;
+  const routingEnabled = parseBoolean(env.OMG_ROUTING_ENABLED);
+  const forceInherit = parseBoolean(env.OMG_ROUTING_FORCE_INHERIT);
+  const escalationEnabled = parseBoolean(env.OMG_ESCALATION_ENABLED);
+  const defaultTier = parseTier(env.OMG_ROUTING_DEFAULT_TIER);
+  const maxEscalationsRaw = env.OMG_MAX_ESCALATIONS ?? env.OMG_ROUTING_MAX_ESCALATIONS;
   const maxEscalations = maxEscalationsRaw ? Number.parseInt(maxEscalationsRaw, 10) : undefined;
   if (maxEscalationsRaw !== undefined && !Number.isFinite(maxEscalations)) {
     throw new Error(
-      `[config] OMP_MAX_ESCALATIONS/OMP_ROUTING_MAX_ESCALATIONS must be an integer, got: ${maxEscalationsRaw}`,
+      `[config] OMG_MAX_ESCALATIONS/OMG_ROUTING_MAX_ESCALATIONS must be an integer, got: ${maxEscalationsRaw}`,
     );
   }
 
@@ -318,9 +318,9 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): Partial<Omp
     escalationEnabled !== undefined ||
     defaultTier !== undefined ||
     maxEscalations !== undefined ||
-    env.OMP_MODEL_HIGH !== undefined ||
-    env.OMP_MODEL_MEDIUM !== undefined ||
-    env.OMP_MODEL_LOW !== undefined
+    env.OMG_MODEL_HIGH !== undefined ||
+    env.OMG_MODEL_MEDIUM !== undefined ||
+    env.OMG_MODEL_LOW !== undefined
   ) {
     partial.routing = {
       enabled: routingEnabled ?? true,
@@ -342,16 +342,16 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): Partial<Omp
     env.GEMINI_MODEL !== undefined ||
     env.GEMINI_API_VERSION !== undefined ||
     env.GEMINI_API_KEY !== undefined ||
-    env.OMP_GEMINI_PROVIDER_ENABLED !== undefined ||
-    env.OMP_REQUEST_TIMEOUT_MS !== undefined ||
+    env.OMG_GEMINI_PROVIDER_ENABLED !== undefined ||
+    env.OMG_REQUEST_TIMEOUT_MS !== undefined ||
     env.GEMINI_REQUEST_TIMEOUT_MS !== undefined ||
-    env.OMP_RETRY_MAX_RETRIES !== undefined ||
-    env.OMP_RETRY_INITIAL_DELAY_MS !== undefined ||
-    env.OMP_RETRY_MAX_DELAY_MS !== undefined
+    env.OMG_RETRY_MAX_RETRIES !== undefined ||
+    env.OMG_RETRY_INITIAL_DELAY_MS !== undefined ||
+    env.OMG_RETRY_MAX_DELAY_MS !== undefined
   ) {
-    const providerEnabled = parseBoolean(env.OMP_GEMINI_PROVIDER_ENABLED);
+    const providerEnabled = parseBoolean(env.OMG_GEMINI_PROVIDER_ENABLED);
 
-    const timeoutRaw = env.OMP_REQUEST_TIMEOUT_MS ?? env.GEMINI_REQUEST_TIMEOUT_MS;
+    const timeoutRaw = env.OMG_REQUEST_TIMEOUT_MS ?? env.GEMINI_REQUEST_TIMEOUT_MS;
     let requestTimeoutMs: number | undefined;
     if (timeoutRaw !== undefined) {
       const parsed = Number.parseInt(timeoutRaw, 10);
@@ -375,13 +375,13 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): Partial<Omp
     };
   }
 
-  const provider = parseExternalProvider(env.OMP_EXTERNAL_MODELS_DEFAULT_PROVIDER);
+  const provider = parseExternalProvider(env.OMG_EXTERNAL_MODELS_DEFAULT_PROVIDER);
   const externalDefaults = getDefaultExternalModels(env);
   const codexModel = externalDefaults.codexModel;
   const geminiModel = externalDefaults.geminiModel;
-  const onModelFailure = env.OMP_EXTERNAL_MODELS_FALLBACK_POLICY;
-  const allowCrossProvider = parseBoolean(env.OMP_EXTERNAL_MODELS_ALLOW_CROSS_PROVIDER);
-  const crossProviderOrder = parseProviderOrder(env.OMP_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER);
+  const onModelFailure = env.OMG_EXTERNAL_MODELS_FALLBACK_POLICY;
+  const allowCrossProvider = parseBoolean(env.OMG_EXTERNAL_MODELS_ALLOW_CROSS_PROVIDER);
+  const crossProviderOrder = parseProviderOrder(env.OMG_EXTERNAL_MODELS_CROSS_PROVIDER_ORDER);
 
   if (
     provider !== undefined ||
@@ -419,8 +419,8 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): Partial<Omp
 }
 
 function parseRecoveryEnv(env: NodeJS.ProcessEnv): OmpRecoveryConfig | undefined {
-  const maxRestartsRaw = env.OMP_MAX_WORKER_RESTARTS;
-  const policyRaw = env.OMP_WORKER_RESTART_POLICY;
+  const maxRestartsRaw = env.OMG_MAX_WORKER_RESTARTS;
+  const policyRaw = env.OMG_WORKER_RESTART_POLICY;
 
   if (maxRestartsRaw === undefined && policyRaw === undefined) {
     return undefined;
@@ -431,7 +431,7 @@ function parseRecoveryEnv(env: NodeJS.ProcessEnv): OmpRecoveryConfig | undefined
     const parsed = Number.parseInt(maxRestartsRaw, 10);
     if (!Number.isFinite(parsed) || parsed < 0) {
       throw new Error(
-        `[config] OMP_MAX_WORKER_RESTARTS must be a non-negative integer, got: ${maxRestartsRaw}`,
+        `[config] OMG_MAX_WORKER_RESTARTS must be a non-negative integer, got: ${maxRestartsRaw}`,
       );
     }
     maxWorkerRestarts = Math.min(parsed, 10);
@@ -442,7 +442,7 @@ function parseRecoveryEnv(env: NodeJS.ProcessEnv): OmpRecoveryConfig | undefined
     const normalized = policyRaw.trim().toLowerCase();
     if (normalized !== 'on-failure' && normalized !== 'never') {
       throw new Error(
-        `[config] OMP_WORKER_RESTART_POLICY must be "on-failure" or "never", got: ${policyRaw}`,
+        `[config] OMG_WORKER_RESTART_POLICY must be "on-failure" or "never", got: ${policyRaw}`,
       );
     }
     restartPolicy = normalized;
@@ -473,7 +473,7 @@ export function loadConfig(options: LoadConfigOptions = {}): OmpConfig {
 
   if (
     config.routing.forceInherit !== true &&
-    env.OMP_ROUTING_FORCE_INHERIT === undefined &&
+    env.OMG_ROUTING_FORCE_INHERIT === undefined &&
     isNonGeminiProvider(env)
   ) {
     config.routing = {

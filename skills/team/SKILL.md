@@ -5,35 +5,35 @@ primaryRole: orchestrator
 description: Orchestrate parallel tmux workers for a multi-agent team task. Use when the user wants coordinated multi-worker execution.
 ---
 
-# Team Skill (oh-my-product)
+# Team Skill (oh-my-gemini)
 
 ## Quick Start
 
-- Launch `omp team run --task "..." --workers <N>` when the task benefits from parallel workers.
+- Launch `omg team run --task "..." --workers <N>` when the task benefits from parallel workers.
 
 Use this skill when the user wants to run a multi-worker team orchestration task.
 
 ## Quick Start
 
-Launches `omp team run` with the specified task and worker count, creating a tmux session with N parallel workers. Each worker receives the team context via GEMINI.md and executes the task, then writes a completion signal.
+Launches `omg team run` with the specified task and worker count, creating a tmux session with N parallel workers. Each worker receives the team context via GEMINI.md and executes the task, then writes a completion signal.
 
 ## Usage
 
 ```
-omp team run --task "<task description>" --workers <N>
+omg team run --task "<task description>" --workers <N>
 ```
 
 ## Examples
 
-- `omp team run --task "Review all PRs" --workers 3`
-- `omp team run --task "Run smoke tests" --workers 2`
-- `omp team run --task "Audit dependencies" --workers 4`
+- `omg team run --task "Review all PRs" --workers 3`
+- `omg team run --task "Run smoke tests" --workers 2`
+- `omg team run --task "Audit dependencies" --workers 4`
 
 ## Orchestration steps
 
 1. Hook system writes team context to `.gemini/GEMINI.md`
 2. tmux session is created with N worker panes
-3. Each worker runs `omp worker run --team <name> --worker <id>`
+3. Each worker runs `omg worker run --team <name> --worker <id>`
 4. Workers read context, execute task, write done signal to state
 5. Orchestrator polls until all workers complete
 6. Results aggregated and displayed
@@ -42,5 +42,5 @@ omp team run --task "<task description>" --workers <N>
 
 - [ ] tmux session created with N panes
 - [ ] Each pane executes the worker run command
-- [ ] Each worker writes a done signal (`.omp/state/team/<name>/workers/<id>/done.json`)
-- [ ] `omp team status` reflects worker completion
+- [ ] Each worker writes a done signal (`.omg/state/team/<name>/workers/<id>/done.json`)
+- [ ] `omg team status` reflects worker completion

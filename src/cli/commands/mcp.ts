@@ -32,7 +32,7 @@ let shutdownHandlersInstalled = false;
 
 function printMcpServeHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp mcp serve [--dry-run] [--json]',
+    'Usage: omg mcp serve [--dry-run] [--json]',
     '',
     'Options:',
     '  --dry-run   Resolve and print MCP surfaces without opening stdio transport',

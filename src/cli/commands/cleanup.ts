@@ -12,12 +12,12 @@ export interface CleanupCommandContext {
 
 const STALE_DIR_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
 const STALE_HEARTBEAT_THRESHOLD_MS = 90 * 1000; // 90 seconds
-const TMUX_SESSION_PATTERN = /^(omp-team-|omp-team-)/;
+const TMUX_SESSION_PATTERN = /^(omg-team-|omg-team-)/;
 
 function printCleanupHelp(io: CliIo): void {
   io.stdout(
     [
-      'Usage: omp cleanup [options]',
+      'Usage: omg cleanup [options]',
       '',
       'Kill orphaned workers and clean stale state.',
       '',
@@ -61,7 +61,7 @@ interface StaleDir {
 }
 
 function findStaleDirs(cwd: string): StaleDir[] {
-  const teamStateRoot = path.join(cwd, '.omp', 'state', 'team');
+  const teamStateRoot = path.join(cwd, '.omg', 'state', 'team');
   const stale: StaleDir[] = [];
   const now = Date.now();
 
@@ -104,7 +104,7 @@ interface StaleHeartbeat {
 }
 
 function findStaleHeartbeats(cwd: string): StaleHeartbeat[] {
-  const teamStateRoot = path.join(cwd, '.omp', 'state', 'team');
+  const teamStateRoot = path.join(cwd, '.omg', 'state', 'team');
   const stale: StaleHeartbeat[] = [];
   const now = Date.now();
 
@@ -195,7 +195,7 @@ export async function executeCleanupCommand(
 
   let cleanedCount = 0;
 
-  // 1. Tmux sessions matching omp-team-* or omp-team-*
+  // 1. Tmux sessions matching omg-team-* or omg-team-*
   const sessions = listTmuxSessions(io);
   const matchingSessions = sessions.filter((s) => TMUX_SESSION_PATTERN.test(s));
 

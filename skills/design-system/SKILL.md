@@ -5,7 +5,7 @@ primaryRole: designer
 description: Extract, normalize, and sync design system tokens into DESIGN.md. Use when the user wants to create, import, or update design tokens.
 ---
 
-# Design System Skill (oh-my-product)
+# Design System Skill (oh-my-gemini)
 
 ## Quick Start
 

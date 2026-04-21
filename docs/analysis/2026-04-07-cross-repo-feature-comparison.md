@@ -1,30 +1,30 @@
-# Cross-Repository Feature Comparison: OMP vs OMC vs OMX
+# Cross-Repository Feature Comparison: OMG vs OMC vs OMX
 
 **Date:** 2026-04-07
 **Method:** GitHub API + source inspection + 5-critic adversarial review (4 iterations)
-**Supplements:** `2026-03-02-omp-omc-omx-capability-delta-matrix.md` (implementation-level deltas)
+**Supplements:** `2026-03-02-omg-omc-omx-capability-delta-matrix.md` (implementation-level deltas)
 
 ---
 
 ## 1. Repository Profiles
 
-| | oh-my-product (OMP) | oh-my-claudecode (OMC) | oh-my-codex (OMX) |
+| | oh-my-gemini (OMG) | oh-my-claudecode (OMC) | oh-my-codex (OMX) |
 |---|---|---|---|
 | **Target CLI** | Gemini CLI (extension) | Claude Code (hooks/plugin) | OpenAI Codex CLI (hooks) |
 | **Stars** | 74 | 25,404 | 17,895 |
 | **Language** | TypeScript | TypeScript | TypeScript + Rust |
-| **npm Package** | oh-my-product | oh-my-claude-sisyphus | oh-my-codex |
+| **npm Package** | oh-my-gemini | oh-my-claude-sisyphus | oh-my-codex |
 | **Version** | 0.5.9 | latest | 0.12.0 |
 | **Extension Model** | Native `gemini-extension.json` | Claude `settings.json` hooks | `.codex/hooks.json` |
-| **CLI Binary** | `omp` | (hooks-based, no binary) | `omx` |
-| **State Dir** | `.omp/state/` | `.omc/state/` | `.omx/state/` |
-| **In-Session Prefix** | `/omp:` (TOML) | `/oh-my-claudecode:` (skills) | `$` (AGENTS.md keywords) |
+| **CLI Binary** | `omg` | (hooks-based, no binary) | `omx` |
+| **State Dir** | `.omg/state/` | `.omc/state/` | `.omx/state/` |
+| **In-Session Prefix** | `/omg:` (TOML) | `/oh-my-claudecode:` (skills) | `$` (AGENTS.md keywords) |
 
 ---
 
 ## 2. Agent Catalogs
 
-### 2.1 OMP Agents
+### 2.1 OMG Agents
 
 **Source:** `src/agents/definitions.ts` registers 20 agents (19 default + harsh-critic optional).
 **Prompts:** `agents/*.md` contains 33 role prompt files (superset of definitions.ts).
@@ -65,13 +65,13 @@
 
 ### 2.4 Agent Gap Summary
 
-| Agent | OMP | OMC | OMX | Notes |
+| Agent | OMG | OMC | OMX | Notes |
 |-------|-----|-----|-----|-------|
-| tracer | prompt-only (agents/tracer.md) | Full subagent | - | OMP has prompt but not in definitions.ts registry |
+| tracer | prompt-only (agents/tracer.md) | Full subagent | - | OMG has prompt but not in definitions.ts registry |
 | team-executor | - | - | Yes | OMX-specific for team worker context |
 | vision | prompt-only | - | Yes | Multimodal agent, untapped Gemini opportunity |
 | researcher | prompt-only | - | Yes | Source-backed comparisons |
-| consultant | prompt-only | - | - | OMP-exclusive |
+| consultant | prompt-only | - | - | OMG-exclusive |
 
 ---
 
@@ -79,7 +79,7 @@
 
 ### 3.1 Architecture Comparison
 
-| Aspect | OMP | OMC | OMX |
+| Aspect | OMG | OMC | OMX |
 |--------|-----|-----|-----|
 | **Backend** | tmux panes + subagents + gemini-spawn | Claude Code native teams (TeamCreate/TeamDelete) | tmux panes + git worktrees |
 | **Control Plane** | Deterministic state machine (task-lifecycle.ts, mailbox-lifecycle.ts, failure-taxonomy.ts) | Simpler task/message via TaskCreate/TaskUpdate | SQLite-backed task state with claim/release |
@@ -88,22 +88,22 @@
 | **Fix Loop** | Built into orchestrator with configurable maxFixAttempts (DEFAULT_FIX_LOOP_CAP=3) | Separate team-fix command | configurable max_fix_attempts |
 | **Scaling** | Via subagents-catalog | Via agent spawning | Dynamic scaling + rebalance-policy.ts |
 | **Communication** | Mailbox lifecycle with notification/delivery tracking | SendMessage between teammates | Inbox/mailbox with dispatch/broadcast/DM |
-| **Monitoring** | team/live.toml + omp hud | HUD statusline | omx hud --watch |
+| **Monitoring** | team/live.toml + omg hud | HUD statusline | omx hud --watch |
 
 ### 3.2 Team CLI Commands
 
-| Command | OMP | OMC | OMX |
+| Command | OMG | OMC | OMX |
 |---------|-----|-----|-----|
-| Start team | `omp team run` | `/team N:executor "..."` | `omx team N:type "..."` |
-| Cancel | `omp team cancel` | `/cancel` | `omx team shutdown` |
-| Status | `omp team status` | HUD-based | `omx team status` |
-| Resume | `omp team resume` | - | `omx team resume` |
-| Shutdown | `omp team shutdown` | SendMessage shutdown_request | `omx team shutdown` |
-| Worker run | `omp worker run` (internal) | N/A (native subagents) | worker bootstrap |
+| Start team | `omg team run` | `/team N:executor "..."` | `omx team N:type "..."` |
+| Cancel | `omg team cancel` | `/cancel` | `omx team shutdown` |
+| Status | `omg team status` | HUD-based | `omx team status` |
+| Resume | `omg team resume` | - | `omx team resume` |
+| Shutdown | `omg team shutdown` | SendMessage shutdown_request | `omx team shutdown` |
+| Worker run | `omg worker run` (internal) | N/A (native subagents) | worker bootstrap |
 
-### 3.3 Team Subcommands (OMP-Exclusive)
+### 3.3 Team Subcommands (OMG-Exclusive)
 
-OMP has 8 team subcommands in `commands/omp/team/`:
+OMG has 8 team subcommands in `commands/omg/team/`:
 - `run.toml` — Core orchestration entry (plan→exec→verify→fix→completed|failed)
 - `plan.toml` — Implementation plan stage
 - `prd.toml` — PRD-quality scope lock
@@ -117,15 +117,15 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 
 ## 4. Execution Modes
 
-| Mode | OMP | OMC | OMX | Notes |
+| Mode | OMG | OMC | OMX | Notes |
 |------|-----|-----|-----|-------|
 | **Autopilot** | `src/modes/autopilot.ts` | Full skill | Pipeline orchestrator → RALPLAN → teams → ralph | |
 | **Ralph** | `src/modes/ralph.ts` | Full skill | Contract + persistence system | OMX has most structured implementation |
 | **Ultrawork** | `src/modes/ultrawork.ts` | Full skill | Full implementation | Parallel execution in all three |
-| **UltraQA** | Name registered only (`mode-names.ts:15`) — NO implementation | Full skill | Full implementation | **OMP genuine gap** |
-| **Pipeline** | Deprecated (#1131) | Active | Deprecated (merged into team) | OMP and OMX both deprecated it |
+| **UltraQA** | Name registered only (`mode-names.ts:15`) — NO implementation | Full skill | Full implementation | **OMG genuine gap** |
+| **Pipeline** | Deprecated (#1131) | Active | Deprecated (merged into team) | OMG and OMX both deprecated it |
 | **Team** | 8 subcommands + tmux | Native Claude teams | tmux + worktrees | Different architectures |
-| **Ralplan** | `commands/omp/consensus.toml` + `skills/ralplan/` | Full skill | Full implementation | All three have it |
+| **Ralplan** | `commands/omg/consensus.toml` + `skills/ralplan/` | Full skill | Full implementation | All three have it |
 | **Deep-Interview** | `skills/deep-interview/` | Full skill | With math gating | OMX has most sophisticated gating |
 | **Ecomode** | - | - | Merged into ultrawork | OMX-exclusive concept |
 
@@ -133,7 +133,7 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 
 ## 5. CLI Surface Comparison
 
-### 5.1 OMP CLI Commands (27 TypeScript files in `src/cli/commands/`)
+### 5.1 OMG CLI Commands (27 TypeScript files in `src/cli/commands/`)
 
 **Setup & Config:** setup, update, uninstall, extension-path
 **Diagnostics:** doctor (35.7KB), verify, version
@@ -143,7 +143,7 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 **Monitoring:** hud, cost, sessions
 **Dev:** prd, skill, wait, tools, mcp
 
-### 5.2 OMP In-Session Commands (47 TOML files in `commands/omp/`)
+### 5.2 OMG In-Session Commands (47 TOML files in `commands/omg/`)
 
 **Team (8):** team/{run, plan, prd, exec, verify, assemble, live, subagents}
 **Modes:** team, autopilot, ralph, ultrawork, loop
@@ -232,25 +232,25 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 
 ### 5.7 CLI Interface Comparison Matrix
 
-| CLI Feature | OMP (`omp`) | OMC (`omc`) | OMX (`omx`) |
+| CLI Feature | OMG (`omg`) | OMC (`omc`) | OMX (`omx`) |
 |-------------|-------------|-------------|-------------|
-| **Launch** | `omp launch` | N/A (hooks auto-load) | `omx` (auto-HUD) |
-| **Team spawn** | `omp team run --task "..." --workers N` | `omc team N:codex "..."` | `omx team N:type "..."` |
-| **Team status** | `omp team status` | N/A (HUD) | `omx team status` |
-| **Team resume** | `omp team resume` | N/A | `omx team resume` |
-| **Team shutdown** | `omp team shutdown` | N/A | `omx team shutdown` |
-| **Multi-provider ask** | `omp ask` (Gemini only) | `omc ask claude\|codex\|gemini` | `omx ask claude\|gemini` |
+| **Launch** | `omg launch` | N/A (hooks auto-load) | `omx` (auto-HUD) |
+| **Team spawn** | `omg team run --task "..." --workers N` | `omc team N:codex "..."` | `omx team N:type "..."` |
+| **Team status** | `omg team status` | N/A (HUD) | `omx team status` |
+| **Team resume** | `omg team resume` | N/A | `omx team resume` |
+| **Team shutdown** | `omg team shutdown` | N/A | `omx team shutdown` |
+| **Multi-provider ask** | `omg ask` (Gemini only) | `omc ask claude\|codex\|gemini` | `omx ask claude\|gemini` |
 | **Multi-provider workers** | Gemini-only | codex/gemini/claude | codex/claude/gemini |
-| **Diagnostics** | `omp doctor` | `omc doctor` | `omx doctor [--team]` |
-| **Setup** | `omp setup` | `omc setup` | `omx setup [--scope]` |
-| **HUD** | `omp hud` | `omc hud` | `omx hud [--watch\|--preset]` |
-| **Cost tracking** | `omp cost` | N/A | N/A |
-| **Session mgmt** | `omp sessions` | N/A | `omx session` (search) |
-| **Wait/rate-limit** | `omp wait` | `omc wait --start` | N/A |
-| **MCP server** | `omp mcp serve` | N/A | N/A (4 built-in) |
-| **PRD generation** | `omp prd` | N/A (skill) | N/A (skill) |
-| **Skill mgmt** | `omp skill` | N/A (skill) | N/A (skill) |
-| **Tools mgmt** | `omp tools` | N/A | N/A |
+| **Diagnostics** | `omg doctor` | `omc doctor` | `omx doctor [--team]` |
+| **Setup** | `omg setup` | `omc setup` | `omx setup [--scope]` |
+| **HUD** | `omg hud` | `omc hud` | `omx hud [--watch\|--preset]` |
+| **Cost tracking** | `omg cost` | N/A | N/A |
+| **Session mgmt** | `omg sessions` | N/A | `omx session` (search) |
+| **Wait/rate-limit** | `omg wait` | `omc wait --start` | N/A |
+| **MCP server** | `omg mcp serve` | N/A | N/A (4 built-in) |
+| **PRD generation** | `omg prd` | N/A (skill) | N/A (skill) |
+| **Skill mgmt** | `omg skill` | N/A (skill) | N/A (skill) |
+| **Tools mgmt** | `omg tools` | N/A | N/A |
 | **Read-only explore** | N/A | N/A | `omx explore --prompt` |
 | **Shell sidecar** | N/A | N/A | `omx sparkshell <cmd>` |
 | **Resume session** | N/A | N/A | `omx resume` |
@@ -263,20 +263,20 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 | **Hook mgmt CLI** | N/A | N/A | `omx hooks init\|validate\|test` |
 | **Cleanup orphans** | N/A | N/A | `omx cleanup` |
 | **Notifications CLI** | N/A | `omc config-stop-callback` | `--discord\|--slack\|--telegram` |
-| **Extension path** | `omp extension` | N/A | N/A |
-| **Uninstall** | `omp uninstall` | N/A | `omx uninstall` |
+| **Extension path** | `omg extension` | N/A | N/A |
+| **Uninstall** | `omg uninstall` | N/A | `omx uninstall` |
 
-### 5.8 CLI Gap Analysis for OMP
+### 5.8 CLI Gap Analysis for OMG
 
-**OMP has, others don't (CLI-level):**
-- `omp cost` — Token cost tracking CLI
-- `omp mcp serve` — Built-in MCP server
-- `omp prd` — Direct PRD generation CLI
-- `omp tools` — Tool management CLI
-- `omp extension` — Extension path resolution
-- `omp team cancel` — Explicit cancel command
+**OMG has, others don't (CLI-level):**
+- `omg cost` — Token cost tracking CLI
+- `omg mcp serve` — Built-in MCP server
+- `omg prd` — Direct PRD generation CLI
+- `omg tools` — Tool management CLI
+- `omg extension` — Extension path resolution
+- `omg team cancel` — Explicit cancel command
 
-**OMX has, OMP doesn't (CLI-level):**
+**OMX has, OMG doesn't (CLI-level):**
 - `omx explore --prompt` — Read-only codebase exploration
 - `omx sparkshell <cmd>` — Native Rust shell sidecar
 - `omx resume` — Resume previous session
@@ -290,7 +290,7 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 - `-w, --worktree` — Git worktree launch
 - Multi-provider team workers (codex/claude/gemini)
 
-**OMC has, OMP doesn't (CLI-level):**
+**OMC has, OMG doesn't (CLI-level):**
 - `omc team N:codex|gemini "..."` — Multi-provider team spawn
 - `omc ask codex|gemini "..."` — Multi-provider ask
 - `omc autoresearch --mission` — Autoresearch from terminal
@@ -298,31 +298,31 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 
 ---
 
-## 6. Features OMP Has That Others Don't
+## 6. Features OMG Has That Others Don't
 
 | Feature | Evidence | Strategic Value |
 |---------|----------|----------------|
-| **Native Gemini extension** | `gemini-extension.json` | Only OMP is a first-class Gemini CLI extension |
-| **Intent classification** | `commands/omp/intent.toml` | Automatic workflow routing based on task shape |
-| **Approval posture** | `commands/omp/approval.toml` | Configurable autonomy (suggest/auto/full-auto) |
-| **Taskboard** | `commands/omp/taskboard.toml` | Task ledger with stable IDs, ownership, dependencies |
-| **Workspace management** | `commands/omp/workspace.toml` | Lane inspection, audit, worktree management |
-| **Team assembly** | `commands/omp/team/assemble.toml` | Dynamic roster with approval gate |
-| **Team live mode** | `commands/omp/team/live.toml` | tmux worker pane orchestration |
-| **Team subagents** | `commands/omp/team/subagents.toml` | Subagent backend orchestration |
-| **Context optimization** | `commands/omp/optimize.toml` + skill | Active context/cache optimization |
-| **Checkpoint** | `commands/omp/checkpoint.toml` | Session checkpoint snapshots |
+| **Native Gemini extension** | `gemini-extension.json` | Only OMG is a first-class Gemini CLI extension |
+| **Intent classification** | `commands/omg/intent.toml` | Automatic workflow routing based on task shape |
+| **Approval posture** | `commands/omg/approval.toml` | Configurable autonomy (suggest/auto/full-auto) |
+| **Taskboard** | `commands/omg/taskboard.toml` | Task ledger with stable IDs, ownership, dependencies |
+| **Workspace management** | `commands/omg/workspace.toml` | Lane inspection, audit, worktree management |
+| **Team assembly** | `commands/omg/team/assemble.toml` | Dynamic roster with approval gate |
+| **Team live mode** | `commands/omg/team/live.toml` | tmux worker pane orchestration |
+| **Team subagents** | `commands/omg/team/subagents.toml` | Subagent backend orchestration |
+| **Context optimization** | `commands/omg/optimize.toml` + skill | Active context/cache optimization |
+| **Checkpoint** | `commands/omg/checkpoint.toml` | Session checkpoint snapshots |
 | **Cost tracking CLI** | `src/cli/commands/cost.ts` + skill | Token cost monitoring |
 | **MCP server** | `src/cli/commands/mcp.ts` | Direct MCP ecosystem integration |
-| **Reasoning effort** | `commands/omp/reasoning.toml` | Per-teammate depth/cost control |
-| **Conditional rules** | `commands/omp/rules.toml` | Context-triggered rule injection |
+| **Reasoning effort** | `commands/omg/reasoning.toml` | Per-teammate depth/cost control |
+| **Conditional rules** | `commands/omg/rules.toml` | Context-triggered rule injection |
 | **Handoff skill** | `skills/handoff/` | Resume-ready context transfer |
 | **Control plane** | `src/team/control-plane/` | Deterministic task-lifecycle, mailbox-lifecycle, failure-taxonomy |
 | **33 agent prompts** | `agents/*.md` | Richest agent prompt library of the three |
 
 ---
 
-## 7. Genuine Gaps in OMP (vs OMC/OMX)
+## 7. Genuine Gaps in OMG (vs OMC/OMX)
 
 | # | Feature | Source | Status | Implementation Notes |
 |---|---------|--------|--------|---------------------|
@@ -335,15 +335,15 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 | 7 | **`/schedule`** | OMC | Missing | Remote cron agents. Platform API dependent. |
 | 8 | **`/project-session-manager`** | OMC | Missing | Git worktree + tmux session isolation. |
 | 9 | **CCG tri-model** | OMC | Missing | Cross-model synthesis. Low relevance for Gemini-native. |
-| 10 | **Multi-provider workers** | OMX | Missing | OMX can spawn codex/claude/gemini workers. OMP is Gemini-only. |
+| 10 | **Multi-provider workers** | OMX | Missing | OMX can spawn codex/claude/gemini workers. OMG is Gemini-only. |
 | 11 | **Rust crates** | OMX | Missing | Performance crates (explore, mux, runtime, sparkshell). Different tech choice. |
-| 12 | **4 MCP servers** | OMX | Partial | OMP has 1 MCP server. OMX has state, memory, trace, code-intel servers. |
+| 12 | **4 MCP servers** | OMX | Partial | OMG has 1 MCP server. OMX has state, memory, trace, code-intel servers. |
 
 ---
 
 ## 8. Competitive Landscape (Gemini CLI Ecosystem)
 
-| Extension | Stars | Overlap with OMP |
+| Extension | Stars | Overlap with OMG |
 |-----------|-------|-----------------|
 | **conductor** (Google official) | 3,389 | Team orchestration — direct competitor |
 | **ralph** (Google official) | 281 | Ralph persistence loops — direct competitor |
@@ -351,7 +351,7 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 | **gemini-cli-prompt-library** | 369 | Prompt/skill library |
 | **skill-porter** | 150 | Skill porting |
 
-**Implication:** OMP must differentiate from Google's own extensions, not just from OMC/OMX. Features Google ships natively become OMP's liabilities.
+**Implication:** OMG must differentiate from Google's own extensions, not just from OMC/OMX. Features Google ships natively become OMG's liabilities.
 
 ---
 
@@ -360,15 +360,15 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 ### The Core Insight
 
 > "What does OMC have that we don't?" is the wrong question.
-> **"What can ONLY OMP do?"** is the right question.
+> **"What can ONLY OMG do?"** is the right question.
 
-### OMP's Unique Advantages (Unexploited)
+### OMG's Unique Advantages (Unexploited)
 
 1. **1M context window** — Whole-repo planning without RAG. No other CLI has this.
 2. **Multimodal vision agent** — Image/diagram-driven coding flows. vision agent prompt exists but unused.
 3. **Native extension ecosystem** — `gemini-extension.json` distribution via Gemini CLI marketplace.
-4. **MCP-as-Server posture** — Other tools (OMC, OMX, third-party) call OMP via MCP.
-5. **Intent + Approval + Taskboard** — Composable autonomy stack unique to OMP.
+4. **MCP-as-Server posture** — Other tools (OMC, OMX, third-party) call OMG via MCP.
+5. **Intent + Approval + Taskboard** — Composable autonomy stack unique to OMG.
 6. **Deterministic control plane** — Task-lifecycle + mailbox-lifecycle + failure-taxonomy. Most rigorous of the three.
 
 ### Recommended Priority Order
@@ -388,7 +388,7 @@ OMP has 8 team subcommands in `commands/omp/team/`:
 ## 10. Methodology & Corrections Log
 
 ### Data Collection
-- OMP: Direct filesystem inspection + source-level verification
+- OMG: Direct filesystem inspection + source-level verification
 - OMC: GitHub API (tree traversal) + WebFetch (README, docs website)
 - OMX: GitHub API + WebFetch + repo contents API
 

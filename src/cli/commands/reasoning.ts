@@ -22,7 +22,7 @@ interface ReasoningState {
 
 function printReasoningHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp reasoning [low|medium|high|xhigh]',
+    'Usage: omg reasoning [low|medium|high|xhigh]',
     '',
     'Show or set the reasoning effort profile.',
     '',
@@ -44,7 +44,7 @@ function isValidEffort(value: string): value is ReasoningEffort {
 }
 
 function getStateFilePath(cwd: string): string {
-  return path.join(cwd, '.omp', 'state', 'reasoning.json');
+  return path.join(cwd, '.omg', 'state', 'reasoning.json');
 }
 
 async function readReasoningState(cwd: string): Promise<ReasoningState | null> {

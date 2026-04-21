@@ -94,7 +94,7 @@ function resolveStopCallbackConfigPath(cwd: string): string {
 }
 
 function resolveLegacyStopCallbackConfigPath(cwd: string): string {
-  return path.join(cwd, '.omp', 'notifications', 'stop-callbacks.json');
+  return path.join(cwd, '.omg', 'notifications', 'stop-callbacks.json');
 }
 
 export async function readStopCallbackConfig(cwd: string): Promise<StopCallbackConfigFile | null> {

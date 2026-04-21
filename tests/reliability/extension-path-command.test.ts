@@ -65,7 +65,7 @@ describe('reliability: extension path command', () => {
 
     expect(result.exitCode).toBe(0);
     expect(ioCapture.stdout.join('\n')).toContain('OMG_EXTENSION_PATH');
-    expect(ioCapture.stdout.join('\n')).toContain('OMP_EXTENSION_PATH');
+    expect(ioCapture.stdout.join('\n')).toContain('OMG_EXTENSION_PATH');
   });
 
   test('unknown options return usage error', async () => {
@@ -78,7 +78,7 @@ describe('reliability: extension path command', () => {
 
     expect(result.exitCode).toBe(2);
     expect(ioCapture.stderr.join('\n')).toContain('--bad');
-    expect(ioCapture.stdout.join('\n')).toContain('Usage: omp extension path');
+    expect(ioCapture.stdout.join('\n')).toContain('Usage: omg extension path');
   });
 
   test('unexpected positional arguments return usage error', async () => {

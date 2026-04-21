@@ -25,7 +25,7 @@ export interface TeamCancelCommandContext {
 
 function printTeamCancelHelp(io: CliIo): void {
   io.stdout([
-    'Usage: omp team cancel [--team <name>] [--force] [--json]',
+    'Usage: omg team cancel [--team <name>] [--force] [--json]',
     '',
     'Options:',
     '  --team <name>   Team state namespace (default: oh-my-gemini)',
@@ -87,7 +87,7 @@ async function defaultCancelRunner(input: TeamCancelInput): Promise<TeamCancelOu
       teamName,
       taskId: task.id,
       worker: 'system-cancel',
-      reason: task.error ?? 'Cancelled via omp team cancel.',
+      reason: task.error ?? 'Cancelled via omg team cancel.',
     });
 
     cancelledTasks.push(task.id);
@@ -101,9 +101,9 @@ async function defaultCancelRunner(input: TeamCancelInput): Promise<TeamCancelOu
       from: phase.currentPhase,
       to: 'failed',
       at: now,
-      reason: 'Team run cancelled via omp team cancel.',
+      reason: 'Team run cancelled via omg team cancel.',
       metadata: {
-        invokedBy: 'omp team cancel',
+        invokedBy: 'omg team cancel',
         force: input.force,
         cancellationType: 'operator_requested',
       },

@@ -8,7 +8,7 @@ import { createTempDir, removeDir } from '../utils/runtime.js';
 
 describe('reliability: ndjson corruption tolerance', () => {
   test('readNdjsonFile skips malformed lines without throwing', async () => {
-    const tempRoot = createTempDir('omp-ndjson-corruption-');
+    const tempRoot = createTempDir('omg-ndjson-corruption-');
 
     try {
       const filePath = path.join(tempRoot, 'events.ndjson');
@@ -29,7 +29,7 @@ describe('reliability: ndjson corruption tolerance', () => {
   });
 
   test('readNdjsonFile returns empty array for ENOENT', async () => {
-    const tempRoot = createTempDir('omp-ndjson-enoent-');
+    const tempRoot = createTempDir('omg-ndjson-enoent-');
 
     try {
       const filePath = path.join(tempRoot, 'missing.ndjson');
@@ -40,7 +40,7 @@ describe('reliability: ndjson corruption tolerance', () => {
   });
 
   test('readNdjsonFile throws for permission errors', async () => {
-    const tempRoot = createTempDir('omp-ndjson-permission-');
+    const tempRoot = createTempDir('omg-ndjson-permission-');
 
     try {
       const filePath = path.join(tempRoot, 'events.ndjson');

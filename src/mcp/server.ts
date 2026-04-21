@@ -526,7 +526,7 @@ function createTeamStatusResource(
   stateStore: TeamStateStore,
   teamName: string,
 ): McpResourceDefinition {
-  const uri = `omp://team/${teamName}/status`;
+  const uri = `omg://team/${teamName}/status`;
 
   return {
     uri,
@@ -791,7 +791,7 @@ function createMailboxListTool(
 }
 
 function createSkillCatalogResource(skillsDir?: string): McpResourceDefinition {
-  const uri = 'omp://skills/catalog';
+  const uri = 'omg://skills/catalog';
 
   return {
     uri,
@@ -817,7 +817,7 @@ function createSkillCatalogResource(skillsDir?: string): McpResourceDefinition {
 }
 
 function createGeminiContextResource(cwd: string): McpResourceDefinition {
-  const uri = 'omp://context/gemini';
+  const uri = 'omg://context/gemini';
 
   return {
     uri,
@@ -879,7 +879,7 @@ function createStatusPrompt(defaultTeamName: string): McpPromptDefinition {
 
       return [
         createPromptTextMessage([
-          `Summarize current status for team \"${team}\" using omp://team/${team}/status.`,
+          `Summarize current status for team \"${team}\" using omg://team/${team}/status.`,
           'Highlight phase, runtime state, blocked tasks, and next remediation action.',
           'Keep the summary under 10 bullet points.',
         ].join('\n')),
@@ -891,7 +891,7 @@ function createStatusPrompt(defaultTeamName: string): McpPromptDefinition {
 function createSkillPrompt(): McpPromptDefinition {
   return {
     name: 'skill_execution',
-    description: 'Prompt template to execute a named oh-my-product skill.',
+    description: 'Prompt template to execute a named oh-my-gemini skill.',
     arguments: [
       {
         name: 'skill',
@@ -909,7 +909,7 @@ function createSkillPrompt(): McpPromptDefinition {
 
       return [
         createPromptTextMessage([
-          `Run skill: omp skill ${skill} "${objective}"`,
+          `Run skill: omg skill ${skill} "${objective}"`,
           'After execution, report evidence artifacts and unresolved blockers.',
         ].join('\n')),
       ];

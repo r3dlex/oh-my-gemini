@@ -30,10 +30,10 @@ function createIoCapture(): {
 function createHudContext(): HudRenderContext {
   return {
     version: '0.1.0',
-    gitBranch: 'oh-my-product/dev',
+    gitBranch: 'oh-my-gemini/dev',
     generatedAt: '2026-03-05T00:00:00.000Z',
     team: {
-      teamName: 'oh-my-product',
+      teamName: 'oh-my-gemini',
       hasState: true,
       phase: 'exec',
       runtimeStatus: 'running',
@@ -75,7 +75,7 @@ describe('reliability: hud command', () => {
     });
 
     expect(result.exitCode).toBe(0);
-    expect(ioCapture.stdout.join('\n')).toMatch(/Usage: omp hud/i);
+    expect(ioCapture.stdout.join('\n')).toMatch(/Usage: omg hud/i);
   });
 
   test('fails with usage error for unknown option', async () => {
@@ -266,7 +266,7 @@ describe('reliability: hud command', () => {
       team: { teamName: string };
       gemini: { model: string };
     };
-    expect(payload.team.teamName).toBe('oh-my-product');
+    expect(payload.team.teamName).toBe('oh-my-gemini');
     expect(payload.gemini.model).toBe('gemini-2.5-pro');
   });
 });

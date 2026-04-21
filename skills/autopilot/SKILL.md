@@ -5,7 +5,7 @@ primaryRole: orchestrator
 description: Drive a task from clarified objective through implementation and verification. Use when the user wants end-to-end autonomous execution.
 ---
 
-# Autopilot Skill (oh-my-product)
+# Autopilot Skill (oh-my-gemini)
 
 ## Quick Start
 
@@ -22,7 +22,7 @@ Use this skill when the user wants end-to-end execution with minimal supervision
 1. Clarify the objective, constraints, and acceptance criteria.
 2. Produce or refine a phased plan.
 3. Execute the plan with minimal coherent changes.
-4. Validate with typecheck, tests, and `omp verify` when relevant.
+4. Validate with typecheck, tests, and `omg verify` when relevant.
 5. Return a completion summary, evidence, and follow-ups.
 
 ## Stop conditions
@@ -31,7 +31,7 @@ Use this skill when the user wants end-to-end execution with minimal supervision
 - The user asks to stop or switch to manual control
 
 ## Related surfaces
-- `omp skill plan`
-- `omp skill execute`
-- `omp skill verify`
-- `omp team run`
+- `omg skill plan`
+- `omg skill execute`
+- `omg skill verify`
+- `omg team run`

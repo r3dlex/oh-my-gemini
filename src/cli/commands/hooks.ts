@@ -32,7 +32,7 @@ export interface HooksCommandContext {
 }
 
 const CANONICAL_HOOKS_STATE_FILE = path.join('.omg', 'state', 'hooks.json');
-const LEGACY_HOOKS_STATE_FILE = path.join('.omp', 'state', 'hooks.json');
+const LEGACY_HOOKS_STATE_FILE = path.join('.omg', 'state', 'hooks.json');
 
 const REGISTERED_HOOKS = [
   'createModeRegistryHook',
@@ -53,7 +53,7 @@ function printHooksHelp(io: CliIo): void {
   io.stdout(
     [
       'Usage: omg hooks <subcommand> [options]',
-      'Compatibility alias: omp hooks <subcommand> [options]',
+      'Compatibility alias: omg hooks <subcommand> [options]',
       '',
       'Subcommands:',
       '  init      Bootstrap hook scaffolding',

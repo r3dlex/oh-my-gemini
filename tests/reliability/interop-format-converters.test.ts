@@ -14,19 +14,19 @@ import {
 } from '../../src/interop/format-converters.js';
 
 describe('reliability: interop format converters', () => {
-  test('maps OMP blocked status to OMC pending with lossy annotation', () => {
+  test('maps OMG blocked status to OMC pending with lossy annotation', () => {
     const mapped = omgStatusToOmc('blocked');
 
     expect(mapped.status).toBe('pending');
     expect(mapped.annotation.lossy).toBe(true);
-    expect(mapped.annotation.originalSystem).toBe('omp');
+    expect(mapped.annotation.originalSystem).toBe('omg');
     expect(mapped.annotation.originalStatus).toBe('blocked');
   });
 
-  test('recovers OMP blocked status from lossy OMC annotation', () => {
+  test('recovers OMG blocked status from lossy OMC annotation', () => {
     const mapped = omcStatusToOmp('pending', {
       _interop: {
-        originalSystem: 'omp',
+        originalSystem: 'omg',
         originalStatus: 'blocked',
         mappedStatus: 'pending',
         mappedAt: new Date().toISOString(),
@@ -37,7 +37,7 @@ describe('reliability: interop format converters', () => {
     expect(mapped).toBe('blocked');
   });
 
-  test('validates OMC and OMP status values', () => {
+  test('validates OMC and OMG status values', () => {
     expect(isOmcTaskStatus('completed')).toBe(true);
     expect(isOmcTaskStatus('blocked')).toBe(false);
 
@@ -47,7 +47,7 @@ describe('reliability: interop format converters', () => {
 
   test('converts interop message to Gemini content with role mapping', () => {
     const content = interopMessageToGeminiContent({
-      source: 'omp',
+      source: 'omg',
       target: 'omc',
       content: 'Task complete.',
     });
@@ -83,7 +83,7 @@ describe('reliability: interop format converters', () => {
       messages: [
         {
           source: 'omc',
-          target: 'omp',
+          target: 'omg',
           content: 'Please review the bridge layer.',
         },
       ],
@@ -102,7 +102,7 @@ describe('reliability: interop format converters', () => {
 
   test('converts Gemini content back to interop message', () => {
     const message = geminiContentToInteropMessage({
-      source: 'omp',
+      source: 'omg',
       target: 'omc',
       content: {
         role: 'model',

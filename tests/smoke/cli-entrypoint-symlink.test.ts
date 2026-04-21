@@ -16,13 +16,13 @@ describe('smoke: cli entrypoint symlink compatibility', () => {
   test.runIf(cliEntrypointExists())(
     'symlinked cli entrypoint executes global help successfully',
     () => {
-      const tempDir = createTempDir('omp-symlink-entrypoint-');
+      const tempDir = createTempDir('omg-symlink-entrypoint-');
 
       try {
         const sourceEntrypoint = existsSync(srcCliEntrypointPath)
           ? srcCliEntrypointPath
           : distCliEntrypointPath;
-        const linkPath = path.join(tempDir, 'omp-symlink-entrypoint');
+        const linkPath = path.join(tempDir, 'omg-symlink-entrypoint');
         symlinkSync(sourceEntrypoint, linkPath);
 
         const result = runCliEntrypoint(linkPath, ['--help'], {

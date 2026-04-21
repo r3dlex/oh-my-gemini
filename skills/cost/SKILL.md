@@ -5,23 +5,23 @@ primaryRole: analyst
 description: Summarize token usage and spend-style session metrics across time windows. Use when the user wants usage volume or cost trends.
 ---
 
-# Cost Skill (oh-my-product)
+# Cost Skill (oh-my-gemini)
 
 ## Quick Start
 
-- Run `omp cost --period <daily|weekly|monthly>` and summarize the totals plus the most relevant trend notes.
+- Run `omg cost --period <daily|weekly|monthly>` and summarize the totals plus the most relevant trend notes.
 
 Use this skill when the user wants visibility into usage volume or spend trends.
 
 ## Quick Start
-- `omp cost`
-- `omp cost --period daily`
-- `omp cost --period weekly`
-- `omp cost --period monthly`
+- `omg cost`
+- `omg cost --period daily`
+- `omg cost --period weekly`
+- `omg cost --period monthly`
 
 ## Related surfaces
-- `omp sessions`
-- `omp hud`
+- `omg sessions`
+- `omg hud`
 
 ## Expected output
 - selected period

@@ -124,7 +124,7 @@ export type AgentOverrides = Partial<Record<string, AgentOverrideConfig>>;
 export type AgentFactory = (model?: string) => AgentConfig;
 
 /**
- * Available agent descriptor for OMP prompt building
+ * Available agent descriptor for OMG prompt building
  */
 export interface AvailableAgent {
   name: string;

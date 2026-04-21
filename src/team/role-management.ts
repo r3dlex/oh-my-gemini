@@ -286,9 +286,9 @@ function normalizeOptionalModel(raw: string | undefined): string | undefined {
 function resolveGeminiRoleModelRouting(
   env: NodeJS.ProcessEnv = process.env,
 ): GeminiRoleModelRouting {
-  const fast = normalizeOptionalModel(env.OMP_GEMINI_MODEL_FAST);
-  const balanced = normalizeOptionalModel(env.OMP_GEMINI_MODEL_BALANCED);
-  const reasoning = normalizeOptionalModel(env.OMP_GEMINI_MODEL_REASONING);
+  const fast = normalizeOptionalModel(env.OMG_GEMINI_MODEL_FAST);
+  const balanced = normalizeOptionalModel(env.OMG_GEMINI_MODEL_BALANCED);
+  const reasoning = normalizeOptionalModel(env.OMG_GEMINI_MODEL_REASONING);
 
   return {
     fast: fast ?? DEFAULT_GEMINI_MODEL_ROUTING.fast,

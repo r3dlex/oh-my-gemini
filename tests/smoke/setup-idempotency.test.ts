@@ -12,7 +12,7 @@ import {
 } from '../utils/runtime.js';
 
 const trackedSetupFiles = [
-  '.omp/setup-scope.json',
+  '.omg/setup-scope.json',
   '.gemini/settings.json',
   '.gemini/GEMINI.md',
   '.gemini/sandbox.Dockerfile',
@@ -22,7 +22,7 @@ describe('smoke: setup idempotency', () => {
   test.runIf(cliEntrypointExists())(
     'setup --scope project is idempotent for managed project files',
     async () => {
-      const sandboxProject = createTempDir('omp-setup-idempotency-');
+      const sandboxProject = createTempDir('omg-setup-idempotency-');
 
       try {
         const firstRun = runOmp(['setup', '--scope', 'project'], {
@@ -113,7 +113,7 @@ describe('smoke: setup idempotency', () => {
   test.runIf(cliEntrypointExists())(
     'setup fails with actionable error when .gemini is a file',
     () => {
-      const sandboxProject = createTempDir('omp-setup-conflict-');
+      const sandboxProject = createTempDir('omg-setup-conflict-');
 
       try {
         writeFileSync(path.join(sandboxProject, '.gemini'), 'not-a-directory', 'utf8');
