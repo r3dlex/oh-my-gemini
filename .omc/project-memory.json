@@ -1,0 +1,413 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776542641419,
+  "projectRoot": "/Users/andreburgstahler/Ws/Personal/AiTool/oh-my-gemini",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": ">=20.10.0",
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "vitest",
+        "version": "3.0.8",
+        "category": "testing"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": "Node.js 20.10.0"
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": "npm test",
+    "lintCommand": "npm run lint",
+    "devCommand": null,
+    "scripts": {
+      "clean": "rm -rf dist coverage .vitest",
+      "build": "tsc -p tsconfig.build.json",
+      "typecheck": "tsc -p tsconfig.json --noEmit",
+      "lint": "npm run typecheck",
+      "prepack": "bash scripts/sync-extension-version.sh && npm run build",
+      "prepublishOnly": "npm run gate:publish",
+      "setup": "npm run omp -- setup --scope project",
+      "setup:subagents": "bash scripts/setup-subagents.sh",
+      "doctor": "npm run omp -- doctor",
+      "verify": "npm run omp -- verify",
+      "pack:tarball": "npm pack --json",
+      "pack:consumer-smoke": "bash scripts/consumer-contract-smoke.sh",
+      "pack:global-install-smoke": "bash scripts/global-install-contract-smoke.sh",
+      "gate:consumer-contract": "bash scripts/consumer-contract-smoke.sh",
+      "gate:global-install-contract": "npm run gate:consumer-contract && bash scripts/global-install-contract-smoke.sh",
+      "gate:publish": "npm run gate:global-install-contract && npm run gate:3",
+      "gate:legacy-bypass": "bash scripts/legacy-bypass-policy.sh",
+      "gate:3": "npm run gate:legacy-bypass && npm run typecheck && npm run test:all && npm run verify",
+      "team:run": "npm run omp -- team run --task smoke",
+      "team:e2e": "bash scripts/e2e-omx-team.sh",
+      "test:docker": "bash scripts/docker-ci-smoke.sh",
+      "test:docker:keep": "bash scripts/docker-ci-keep.sh",
+      "test:docker:full": "bash scripts/docker-ci-full.sh",
+      "test": "vitest run",
+      "test:watch": "vitest",
+      "test:smoke": "vitest run tests/smoke",
+      "test:integration": "vitest run tests/integration",
+      "test:reliability": "vitest run tests/reliability",
+      "test:coverage": "vitest run tests/smoke tests/integration tests/reliability --coverage",
+      "test:verification": "vitest run tests/reliability/verification-tier-selector.test.ts tests/reliability/verification-test-runner.test.ts tests/reliability/verification-assertions.test.ts tests/reliability/verify-command-package-manager.test.ts",
+      "test:e2e": "vitest run tests/e2e",
+      "test:all": "npm run test:smoke && npm run test:integration && npm run test:reliability",
+      "verify:ci": "npm run test:verification && npm run verify -- --tier thorough --json",
+      "verify:features": "bash scripts/feature-readiness-check.sh",
+      "omp": "node --import tsx ./src/cli/index.ts"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": "feature-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "src",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "agents": {
+      "path": "agents",
+      "purpose": null,
+      "fileCount": 36,
+      "lastAccessed": 1776542641409,
+      "keyFiles": [
+        "analyst.md",
+        "api-reviewer.md",
+        "architect.md",
+        "build-fixer.md",
+        "code-reviewer.md"
+      ]
+    },
+    "commands": {
+      "path": "commands",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776542641411,
+      "keyFiles": []
+    },
+    "coverage": {
+      "path": "coverage",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1776542641411,
+      "keyFiles": [
+        "coverage-summary.json",
+        "lcov.info"
+      ]
+    },
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 3,
+      "lastAccessed": 1776542641411,
+      "keyFiles": [
+        "constants.d.ts",
+        "constants.js",
+        "constants.js.map"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 1,
+      "lastAccessed": 1776542641411,
+      "keyFiles": [
+        "ARCHITECTURE.md"
+      ]
+    },
+    "extensions": {
+      "path": "extensions",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776542641412,
+      "keyFiles": []
+    },
+    "hooks": {
+      "path": "hooks",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776542641412,
+      "keyFiles": [
+        "hooks.json"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 16,
+      "lastAccessed": 1776542641412,
+      "keyFiles": [
+        "bootstrap-dev.sh",
+        "consumer-contract-smoke.sh",
+        "docker-ci-full.sh",
+        "docker-ci-keep.sh",
+        "docker-ci-smoke.sh"
+      ]
+    },
+    "skills": {
+      "path": "skills",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776542641412,
+      "keyFiles": []
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 1,
+      "lastAccessed": 1776542641412,
+      "keyFiles": [
+        "constants.ts"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 0,
+      "lastAccessed": 1776542641412,
+      "keyFiles": []
+    },
+    "dist/config": {
+      "path": "dist/config",
+      "purpose": "Configuration files",
+      "fileCount": 12,
+      "lastAccessed": 1776542641413,
+      "keyFiles": [
+        "index.d.ts",
+        "index.js",
+        "index.js.map"
+      ]
+    },
+    "docs/api": {
+      "path": "docs/api",
+      "purpose": "API routes",
+      "fileCount": 1,
+      "lastAccessed": 1776542641413,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "docs/assets": {
+      "path": "docs/assets",
+      "purpose": "Static assets",
+      "fileCount": 1,
+      "lastAccessed": 1776542641413,
+      "keyFiles": [
+        "omp_logo.png"
+      ]
+    },
+    "docs/examples": {
+      "path": "docs/examples",
+      "purpose": "Example code",
+      "fileCount": 3,
+      "lastAccessed": 1776542641413,
+      "keyFiles": [
+        "ci-integration.md",
+        "code-review-workflow.md",
+        "custom-skill-guide.md"
+      ]
+    },
+    "src/assets": {
+      "path": "src/assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1776542641414,
+      "keyFiles": []
+    },
+    "src/config": {
+      "path": "src/config",
+      "purpose": "Configuration files",
+      "fileCount": 4,
+      "lastAccessed": 1776542641414,
+      "keyFiles": [
+        "index.ts",
+        "loader.ts",
+        "models.ts"
+      ]
+    },
+    "tests/fixtures": {
+      "path": "tests/fixtures",
+      "purpose": "Test fixtures",
+      "fileCount": 1,
+      "lastAccessed": 1776542641414,
+      "keyFiles": [
+        "gemini-md-baseline.txt"
+      ]
+    },
+    "tests/utils": {
+      "path": "tests/utils",
+      "purpose": "Utility functions",
+      "fileCount": 1,
+      "lastAccessed": 1776542641414,
+      "keyFiles": [
+        "runtime.ts"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "",
+      "accessCount": 14,
+      "lastAccessed": 1776603405856,
+      "type": "directory"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 5,
+      "lastAccessed": 1776638550058,
+      "type": "file"
+    },
+    {
+      "path": "src",
+      "accessCount": 4,
+      "lastAccessed": 1776638371269,
+      "type": "directory"
+    },
+    {
+      "path": "gemini-extension.json",
+      "accessCount": 3,
+      "lastAccessed": 1776442408563,
+      "type": "file"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "accessCount": 3,
+      "lastAccessed": 1776442415965,
+      "type": "file"
+    },
+    {
+      "path": "src/cli/index.ts",
+      "accessCount": 3,
+      "lastAccessed": 1776638419106,
+      "type": "file"
+    },
+    {
+      "path": "src/installer/index.ts",
+      "accessCount": 3,
+      "lastAccessed": 1776638420059,
+      "type": "file"
+    },
+    {
+      "path": "src/cli/commands",
+      "accessCount": 2,
+      "lastAccessed": 1776587805976,
+      "type": "directory"
+    },
+    {
+      "path": "src/lib/worktree-paths.ts",
+      "accessCount": 2,
+      "lastAccessed": 1776638332121,
+      "type": "file"
+    },
+    {
+      "path": "tests",
+      "accessCount": 2,
+      "lastAccessed": 1776638350016,
+      "type": "directory"
+    },
+    {
+      "path": "src/skills/resolver.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776587767982,
+      "type": "file"
+    },
+    {
+      "path": "src/cli/commands/skill.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776587768682,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/learner/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776587768757,
+      "type": "file"
+    },
+    {
+      "path": "src/skills/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776587783455,
+      "type": "file"
+    },
+    {
+      "path": "src/skills/dispatcher.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776587793263,
+      "type": "file"
+    },
+    {
+      "path": "src/skills",
+      "accessCount": 1,
+      "lastAccessed": 1776587793279,
+      "type": "directory"
+    },
+    {
+      "path": "src/cli/commands/setup.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776587820602,
+      "type": "file"
+    },
+    {
+      "path": "src/cli/tools/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776603557025,
+      "type": "file"
+    },
+    {
+      "path": "scripts/sync-extension-version.sh",
+      "accessCount": 1,
+      "lastAccessed": 1776603557635,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 1,
+      "lastAccessed": 1776628340513,
+      "type": "file"
+    },
+    {
+      "path": "tests/smoke/extension-installable.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776638330319,
+      "type": "file"
+    },
+    {
+      "path": "tests/integration/subagents-team-run.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776638330958,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
